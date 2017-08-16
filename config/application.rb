@@ -16,5 +16,10 @@ Bundler.require(*Rails.groups)
 module Wracket
   class Application < Rails::Application
     config.load_defaults 5.1
+
+    # We handle frontend assets by Webpack.
+    config.generators.stylesheets = false
+    config.generators.javascripts = false
+    config.generators.helper = false
   end
 end
