@@ -151,15 +151,15 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  capybara (~> 2.13)
-  jbuilder (~> 2.5)
-  listen (>= 3.0.5, < 3.2)
+  capybara
+  jbuilder
+  listen
   pg (>= 0.18, < 2.0)
   puma (~> 3.7)
   rails (~> 5.1.5)
   selenium-webdriver
   spring
-  spring-watcher-listen (~> 2.0.0)
+  spring-watcher-listen
   tzinfo-data
   web-console (>= 3.3.0)
 
