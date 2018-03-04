@@ -3,6 +3,9 @@
   "private": true,
   "author": "ryym <ryym.64@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.28.10",
