@@ -3,11 +3,10 @@
   <head>
     <title>Wracket</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all' %>
   </head>
 
   <body>
     <%= yield %>
+    <script src="<%= asset_url('app.js') %>"></script>
   </body>
 </html>
