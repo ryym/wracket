@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./tsdest",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "module": "es6",
+    "allowSyntheticDefaultImports": true,
+    "target": "es6"
+  },
+  "include": [
+    "./frontend/**/*"
+  ]
+}
+

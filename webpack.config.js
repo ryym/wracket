@@ -28,6 +28,10 @@ module.exports = {
     app: FRONTEND_ROOT,
   },
 
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+  },
+
   output: {
     path: DEST_DIR,
     filename: byEnv({
@@ -45,9 +49,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         include: FRONTEND_ROOT,
-        use: [],
+        use: [{loader: 'awesome-typescript-loader'}],
       },
 
       {
