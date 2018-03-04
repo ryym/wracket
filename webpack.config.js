@@ -26,6 +26,7 @@ const byEnv = ({dev, test, prod}, defaultValue = null) => {
 module.exports = {
   entry: {
     app: FRONTEND_ROOT,
+    welcome: path.join(FRONTEND_ROOT, 'welcome'),
   },
 
   resolve: {

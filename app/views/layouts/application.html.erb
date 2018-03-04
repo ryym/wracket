@@ -8,5 +8,6 @@
   <body>
     <%= yield %>
     <script src="<%= asset_url('app.js') %>"></script>
+    <%= yield :scripts %>
   </body>
 </html>
