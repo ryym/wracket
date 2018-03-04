@@ -6,7 +6,8 @@
     "strictNullChecks": true,
     "module": "es6",
     "allowSyntheticDefaultImports": true,
-    "target": "es6"
+    "target": "es6",
+    "jsx": "react"
   },
   "include": [
     "./frontend/**/*"
