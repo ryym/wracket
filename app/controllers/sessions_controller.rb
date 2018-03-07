@@ -1,0 +1,32 @@
+# TODO: Handle errors properly.
+
+class SessionsController < ApplicationController
+  before_action do
+    @pocket ||= PocketAuthenticator.new(
+      consumer_key: ENV['POCKET_CONSUMER_KEY'],
+      redirect_uri: oauth_callback_url,
+    )
+  end
+
+  def login
+    ret = @pocket.obtain_request_token
+    return redirect_back(fallback_location: root_path) if ret.err?
+
+    # XXX: Probably we should not store a request token in a session.
+    session[:pocket_request_token] = ret.request_token
+    redirect_to @pocket.authorization_url(ret.request_token)
+  end
+
+  def create
+    request_token = session[:pocket_request_token]
+    return redirect_to root_path if request_token.empty?
+
+    ret = @pocket.obtain_access_token(request_token)
+    return redirect_to root_path if ret.err?
+
+    # TODO: Create or update user data with access token.
+    # TODO: Reset session (change session id) to prevent session fixation attack.
+
+    redirect_to root_path
+  end
+end
