@@ -4,4 +4,6 @@ Rails.application.routes.draw do
 
   post '/login', to: 'sessions#login'
   get '/oauth_callback', to: 'sessions#create'
+
+  get 'home', to: 'home#index'
 end
