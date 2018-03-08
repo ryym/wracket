@@ -24,9 +24,11 @@ class SessionsController < ApplicationController
     ret = @pocket.obtain_access_token(request_token)
     return redirect_to root_path if ret.err?
 
-    # TODO: Create or update user data with access token.
-    # TODO: Reset session (change session id) to prevent session fixation attack.
+    reset_session
 
-    redirect_to root_path
+    user = User.login(ret.username, ret.access_token)
+    session[:user_id] = user.id
+
+    redirect_to home_path
   end
 end
