@@ -10,6 +10,13 @@ class Http
     @default_headers = headers
   end
 
+  def post_json(path, data, headers: {})
+    req = Net::HTTP::Post.new(path, @default_headers.merge(headers))
+    req.body = JSON.generate(data)
+    res = new_http.request(req)
+    Response.new(res)
+  end
+
   def post_form(path, data, headers: {})
     req = Net::HTTP::Post.new(path, @default_headers.merge(headers))
     req.set_form_data(data)
@@ -46,6 +53,10 @@ class Http
 
     def form
       @form ||= Hash[URI.decode_www_form(@res.body)]
+    end
+
+    def body_json
+      JSON.parse(@res.body)
     end
   end
 end
