@@ -3,6 +3,9 @@
 # TODO: Add expiry for access tokens.
 
 class User < ApplicationRecord
+  has_many :user_entries
+  has_many :entries, through: :user_entries
+
   validates :username, presence: true, uniqueness: true
   validates :access_token, presence: true
 
