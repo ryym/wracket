@@ -11,6 +11,7 @@ gem 'puma', '~> 3.7'
 gem 'jbuilder'
 gem 'config'
 gem 'dotenv-rails'
+gem 'activerecord-import'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
