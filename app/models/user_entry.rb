@@ -9,4 +9,6 @@ class UserEntry < ApplicationRecord
   has_many :tags, through: :user_entry_tags
 
   # TODO: validation
+
+  scope :by_user, ->(user){ where(user: user) }
 end
