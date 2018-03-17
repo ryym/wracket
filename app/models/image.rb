@@ -1,5 +1,6 @@
 class Image < ApplicationRecord
-  belongs_to :entry
+  # See UserEntry comments for the reason of `required: false`.
+  belongs_to :entry, required: false
 
   # TODO: validation
 end
