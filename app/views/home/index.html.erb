@@ -1,2 +1,10 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>My List</h1>
+
+<div id="bookmark-list"></div>
+
+<%= content_for(:scripts) do %>
+  <script type="application/json" id="bookmarks-data">
+    <%= raw(bookmarks.to_json) %>
+  </script>
+  <script src="<%= asset_url('home.js') %>"></script>
+<% end %>
