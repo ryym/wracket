@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314135654) do
+ActiveRecord::Schema.define(version: 20180321014125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookmark_tags", force: :cascade do |t|
+    t.bigint "bookmark_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bookmark_id", "tag_id"], name: "index_bookmark_tags_on_bookmark_id_and_tag_id", unique: true
+    t.index ["bookmark_id"], name: "index_bookmark_tags_on_bookmark_id"
+    t.index ["tag_id"], name: "index_bookmark_tags_on_tag_id"
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "entry_id", null: false
+    t.integer "status", default: 0, null: false
+    t.boolean "favorite", default: false, null: false
+    t.integer "sort_id"
+    t.datetime "added_to_pocket_at", null: false
+    t.datetime "updated_on_pocket_at"
+    t.datetime "archived_at"
+    t.datetime "favorited_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_id"], name: "index_bookmarks_on_entry_id"
+    t.index ["user_id", "entry_id"], name: "index_bookmarks_on_user_id_and_entry_id", unique: true
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
 
   create_table "entries", force: :cascade do |t|
     t.bigint "resolved_id"
@@ -49,33 +76,6 @@ ActiveRecord::Schema.define(version: 20180314135654) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "user_entries", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "entry_id", null: false
-    t.integer "status", default: 0, null: false
-    t.boolean "favorite", default: false, null: false
-    t.integer "sort_id"
-    t.datetime "added_to_pocket_at", null: false
-    t.datetime "updated_on_pocket_at"
-    t.datetime "archived_at"
-    t.datetime "favorited_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["entry_id"], name: "index_user_entries_on_entry_id"
-    t.index ["user_id", "entry_id"], name: "index_user_entries_on_user_id_and_entry_id", unique: true
-    t.index ["user_id"], name: "index_user_entries_on_user_id"
-  end
-
-  create_table "user_entry_tags", force: :cascade do |t|
-    t.bigint "user_entry_id", null: false
-    t.bigint "tag_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tag_id"], name: "index_user_entry_tags_on_tag_id"
-    t.index ["user_entry_id", "tag_id"], name: "index_user_entry_tags_on_user_entry_id_and_tag_id", unique: true
-    t.index ["user_entry_id"], name: "index_user_entry_tags_on_user_entry_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "access_token", limit: 32, null: false
@@ -84,10 +84,10 @@ ActiveRecord::Schema.define(version: 20180314135654) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "bookmark_tags", "bookmarks"
+  add_foreign_key "bookmark_tags", "tags"
+  add_foreign_key "bookmarks", "entries"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "entries", "entries", column: "resolved_id"
   add_foreign_key "images", "entries"
-  add_foreign_key "user_entries", "entries"
-  add_foreign_key "user_entries", "users"
-  add_foreign_key "user_entry_tags", "tags"
-  add_foreign_key "user_entry_tags", "user_entries"
 end

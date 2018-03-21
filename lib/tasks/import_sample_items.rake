@@ -27,8 +27,8 @@ namespace :tmp do
 
     ActiveRecord::Base.transaction do
       entry_ids = user.entries.pluck(:id)
-      UserEntryTag.joins(:user_entry).merge(UserEntry.where(user: user)).delete_all
-      UserEntry.where(user: user).delete_all
+      BookmarkTag.joins(:bookmark).merge(Bookmark.where(user: user)).delete_all
+      Bookmark.where(user: user).delete_all
       Image.where(entry_id: entry_ids).delete_all
       Entry.where(id: entry_ids).delete_all
     end

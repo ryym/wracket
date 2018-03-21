@@ -1,5 +1,5 @@
 class Tag < ApplicationRecord
-  has_many :user_entry_tags, inverse_of: :tag
+  has_many :bookmark_tags, inverse_of: :tag
 
   # TODO: validation
 

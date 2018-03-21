@@ -13,7 +13,7 @@ class RetrievedJsonConverter
 
   def append_results(user_id, id, item, retrieved_entry_ids, result)
       result.entries.push(*build_entries(id, item, retrieved_entry_ids))
-      result.user_entries.push(build_user_entry(user_id, id, item))
+      result.bookmarks.push(build_bookmark(user_id, id, item))
 
       tags_with_entry_id = build_tags_with_entry_id(id, item.fetch('tags', {}))
       result.tags_with_entry_id.push(*tags_with_entry_id)
@@ -80,8 +80,8 @@ class RetrievedJsonConverter
     entries
   end
 
-  def build_user_entry(user_id, entry_id, item)
-    UserEntry.new(
+  def build_bookmark(user_id, entry_id, item)
+    Bookmark.new(
       user_id: user_id,
       entry_id: entry_id,
       status: item['status'].to_i,
@@ -123,13 +123,13 @@ class RetrievedJsonConverter
   class Result
     # XXX: Should be readonly.
     attr_accessor :entries
-    attr_accessor :user_entries
+    attr_accessor :bookmarks
     attr_accessor :tags_with_entry_id
     attr_accessor :images
 
     def initialize
       self.entries = []
-      self.user_entries = []
+      self.bookmarks = []
       self.tags_with_entry_id = []
       self.images = []
     end

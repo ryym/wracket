@@ -7,20 +7,20 @@ class RetrievedDataSaver
     result.of_entries = import_entries(converted.entries)
     failed_entries = result.of_entries.failed_instances
 
-    result.of_user_entries = import_user_entries(converted.user_entries, failed_entries)
+    result.of_bookmarks = import_bookmarks(converted.bookmarks, failed_entries)
 
     tags_with_entry_id = converted.tags_with_entry_id
     result.of_tags = import_tags(tags_with_entry_id)
 
-    user_entries = UserEntry.by_user(user_id)
+    bookmarks = Bookmark.by_user(user_id)
     tags = Tag.by_name(tags_with_entry_id.map(&:name))
-    user_entry_tags = make_user_entry_tags(
-      user_entries,
+    bookmark_tags = make_bookmark_tags(
+      bookmarks,
       tags,
       tags_with_entry_id,
     )
 
-    result.of_user_entry_tags = import_user_entry_tags(user_entry_tags)
+    result.of_bookmark_tags = import_bookmark_tags(bookmark_tags)
 
     result.of_images = import_images(converted.images, failed_entries)
 
@@ -42,9 +42,9 @@ class RetrievedDataSaver
     ])
   end
 
-  def import_user_entries(user_entries, failed_entries)
-    user_entries = select_by_valid_entry_ids(user_entries, failed_entries)
-    UserEntry.import(user_entries, on_duplicate_key_ignore: true)
+  def import_bookmarks(bookmarks, failed_entries)
+    bookmarks = select_by_valid_entry_ids(bookmarks, failed_entries)
+    Bookmark.import(bookmarks, on_duplicate_key_ignore: true)
   end
 
   def import_tags(tags_with_entry_id)
@@ -54,21 +54,21 @@ class RetrievedDataSaver
     Tag.import(tags, on_duplicate_key_ignore: true)
   end
 
-  def make_user_entry_tags(user_entries, tags, tags_with_entry_id)
-    user_entry_by_entry_id = user_entries.each_with_object({}) do |ue, ues|
+  def make_bookmark_tags(bookmarks, tags, tags_with_entry_id)
+    bookmark_by_entry_id = bookmarks.each_with_object({}) do |ue, ues|
       ues[ue.entry_id] = ue
     end
 
     tags_with_entry_id.each_with_object([]) do |twe, recs|
-      ue = user_entry_by_entry_id[twe.entry_id]
+      ue = bookmark_by_entry_id[twe.entry_id]
       next if ue.nil?
       tag = tags.find { |t| t.name == twe.name }
-      recs.push(UserEntryTag.new(user_entry_id: ue.id, tag_id: tag.id))
+      recs.push(BookmarkTag.new(bookmark_id: ue.id, tag_id: tag.id))
     end
   end
 
-  def import_user_entry_tags(user_entry_tags)
-    UserEntryTag.import(user_entry_tags, on_duplicate_key_ignore: true)
+  def import_bookmark_tags(bookmark_tags)
+    BookmarkTag.import(bookmark_tags, on_duplicate_key_ignore: true)
   end
 
   def import_images(images, failed_entries)
@@ -88,9 +88,9 @@ class RetrievedDataSaver
   # XXX: Should be readonly.
   Result = Struct.new(
     :of_entries,
-    :of_user_entries,
+    :of_bookmarks,
     :of_tags,
-    :of_user_entry_tags,
+    :of_bookmark_tags,
     :of_images,
   )
 end
