@@ -11,4 +11,8 @@ class Bookmark < ApplicationRecord
   # TODO: validation
 
   scope :by_user, ->(user){ where(user: user) }
+
+  scope :unarchived, -> { where(archived_at: nil) }
+
+  scope :order_by_newest, -> { order(added_to_pocket_at: :desc) }
 end

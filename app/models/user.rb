@@ -18,4 +18,8 @@ class User < ApplicationRecord
       User.create!(username: name, access_token: token)
     end
   end
+
+  def unarchived_bookmarks
+    bookmarks.includes(entry: :resolved).unarchived.order_by_newest
+  end
 end

@@ -10,4 +10,13 @@ class Entry < ApplicationRecord
   has_many :images, dependent: :destroy
 
   # TODO: validation
+
+  def resolved_url
+    resolved&.url || url
+  end
+
+  def resolved_title
+    return title unless resolved
+    resolved.parsed_title || resolved.title
+  end
 end
