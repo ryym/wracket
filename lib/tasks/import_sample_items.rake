@@ -9,7 +9,7 @@ namespace :tmp do
       access_token: user.access_token,
     )
 
-    res = pocket.retrieve(count: 30, state: 'all')
+    res = pocket.retrieve(count: 30, state: 'all', detailType: 'complete')
     if res.code != '200'
       raise "failed to retrieve data. code: #{res.code}"
     end
