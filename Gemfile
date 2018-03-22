@@ -13,6 +13,9 @@ gem 'config'
 gem 'dotenv-rails'
 gem 'activerecord-import'
 
+# https://github.com/flavorjones/loofah/issues/144
+gem 'loofah', '>= 2.2.1'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug'
