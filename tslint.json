@@ -1,0 +1,7 @@
+{
+  "defaultSeverity": "error",
+  "rules": {
+    "ban-types": [true, ["Object"]],
+    "no-unused-variable": [true, { "ignore-pattern": "^_" }]
+  }
+}
