@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Dispatch} from '../store';
-import {State} from '../state';
-import {incr, incrLater} from '../store/actions';
-import {getCount} from '../store/selectors';
+import {Dispatch} from '../../store';
+import {State} from '../../state';
+import {incr, incrLater} from '../../store/actions';
+import {getCount} from '../../store/selectors';
 
 export interface Props {
   count: number;

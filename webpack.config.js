@@ -7,6 +7,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 const ROOT = __dirname;
 const FRONTEND_ROOT = path.join(ROOT, 'frontend');
+const ENTRY_ROOT = path.join(FRONTEND_ROOT, 'entries');
 const DEST_DIR = path.join(ROOT, 'public', 'assets');
 
 const ENV = process.env.NODE_ENV || 'development';
@@ -27,9 +28,9 @@ const byEnv = ({dev, test, prod}, defaultValue = null) => {
 
 module.exports = {
   entry: {
-    app: FRONTEND_ROOT,
-    home: path.join(FRONTEND_ROOT, 'home'),
-    welcome: path.join(FRONTEND_ROOT, 'welcome'),
+    app: path.join(ENTRY_ROOT, 'app'),
+    home: path.join(ENTRY_ROOT, 'home'),
+    welcome: path.join(ENTRY_ROOT, 'welcome'),
   },
 
   resolve: {

@@ -1,12 +1,13 @@
 import React from 'react';
-import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {ConnectedCounter} from './Counter';
-import {configureStore} from '../store';
+import {Store} from '../../store';
 
-const store = configureStore();
+export type Props = {
+  store: Store;
+};
 
-function Welcome() {
+export function WelcomePage({store}: Props) {
   return (
     <Provider store={store}>
       <div>
@@ -15,8 +16,4 @@ function Welcome() {
       </div>
     </Provider>
   );
-}
-
-export function renderView() {
-  render(<Welcome />, document.getElementById('welcome-root'));
 }

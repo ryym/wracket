@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {BookmarkList} from './components/BookmarkList';
-import {Bookmark} from './lib/Bookmark';
+import {HomePage} from '../components/HomePage';
+import {Bookmark} from '../lib/Bookmark';
 
 const $json = document.getElementById('bookmarks-data');
 if ($json == null) {
@@ -11,6 +11,6 @@ if ($json == null) {
 const bookmarks = JSON.parse($json.innerText) as Bookmark[];
 
 render(
-  <BookmarkList bookmarks={bookmarks} />,
+  <HomePage bookmarks={bookmarks} />,
   document.getElementById('bookmark-list'),
 );
