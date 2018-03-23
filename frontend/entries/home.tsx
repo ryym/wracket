@@ -10,7 +10,4 @@ if ($json == null) {
 
 const bookmarks = JSON.parse($json.innerText) as Bookmark[];
 
-render(
-  <HomePage bookmarks={bookmarks} />,
-  document.getElementById('bookmark-list'),
-);
+render(<HomePage bookmarks={bookmarks} />, document.getElementById('bookmark-list'));

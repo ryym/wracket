@@ -5,8 +5,5 @@ import {WelcomePage} from '../components/WelcomePage';
 
 window.addEventListener('DOMContentLoaded', () => {
   const store = configureStore();
-  render(
-    <WelcomePage store={store} />,
-    document.getElementById('welcome-root'),
-  );
+  render(<WelcomePage store={store} />, document.getElementById('welcome-root'));
 });
