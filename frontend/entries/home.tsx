@@ -3,20 +3,27 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {configureStore} from '../store';
 import {HomePage} from '../components/HomePage';
-import {Bookmark} from '../lib/Bookmark';
 
 const $json = document.getElementById('bookmarks-data');
 if ($json == null) {
   throw new Error('initial data script not found');
 }
 
-const bookmarks = JSON.parse($json.innerText) as Bookmark[];
+const bookmarks = JSON.parse($json.innerText);
 
-const store = configureStore();
+const store = configureStore({
+  initialState: {
+    counter: {count: 0}, // TODO: remove
+    bookmarks: {
+      ids: bookmarks.ids,
+      byId: bookmarks.by_id,
+    },
+  },
+});
 
 render(
   <Provider store={store}>
-    <HomePage bookmarks={bookmarks} />
+    <HomePage />
   </Provider>,
   document.getElementById('bookmark-list'),
 );

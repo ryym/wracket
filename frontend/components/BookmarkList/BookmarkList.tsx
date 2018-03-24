@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bookmark} from '../../lib/Bookmark';
+import {Bookmark} from '../../lib/models';
 
 export interface Props {
   readonly bookmarks: Bookmark[];
