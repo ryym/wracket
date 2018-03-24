@@ -117,5 +117,35 @@ class RetrievedDataSaver
     :of_tags,
     :of_bookmark_tags,
     :of_images,
-  )
+  ) do
+    def any_failure?
+      failed_instances_array.any?(&:present?)
+    end
+
+    def failed_entries
+      of_entries.failed_instances
+    end
+
+    def failed_bookmarks
+      of_bookmarks.failed_instances
+    end
+
+    def failed_tags
+      of_tags.failed_instances
+    end
+
+    def failed_bookmark_tags
+      of_bookmark_tags.failed_instances
+    end
+
+    def failed_images
+      of_images.failed_instances
+    end
+
+    private
+
+    def failed_instances_array
+      [failed_entries, failed_bookmarks, failed_tags, failed_bookmark_tags, failed_images]
+    end
+  end
 end
