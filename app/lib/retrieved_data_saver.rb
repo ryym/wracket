@@ -44,7 +44,21 @@ class RetrievedDataSaver
 
   def import_bookmarks(bookmarks, failed_entries)
     bookmarks = select_by_valid_entry_ids(bookmarks, failed_entries)
-    Bookmark.import(bookmarks, on_duplicate_key_ignore: true)
+    Bookmark.import(
+      bookmarks,
+      on_duplicate_key_update: {
+        conflict_target: %i[user_id entry_id],
+        columns: %i[
+          status
+          favorite
+          sort_id
+          added_to_pocket_at
+          updated_on_pocket_at
+          archived_at
+          favorited_at
+        ],
+      },
+    )
   end
 
   def import_tags(tags_with_entry_id)
