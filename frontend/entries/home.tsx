@@ -1,5 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import {configureStore} from '../store';
 import {HomePage} from '../components/HomePage';
 import {Bookmark} from '../lib/Bookmark';
 
@@ -10,4 +12,11 @@ if ($json == null) {
 
 const bookmarks = JSON.parse($json.innerText) as Bookmark[];
 
-render(<HomePage bookmarks={bookmarks} />, document.getElementById('bookmark-list'));
+const store = configureStore();
+
+render(
+  <Provider store={store}>
+    <HomePage bookmarks={bookmarks} />
+  </Provider>,
+  document.getElementById('bookmark-list'),
+);
