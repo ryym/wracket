@@ -9,6 +9,14 @@ export type Dispatch = ReduxDispatch<Action>;
 
 export type Store = ReduxStore<State, Action>;
 
-export function configureStore(): Store {
-  return createStore(rootReducer, applyMiddleware(logger, createThunkMiddleware()));
+export type StoreConfig = {
+  initialState?: State;
+};
+
+export function configureStore(conf: StoreConfig = {}): Store {
+  return createStore(
+    rootReducer,
+    conf.initialState || {},
+    applyMiddleware(logger, createThunkMiddleware()),
+  );
 }
