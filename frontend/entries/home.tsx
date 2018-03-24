@@ -13,7 +13,6 @@ const bookmarks = JSON.parse($json.innerText);
 
 const store = configureStore({
   initialState: {
-    counter: {count: 0}, // TODO: remove
     bookmarks: {
       ids: bookmarks.ids,
       byId: bookmarks.by_id,
