@@ -1,7 +1,8 @@
 class RetrievedJsonConverter
   def convert(user_id, json)
-    items_by_id = json.fetch('list', {})
+    return self.class::Result.new if empty_items?(json)
 
+    items_by_id = json.fetch('list')
     retrieved_entry_ids = Set.new(items_by_id.keys.map(&:to_i))
 
     result = self.class::Result.new
@@ -9,6 +10,11 @@ class RetrievedJsonConverter
       append_results(user_id, id.to_i, item, retrieved_entry_ids, result)
     end
     result
+  end
+
+  def empty_items?(json)
+    # NOTE: If no data exist, Pocket sets an empty array to 'list' instead of an empty object!
+    json['list'].empty?
   end
 
   def append_results(user_id, id, item, retrieved_entry_ids, result)
