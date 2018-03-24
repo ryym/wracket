@@ -50,35 +50,12 @@ class PocketAuthenticator
   end
 
   def return_err(res)
-    ResErr.new(res, {
-      error_code: res.header('X-Error-Code'),
-      message: res.header('X-Error'),
-    })
+    Pocket::ResErr.new(res)
   end
 end
 
 class PocketAuthenticator
-  class Result
-    attr_reader :response
-
-    def initialize(res)
-      @response = res
-    end
-
-    def err?
-      @response.code != "200"
-    end
-  end
-
-  class ResErr < Result
-    def initialize(res, error_code:, message:)
-      super(res)
-      @error_code = error_code
-      @message = message
-    end
-  end
-
-  class ResRequestToken < Result
+  class ResRequestToken < Pocket::Result
     attr_reader :request_token
 
     def initialize(res, request_token)
@@ -87,7 +64,7 @@ class PocketAuthenticator
     end
   end
 
-  class ResAccessToken < Result
+  class ResAccessToken < Pocket::Result
     attr_reader :access_token, :username
 
     def initialize(res, access_token:, username:)
