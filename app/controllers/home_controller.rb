@@ -4,12 +4,15 @@ class HomeController < ApplicationController
   before_action :authenticate!
 
   def index
-    bookmarks = current_user.unarchived_bookmarks.map do |b|
-      {
+    init = { ids: [], by_id: {} }
+    bookmarks = current_user.unarchived_bookmarks.inject(init) do |bs, b|
+      bs[:ids].push(b.id)
+      bs[:by_id][b.id] = {
         id: b.id,
         title: b.entry.resolved_title,
         url: b.entry.url,
       }
+      bs
     end
 
     render locals: {
