@@ -9,6 +9,9 @@ class RetrievedDataSaver
 
     result.of_bookmarks = import_bookmarks(converted.bookmarks, failed_entries)
 
+    # Ignore failures for now.
+    delete_bookmarks(user_id, converted.deleted_bookmarks)
+
     tags_with_entry_id = converted.tags_with_entry_id
     result.of_tags = import_tags(tags_with_entry_id)
 
@@ -59,6 +62,14 @@ class RetrievedDataSaver
         ],
       },
     )
+  end
+
+  def delete_bookmarks(user_id, bookmarks)
+    return if bookmarks.empty?
+    entry_ids = bookmarks.map(&:entry_id)
+    bookmark_where = Bookmark.where(user_id: user_id, entry_id: entry_ids)
+    BookmarkTag.joins(:bookmark).merge(bookmark_where).delete_all
+    bookmark_where.delete_all
   end
 
   def import_tags(tags_with_entry_id)

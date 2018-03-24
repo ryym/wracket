@@ -12,14 +12,19 @@ class RetrievedJsonConverter
   end
 
   def append_results(user_id, id, item, retrieved_entry_ids, result)
-      result.entries.push(*build_entries(id, item, retrieved_entry_ids))
-      result.bookmarks.push(build_bookmark(user_id, id, item))
+    if item['status'].to_i == Bookmark.statuses[:deleted]
+      result.deleted_bookmarks.push(Bookmark.new(user_id: user_id, entry_id: id))
+      return
+    end
 
-      tags_with_entry_id = build_tags_with_entry_id(id, item.fetch('tags', {}))
-      result.tags_with_entry_id.push(*tags_with_entry_id)
+    result.entries.push(*build_entries(id, item, retrieved_entry_ids))
+    result.bookmarks.push(build_bookmark(user_id, id, item))
 
-      images = build_images(id, item.fetch('images', {}))
-      result.images.push(*images)
+    tags_with_entry_id = build_tags_with_entry_id(id, item.fetch('tags', {}))
+    result.tags_with_entry_id.push(*tags_with_entry_id)
+
+    images = build_images(id, item.fetch('images', {}))
+    result.images.push(*images)
   end
 
   def build_entries(id, item, retrieved_ids)
@@ -124,12 +129,14 @@ class RetrievedJsonConverter
     # XXX: Should be readonly.
     attr_accessor :entries
     attr_accessor :bookmarks
+    attr_accessor :deleted_bookmarks
     attr_accessor :tags_with_entry_id
     attr_accessor :images
 
     def initialize
       self.entries = []
       self.bookmarks = []
+      self.deleted_bookmarks = []
       self.tags_with_entry_id = []
       self.images = []
     end
