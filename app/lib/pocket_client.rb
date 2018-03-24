@@ -17,9 +17,15 @@ class PocketClient
   end
 
   def retrieve(params = {})
-    @http.post_json('/v3/get', params.merge(
+    res = @http.post_json('/v3/get', params.merge(
       consumer_key: @consumer_key,
       access_token: @access_token,
     ))
+    res.success? ? ResRetrieve.new(res) : Pocket::ResErr.new(res)
+  end
+end
+
+class PocketClient
+  class ResRetrieve < Pocket::Result
   end
 end

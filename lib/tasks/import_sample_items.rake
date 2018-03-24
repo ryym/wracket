@@ -6,13 +6,13 @@ namespace :tmp do
     user = User.find_by!(username: MY_ACCOUNT_EMAIL)
     pocket = PocketClient.create(user.access_token)
 
-    res = pocket.retrieve(count: 30, state: 'all', detailType: 'complete')
-    if res.code != '200'
-      raise "failed to retrieve data. code: #{res.code}"
+    ret = pocket.retrieve(count: 30, state: 'all', detailType: 'complete')
+    if ret.err?
+      raise "failed to retrieve data. code: #{ret.response.code}"
     end
 
     converter = RetrievedJsonConverter.new
-    converted = converter.convert(user.id, res.body_json)
+    converted = converter.convert(user.id, ret.response.body_json)
 
     saver = RetrievedDataSaver.new
     ret = saver.save(user.id, converted)
