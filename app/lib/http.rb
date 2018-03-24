@@ -47,6 +47,10 @@ class Http
       @res
     end
 
+    def success?
+      @res.code.start_with?('2')
+    end
+
     def header(key)
       @res[key]
     end

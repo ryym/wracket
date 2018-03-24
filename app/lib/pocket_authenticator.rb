@@ -19,7 +19,7 @@ class PocketAuthenticator
       consumer_key: @consumer_key,
       redirect_uri: @redirect_uri,
     })
-    err?(res) ? return_err(res) : ResRequestToken.new(res, res.form['code'])
+    !res.success? ? return_err(res) : ResRequestToken.new(res, res.form['code'])
   end
 
   def authorization_url(request_token)
@@ -37,17 +37,13 @@ class PocketAuthenticator
       consumer_key: @consumer_key,
       code: request_token,
     })
-    err?(res) ? return_err(res) : ResAccessToken.new(res, {
+    !res.success? ? return_err(res) : ResAccessToken.new(res, {
       access_token: res.form['access_token'],
       username: res.form['username'],
     })
   end
 
   private
-
-  def err?(res)
-    res.code != "200"
-  end
 
   def return_err(res)
     Pocket::ResErr.new(res)
