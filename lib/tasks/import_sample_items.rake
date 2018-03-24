@@ -4,10 +4,7 @@ namespace :tmp do
 
   task import_samples: :environment do
     user = User.find_by!(username: MY_ACCOUNT_EMAIL)
-    pocket = PocketClient.new(
-      consumer_key: ENV['POCKET_CONSUMER_KEY'],
-      access_token: user.access_token,
-    )
+    pocket = PocketClient.create(user.access_token)
 
     res = pocket.retrieve(count: 30, state: 'all', detailType: 'complete')
     if res.code != '200'

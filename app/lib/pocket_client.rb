@@ -1,11 +1,16 @@
 class PocketClient
-  def self.new_http
-    Http.new('getpocket.com', ssl: true, headers: {
+  def self.create(access_token)
+    http = Http.new('getpocket.com', ssl: true, headers: {
       'Content-Type': 'application/json',
     })
+    PocketClient.new(
+      consumer_key: ENV['POCKET_CONSUMER_KEY'],
+      access_token: access_token,
+      http: http,
+    )
   end
 
-  def initialize(consumer_key:, access_token:, http: PocketClient.new_http)
+  def initialize(consumer_key:, access_token:, http:)
     @consumer_key = consumer_key
     @access_token = access_token
     @http = http
