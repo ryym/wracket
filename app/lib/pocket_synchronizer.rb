@@ -15,8 +15,10 @@ class PocketSynchronizer
     @logger = logger
   end
 
-  def import_updates_since(last_updated, user)
-    @pocket.retrieve_each(50, since: last_updated.to_i, status: 'all') do |retrieved, json|
+  def import_updates(user)
+    return [false, "first synchronization is not supported yet"] if user.last_synced_at.nil?
+
+    @pocket.retrieve_each(50, since: user.last_synced_at.to_i, status: 'all') do |retrieved, json|
       if retrieved.err?
         @logger.error("failed to retrieve: #{res.code} [err code: #{res.error_code}] #{res.message}")
         return [false, res.message]
@@ -31,6 +33,8 @@ class PocketSynchronizer
         return [false, "failed to import some records"]
       end
     end
+
+    user.update(last_synced_at: Time.current)
 
     [true, nil]
   end
