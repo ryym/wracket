@@ -49,6 +49,9 @@ class CreateCoreTables < ActiveRecord::Migration[5.1]
     end
     add_index :user_entry_tags, %i[user_entry_id tag_id], unique: true
 
+    # I forgot to add timestamps to this table.
+    # They are added at 20180325115612_add_timestamps_to_images.rb.
+    # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :images do |t|
       t.references :entry, null: false, index: true, foreign_key: true
       t.integer :image_id, null: false
@@ -59,5 +62,6 @@ class CreateCoreTables < ActiveRecord::Migration[5.1]
       t.string :caption, null: false, default: ''
     end
     add_index :images, %i[entry_id src], unique: true
+    # rubocop:enable Rails/CreateTableWithTimestamps
   end
 end
