@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 # TODO: Should encrypt access tokens.
 # TODO: Add expiry for access tokens.
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Pocket module provides common utilities used in our Pocket clients.
 module Pocket
   class Result

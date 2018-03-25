@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # XXX: The tasks in this namespace are temporary. Should be removed later.
 namespace :tmp do
   MY_ACCOUNT_EMAIL = 'ryym.64@gmail.com'

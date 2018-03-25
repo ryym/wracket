@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RetrievedJsonConverter
   def convert(user_id, json)
     return self.class::Result.new if empty_items?(json)

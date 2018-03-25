@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Entry < ApplicationRecord
   # See https://getpocket.com/developer/docs/v3/retrieve for resolved_id.
   # - If the entry has a resolved entry, resolved_id is a different entry id.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bookmark < ApplicationRecord
   # XXX: Actually both of the user and entry associations are required.
   # But with the default `required` option,

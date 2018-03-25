@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PocketSynchronizer
   def self.create(pocket)
     self.new(

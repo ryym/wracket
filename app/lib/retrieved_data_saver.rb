@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RetrievedDataSaver
   # Saves given converted models.
   # This continues process even if some records were failed to save.

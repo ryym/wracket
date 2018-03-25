@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Authenticatable
   def pocket_authenticator
     PocketAuthenticator.new(

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Pocket API Authenticator.
 # https://getpocket.com/developer/docs/overview
 class PocketAuthenticator

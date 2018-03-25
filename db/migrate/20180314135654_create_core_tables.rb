@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Create core tables to store data retrieved from Pocket.
 class CreateCoreTables < ActiveRecord::Migration[5.1]
   def change

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PocketClient
   def self.create(access_token)
     http = Http.new('getpocket.com', ssl: true, headers: {
