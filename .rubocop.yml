@@ -1,0 +1,85 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  TargetRailsVersion: 5.1
+  Exclude:
+    - "db/schema.rb"
+    - "log/**/*"
+    - "public/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "node_modules/**/*"
+    - "bin/*"
+    - !ruby/regexp /config\/(?!routes\.rb$).*/
+  UseCache: true
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Layout/AlignParameters:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Layout/DotPosition:
+  Enabled: true
+  EnforcedStyle: trailing
+
+Layout/FirstParameterIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/IndentArray:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/IndentHash:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: true
+  Max: 100
+
+Metrics/MethodLength:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  Enabled: true
+  MinNameLength: 1
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/NegatedIf:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Rails:
+  Enabled: true
