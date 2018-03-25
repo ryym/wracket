@@ -18,7 +18,7 @@ class Bookmark < ApplicationRecord
     deleted: 2,
   }
 
-  scope :by_user, ->(user){ where(user: user) }
+  scope :by_user, ->(user) { where(user: user) }
 
   scope :order_by_newest, -> { order(added_to_pocket_at: :desc) }
 end

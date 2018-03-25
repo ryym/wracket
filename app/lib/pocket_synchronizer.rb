@@ -2,7 +2,7 @@
 
 class PocketSynchronizer
   def self.create(pocket)
-    self.new(
+    new(
       pocket: pocket,
       converter: RetrievedJsonConverter.new,
       saver: RetrievedDataSaver.new,
@@ -18,7 +18,7 @@ class PocketSynchronizer
   end
 
   def import_updates(user)
-    return [false, "first synchronization is not supported yet"] if user.last_synced_at.nil?
+    return [false, 'first synchronization is not supported yet'] if user.last_synced_at.nil?
 
     @pocket.retrieve_each(50, since: user.last_synced_at.to_i, status: 'all') do |retrieved, json|
       if retrieved.err?
@@ -32,7 +32,7 @@ class PocketSynchronizer
 
       if result.any_failure?
         @logger.error("failed to import some records: #{result}")
-        return [false, "failed to import some records"]
+        return [false, 'failed to import some records']
       end
     end
 

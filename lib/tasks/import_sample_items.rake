@@ -9,9 +9,7 @@ namespace :tmp do
     pocket = PocketClient.create(user.access_token)
 
     ret = pocket.retrieve(count: 30, state: 'all', detailType: 'complete')
-    if ret.err?
-      raise "failed to retrieve data. code: #{ret.response.code}"
-    end
+    raise "failed to retrieve data. code: #{ret.response.code}" if ret.err?
 
     converter = RetrievedJsonConverter.new
     converted = converter.convert(user.id, ret.response.body_json)

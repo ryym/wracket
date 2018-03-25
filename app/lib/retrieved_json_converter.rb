@@ -66,7 +66,7 @@ class RetrievedJsonConverter
           id: id,
           resolved_id: id,
           url: item['given_url'],
-        ))
+        )),
       ]
     end
 

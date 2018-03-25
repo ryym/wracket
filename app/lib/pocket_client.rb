@@ -31,7 +31,7 @@ class PocketClient
   # But the given block is called on both cases.
   def retrieve_each(count, params = {})
     offset = 0
-    while true
+    loop do
       ret = retrieve(params.merge(count: count, offset: offset))
       if ret.err?
         yield(ret, nil)
