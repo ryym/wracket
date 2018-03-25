@@ -22,7 +22,9 @@ class PocketSynchronizer
 
     @pocket.retrieve_each(50, since: user.last_synced_at.to_i, status: 'all') do |retrieved, json|
       if retrieved.err?
-        @logger.error("failed to retrieve: #{res.code} [err code: #{res.error_code}] #{res.message}")
+        @logger.error(<<~MSG)
+          failed to retrieve: #{res.code} [err code: #{res.error_code}] #{res.message}
+        MSG
         return [false, res.message]
       end
 

@@ -39,10 +39,15 @@ class PocketAuthenticator
       consumer_key: @consumer_key,
       code: request_token,
     })
-    !res.success? ? return_err(res) : ResAccessToken.new(res, {
-      access_token: res.form['access_token'],
-      username: res.form['username'],
-    })
+
+    if res.success?
+      ResAccessToken.new(res, {
+        access_token: res.form['access_token'],
+        username: res.form['username'],
+      })
+    else
+      return_err(res)
+    end
   end
 
   private
