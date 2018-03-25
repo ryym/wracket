@@ -7,7 +7,7 @@ class Bookmark < ApplicationRecord
   # This behavior reduces the performance of bulk insert.
   belongs_to :user, required: false, inverse_of: :bookmarks
   belongs_to :entry, required: false, inverse_of: :bookmarks
-  has_many :bookmark_tags, inverse_of: :tag
+  has_many :bookmark_tags, dependent: :destroy, inverse_of: :tag
   has_many :tags, through: :bookmark_tags
 
   # TODO: validation

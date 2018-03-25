@@ -5,7 +5,18 @@ class Entry < ApplicationRecord
   # - If the entry has a resolved entry, resolved_id is a different entry id.
   # - If the entry could not be resolved (yet), resolved_id is nil.
   # - Otherwise, resolved_id is the same as entry id.
-  has_one :resolved, class_name: :Entry, foreign_key: :id, primary_key: :resolved_id
+  belongs_to :resolved,
+    class_name: :Entry,
+    foreign_key: :id,
+    primary_key: :resolved_id,
+    inverse_of: :unresolved
+  has_many :unresolved,
+    class_name: :Entry,
+    foreign_key: :resolved_id,
+    primary_key: :id,
+    dependent: :restrict_with_error,
+    inverse_of: :resolved
+
   has_many :bookmarks, dependent: :destroy, inverse_of: :entry
   has_many :users, through: :bookmarks
   has_many :bookmark_tags, dependent: :destroy

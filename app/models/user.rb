@@ -5,7 +5,7 @@
 # TODO: Add expiry for access tokens.
 
 class User < ApplicationRecord
-  has_many :bookmarks, inverse_of: :user
+  has_many :bookmarks, dependent: :destroy, inverse_of: :user
   has_many :entries, through: :bookmarks
 
   validates :username, presence: true, uniqueness: true
