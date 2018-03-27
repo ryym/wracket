@@ -6,10 +6,7 @@ class SessionsController < BaseController
   require_login false
 
   before_action do
-    @pocket ||= PocketAuthenticator.new(
-      consumer_key: ENV['POCKET_CONSUMER_KEY'],
-      redirect_uri: oauth_callback_url,
-    )
+    @pocket ||= PocketAuthenticator.create(oauth_callback_url)
   end
 
   def login

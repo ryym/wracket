@@ -3,11 +3,16 @@
 # Pocket API Authenticator.
 # https://getpocket.com/developer/docs/overview
 class PocketAuthenticator
-  def self.new_http
-    Http.new('getpocket.com', ssl: true, headers: {
+  def self.create(redirect_uri)
+    http = Http.new('getpocket.com', ssl: true, headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       'X-Accept': 'application/x-www-form-urlencoded',
     })
+    new(
+      consumer_key: ENV['POCKET_CONSUMER_KEY'],
+      redirect_uri: redirect_uri,
+      http: http,
+    )
   end
 
   def initialize(consumer_key:, redirect_uri:, http: PocketAuthenticator.new_http)
