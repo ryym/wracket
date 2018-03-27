@@ -2,7 +2,9 @@
 
 # TODO: Handle errors properly.
 
-class SessionsController < ApplicationController
+class SessionsController < BaseController
+  require_login false
+
   before_action do
     @pocket ||= PocketAuthenticator.new(
       consumer_key: ENV['POCKET_CONSUMER_KEY'],

@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-class HomeController < ApplicationController
-  include Authenticatable
-
-  before_action :authenticate!
-
+class HomeController < BaseController
   def index
     init = { ids: [], by_id: {} }
     bookmarks = current_user.unarchived_bookmarks.each_with_object(init) do |b, bs|
