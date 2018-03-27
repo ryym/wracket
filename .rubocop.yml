@@ -53,6 +53,9 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Enabled: false
 
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
 Naming/UncommunicativeMethodParamName:
   Enabled: true
   MinNameLength: 1
