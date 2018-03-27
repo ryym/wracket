@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   get '/oauth_callback', to: 'sessions#create'
 
   get 'home', to: 'home#index'
+
+  namespace :api, { format: :json } do
+  end
 end
