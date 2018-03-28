@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class PocketSynchronizer
-  def self.create(pocket)
+  def self.create(access_token)
+    client = PocketClient.create(access_token)
     new(
-      pocket: pocket,
+      pocket: client,
       converter: RetrievedJsonConverter.new,
       saver: RetrievedDataSaver.new,
       logger: Rails.logger,
