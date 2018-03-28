@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   get 'home', to: 'home#index'
 
   namespace :api, { format: :json } do
+    get 'ping', to: 'ping#ping'
   end
 end
