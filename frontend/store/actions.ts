@@ -3,6 +3,7 @@ import {Thunk} from '../action';
 
 export function ping(name: string): Thunk {
   return thunk(async (_dispatch, _getState, {api}) => {
-    console.log(await api.ping(name));
+    const res = await api.ping(name);
+    console.log('PONG', res.data);
   });
 }
