@@ -2,10 +2,10 @@
 
 class HomeController < BaseController
   def index
-    init = { ids: [], by_id: {} }
+    init = { ids: [], byId: {} }
     bookmarks = current_user.unarchived_bookmarks.each_with_object(init) do |b, bs|
       bs[:ids].push(b.id)
-      bs[:by_id][b.id] = {
+      bs[:byId][b.id] = {
         id: b.id,
         title: b.entry.resolved_title,
         url: b.entry.url,

@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {configureStore} from '../store';
+import {Bookmarks} from '../state';
 import {HomePage} from '../components/HomePage';
 import {findCSRFToken} from '../lib/csrf-token';
 import {createAPI} from '../lib/api';
@@ -20,16 +21,11 @@ if ($json == null) {
 const api = createAPI(csrfToken);
 const thunkCtx = new ThunkContext(api);
 
-const bookmarks = JSON.parse($json.innerText);
+const bookmarks = JSON.parse($json.innerText) as Bookmarks;
 
 const store = configureStore({
   context: thunkCtx,
-  initialState: {
-    bookmarks: {
-      ids: bookmarks.ids,
-      byId: bookmarks.by_id,
-    },
-  },
+  initialState: {bookmarks},
 });
 
 render(
