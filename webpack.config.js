@@ -51,6 +51,11 @@ module.exports = {
     port: 3001,
   },
 
+  devtool: byEnv({
+    dev: 'cheap-module-source-map',
+    prod: false,
+  }),
+
   module: {
     rules: [
       {
