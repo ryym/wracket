@@ -46,6 +46,11 @@ export class Response<T> {
   ) {
     this.isSuccess = 200 <= status && status < 300;
   }
+
+  toString() {
+    const content: string = typeof this.data === 'string' ? this.data : JSON.stringify(this.data);
+    return `${this.status} ${this.statusText}: ${content}`;
+  }
 }
 
 function newResponse<T>(res: AxiosResponse<T>): Response<T> {
