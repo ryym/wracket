@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   namespace :api, { format: :json } do
     get 'ping', to: 'ping#ping'
+    put 'sync', to: 'sync#import_updates'
   end
 end
