@@ -1,12 +1,9 @@
-import {Bookmark} from './lib/models';
+import {Bookmark, Bookmarks} from './lib/models';
 
 export interface State {
-  readonly bookmarks: Bookmarks;
+  readonly bookmarks: BookmarkState;
 }
 
-export interface Bookmarks {
-  readonly ids: number[];
-  readonly byId: {
-    [id: number]: Bookmark;
-  };
+export interface BookmarkState extends Bookmarks {
+  readonly nowLoading: boolean;
 }

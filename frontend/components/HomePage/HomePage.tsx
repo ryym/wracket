@@ -2,23 +2,26 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {State} from '../../state';
 import {Dispatch} from '../../store';
-import {ping} from '../../store/actions';
+import {syncBookmarks} from '../../store/actions';
 import {listBookmarks} from '../../store/selectors';
 import {BookmarkList} from '../BookmarkList';
 import {Bookmark} from '../../lib/models';
 
 export interface Props {
   bookmarks: Bookmark[];
+  nowLoading: boolean;
 }
 export type AllProps = Props & {dispatch: Dispatch};
 
 export class _HomePage extends React.Component<AllProps> {
   render() {
-    const {dispatch, bookmarks} = this.props;
+    const {props} = this;
+    const {dispatch} = props;
     return (
       <div>
-        <button onClick={() => dispatch(ping('home'))}>Ping</button>
-        <BookmarkList bookmarks={bookmarks} />
+        <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
+        {props.nowLoading && 'Now loading...'}
+        <BookmarkList bookmarks={props.bookmarks} />
       </div>
     );
   }
@@ -27,5 +30,6 @@ export class _HomePage extends React.Component<AllProps> {
 export const HomePage = connect((state: State): Props => {
   return {
     bookmarks: listBookmarks(state),
+    nowLoading: state.bookmarks.nowLoading,
   };
 })(_HomePage);

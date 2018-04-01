@@ -2,11 +2,11 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {configureStore} from '../store';
-import {Bookmarks} from '../state';
 import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
 import {findCSRFToken} from '../lib/csrf-token';
 import {createAPI} from '../lib/api';
+import {Bookmarks} from '../lib/models';
 import {ThunkContext} from '../thunk-ctx';
 
 const csrfToken = findCSRFToken();
