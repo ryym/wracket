@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {configureStore} from '../store';
 import {Bookmarks} from '../state';
+import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
 import {findCSRFToken} from '../lib/csrf-token';
 import {createAPI} from '../lib/api';
@@ -30,7 +31,9 @@ const store = configureStore({
 
 render(
   <Provider store={store}>
-    <HomePage />
+    <ErrorBoundary>
+      <HomePage />
+    </ErrorBoundary>
   </Provider>,
   document.getElementById('bookmark-list'),
 );
