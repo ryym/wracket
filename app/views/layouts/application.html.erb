@@ -7,7 +7,7 @@
 
   <body>
     <%= yield %>
-    <script src="<%= asset_url('app.js') %>"></script>
+    <script crossorigin src="<%= asset_url('app.js') %>"></script>
     <%= yield :scripts %>
   </body>
 </html>

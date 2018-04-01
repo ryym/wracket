@@ -6,5 +6,5 @@
   <script type="application/json" id="bookmarks-data">
     <%= raw(bookmarks.to_json) %>
   </script>
-  <script src="<%= asset_url('home.js') %>"></script>
+  <script crossorigin src="<%= asset_url('home.js') %>"></script>
 <% end %>

@@ -49,6 +49,9 @@ module.exports = {
   devServer: {
     contentBase: DEST_DIR,
     port: 3001,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
 
   devtool: byEnv({
