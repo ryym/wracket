@@ -6,6 +6,7 @@ class Entry < ApplicationRecord
   # - If the entry could not be resolved (yet), resolved_id is nil.
   # - Otherwise, resolved_id is the same as entry id.
   belongs_to :resolved,
+    required: false,
     class_name: :Entry,
     foreign_key: :id,
     primary_key: :resolved_id,
