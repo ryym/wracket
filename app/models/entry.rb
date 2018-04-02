@@ -31,6 +31,6 @@ class Entry < ApplicationRecord
 
   def resolved_title
     return title unless resolved
-    resolved.parsed_title || resolved.title
+    resolved.parsed_title.presence || resolved.title
   end
 end
