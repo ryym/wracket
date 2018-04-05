@@ -21,10 +21,17 @@ class BookmarkSearcher
   private
 
   def set_order_and_offset(query, cdtn)
-    query.
-      where('added_to_pocket_at < ?', cdtn.offset_value).
-      order_by_newest.
-      limit(@limit)
+    query = case cdtn.status
+            when :archived
+              query.
+            where('archived_at < ?', cdtn.offset_value).
+            order(archived_at: :desc)
+            else
+              query.
+            where('added_to_pocket_at < ?', cdtn.offset_value).
+            order_by_newest
+            end
+    query.limit(@limit)
   end
 end
 
@@ -35,7 +42,7 @@ class BookmarkSearcher
 
     def initialize(status:, offset_value:)
       raise ArgumentError, "invalid status #{status}" if !Bookmark.statuses.key?(status)
-      @status = status
+      @status = status.to_sym
       @offset_value = offset_value ? Time.zone.parse(offset_value) : Time.current
     end
   end
