@@ -2,10 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {State} from '../../state';
 import {Dispatch} from '../../store';
-import {syncBookmarks} from '../../store/actions';
+import {syncBookmarks, search} from '../../store/actions';
 import {listBookmarks} from '../../store/selectors';
 import {BookmarkList} from '../BookmarkList';
-import {Bookmark} from '../../lib/models';
+import {Bookmark, BookmarkStatus} from '../../lib/models';
 
 export interface Props {
   bookmarks: Bookmark[];
@@ -20,6 +20,12 @@ export class _HomePage extends React.Component<AllProps> {
     return (
       <div>
         <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
+        <button onClick={() => dispatch(search({status: BookmarkStatus.Archived}))}>
+          Archived
+        </button>
+        <button onClick={() => dispatch(search({status: BookmarkStatus.Unarchived}))}>
+          Unarchived
+        </button>
         {props.nowLoading && 'Now loading...'}
         <BookmarkList bookmarks={props.bookmarks} />
       </div>

@@ -1,7 +1,8 @@
-import {Bookmark, Bookmarks} from './lib/models';
+import {Bookmark, Bookmarks, SearchCondition} from './lib/models';
 
 export interface State {
   readonly bookmarks: BookmarkState;
+  readonly searchCondition: SearchCondition;
 }
 
 export interface BookmarkState extends Bookmarks {
