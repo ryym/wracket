@@ -1,5 +1,5 @@
 import {Ajax, createAjax, Response} from './ajax';
-import {Bookmarks} from '../lib/models';
+import {Bookmarks, SearchCondition} from '../lib/models';
 
 const createDefaultAjax = (csrfToken: string): Ajax =>
   createAjax({baseURL: '/api/', headers: {'X-CSRF-Token': csrfToken}});
@@ -19,6 +19,14 @@ export class API {
     const res = await this.ajax<Bookmarks>('/sync', {method: 'put'});
     if (!res.isSuccess) {
       throw new Error(`failed to synchronize bookmarks: ${res}`);
+    }
+    return res.data;
+  }
+
+  async search(cdtn: SearchCondition): Promise<Bookmarks | null> {
+    const res = await this.ajax<Bookmarks>('/search', {params: cdtn});
+    if (!res.isSuccess) {
+      throw new Error(`failed to search bookmarks: ${res}`);
     }
     return res.data;
   }
