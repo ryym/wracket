@@ -13,6 +13,7 @@ class JsonMaker
         id: b.id,
         title: b.entry.resolved_title,
         url: b.entry.url,
+        status: b.status,
       }
     end
   end
