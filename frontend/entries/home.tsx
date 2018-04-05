@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
+import {IS_DEVELOPMENT} from '../consts';
 import {configureStore} from '../store';
 import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
@@ -28,6 +29,11 @@ const store = configureStore({
   context: thunkCtx,
   initialState: {bookmarks},
 });
+
+if (IS_DEVELOPMENT) {
+  // For easy debugging.
+  (window as any)._store = store;
+}
 
 render(
   <Provider store={store}>
