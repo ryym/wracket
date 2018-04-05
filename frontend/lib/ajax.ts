@@ -3,7 +3,7 @@ import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
 export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options';
 
 export interface AjaxOption {
-  method: Method;
+  method?: Method;
   headers?: {};
   params?: {};
 }
