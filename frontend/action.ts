@@ -15,6 +15,6 @@ export type Thunk<R = void, T extends ThunkType = null> = ThunkAction<
   State,
   Action,
   ThunkContext,
-  T,
-  R
+  R,
+  T
 >;
