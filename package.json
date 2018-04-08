@@ -57,10 +57,7 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "redux": "4.0.0-beta.2",
+    "redux-dutiful-thunk": "^1.0.0",
     "redux-logger": "^3.0.6"
-  },
-  "// XXX: NOTE": [
-    "Currently we are using redux-dutiful-redux by 'yarn link'.",
-    "(https://github.com/ryym/redux-dutiful-thunk)"
-  ]
+  }
 }
