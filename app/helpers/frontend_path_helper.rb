@@ -2,6 +2,6 @@
 
 module FrontendPathHelper
   def asset_url(path)
-    AssetUrl.convert(path)
+    AssetUrlConverter.singleton.convert(path)
   end
 end
