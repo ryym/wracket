@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class AssetUrlConverter
-  def self.singleton
-    manifest_path = Rails.env.production? ? Settings.asset_manifest_path : nil
-    @_singleton ||= create(asset_host: Settings.asset_host, manifest_path: manifest_path)
+  def self.singleton(settings: Settings.singleton)
+    manifest_path = Rails.env.production? ? settings.asset_manifest_path : nil
+    @_singleton ||= create(asset_host: settings.asset_host, manifest_path: manifest_path)
   end
 
   def self.create(asset_host:, manifest_path:)
