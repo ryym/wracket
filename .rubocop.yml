@@ -37,6 +37,10 @@ Layout/IndentHash:
   Enabled: true
   EnforcedStyle: consistent
 
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
 Metrics/AbcSize:
   Enabled: false
 

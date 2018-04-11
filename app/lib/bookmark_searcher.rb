@@ -21,16 +21,17 @@ class BookmarkSearcher
   private
 
   def set_order_and_offset(query, cdtn)
-    query = case cdtn.status
-            when :archived
-              query.
-            where('archived_at < ?', cdtn.offset_value).
-            order(archived_at: :desc)
-            else
-              query.
-            where('added_to_pocket_at < ?', cdtn.offset_value).
-            order_by_newest
-            end
+    query =
+      case cdtn.status
+      when :archived
+        query.
+          where('archived_at < ?', cdtn.offset_value).
+          order(archived_at: :desc)
+      else
+        query.
+          where('added_to_pocket_at < ?', cdtn.offset_value).
+          order_by_newest
+      end
     query.limit(@limit)
   end
 end
