@@ -9,7 +9,7 @@ class PocketAuthenticator
       'X-Accept': 'application/x-www-form-urlencoded',
     })
     new(
-      consumer_key: ENV['POCKET_CONSUMER_KEY'],
+      consumer_key: Settings.singleton.pocket_consumer_key,
       redirect_uri: redirect_uri,
       http: http,
     )

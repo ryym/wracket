@@ -6,7 +6,7 @@ class PocketClient
       'Content-Type': 'application/json',
     })
     PocketClient.new(
-      consumer_key: ENV['POCKET_CONSUMER_KEY'],
+      consumer_key: Settings.singleton.pocket_consumer_key,
       access_token: access_token,
       http: http,
     )
