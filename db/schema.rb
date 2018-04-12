@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325115612) do
+ActiveRecord::Schema.define(version: 20180412023224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20180325115612) do
     t.datetime "favorited_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "opened_at"
     t.index ["entry_id"], name: "index_bookmarks_on_entry_id"
     t.index ["user_id", "entry_id"], name: "index_bookmarks_on_user_id_and_entry_id", unique: true
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
