@@ -16,7 +16,7 @@ export class API {
   }
 
   async synchronize(): Promise<Bookmarks | null> {
-    const res = await this.ajax<Bookmarks>('/sync', {method: 'put'});
+    const res = await this.ajax<Bookmarks>('/bookmarks/sync', {method: 'put'});
     if (!res.isSuccess) {
       throw new Error(`failed to synchronize bookmarks: ${res}`);
     }
@@ -24,7 +24,7 @@ export class API {
   }
 
   async search(cdtn: SearchCondition): Promise<Bookmarks | null> {
-    const res = await this.ajax<Bookmarks>('/search', {params: cdtn});
+    const res = await this.ajax<Bookmarks>('/bookmarks/search', {params: cdtn});
     if (!res.isSuccess) {
       throw new Error(`failed to search bookmarks: ${res}`);
     }
