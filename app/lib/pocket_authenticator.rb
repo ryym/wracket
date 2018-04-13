@@ -15,7 +15,7 @@ class PocketAuthenticator
     )
   end
 
-  def initialize(consumer_key:, redirect_uri:, http: PocketAuthenticator.new_http)
+  def initialize(consumer_key:, redirect_uri:, http:)
     @consumer_key = consumer_key
     @redirect_uri = redirect_uri
     @http = http
