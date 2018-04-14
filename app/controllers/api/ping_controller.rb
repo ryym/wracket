@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class PingController < BaseController
+  class PingController < ApiBaseController
     def ping
       render json: { hello: params.fetch('name', 'world') }
     end

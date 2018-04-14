@@ -2,7 +2,7 @@
 
 # TODO: Handle errors properly.
 
-class SessionsController < BaseController
+class SessionsController < ViewBaseController
   require_login false
 
   before_action do

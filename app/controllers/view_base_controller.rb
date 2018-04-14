@@ -1,7 +1,7 @@
 
 # frozen_string_literal: true
 
-class BaseController < ApplicationController
+class ViewBaseController < ApplicationController
   include Authenticatable
 
   before_action :authenticate!

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HomeController < BaseController
+class HomeController < ViewBaseController
   before_action do
     @json ||= JsonMaker.new
   end

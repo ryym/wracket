@@ -1,7 +1,17 @@
 # frozen_string_literal: true
 
 module Api
-  class BaseController < ApplicationController
+  # The redundant 'Api' prefix of this class name is intentional.
+  # Without this, an inheritance like below could accidentally inherits
+  # `BaseController` defined in the top level name scope if it exists
+  # instead of `Api::BaseController`.
+  #
+  #   module Api
+  #     class FooController < BaseController
+  #       # ...
+  #     end
+  #   end
+  class ApiBaseController < ApplicationController
     include Authenticatable
 
     before_action :authenticate_json!

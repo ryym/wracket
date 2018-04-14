@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class SearchController < BaseController
+  class SearchController < ApiBaseController
     before_action do
       @searcher ||= BookmarkSearcher.create
       @json ||= JsonMaker.new

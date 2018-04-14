@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class SyncController < BaseController
+  class SyncController < ApiBaseController
     before_action do
       @syncer ||= PocketSynchronizer.create(current_user.access_token)
       @json ||= JsonMaker.new
