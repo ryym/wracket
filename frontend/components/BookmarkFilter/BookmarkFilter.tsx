@@ -18,8 +18,8 @@ export function BookmarkFilter({condition: cdtn, onConditionChange}: Props) {
           type="radio"
           name="status"
           value={BookmarkStatus.Unread}
-          checked={cdtn.status === BookmarkStatus.Unread}
-          onChange={change({status: BookmarkStatus.Unread})}
+          checked={cdtn.statuses.includes(BookmarkStatus.Unread)}
+          onChange={change({statuses: [BookmarkStatus.Unread]})}
         />Unread
       </label>
       <label>
@@ -27,8 +27,8 @@ export function BookmarkFilter({condition: cdtn, onConditionChange}: Props) {
           type="radio"
           name="status"
           value={BookmarkStatus.Archived}
-          checked={cdtn.status === BookmarkStatus.Archived}
-          onChange={change({status: BookmarkStatus.Archived})}
+          checked={cdtn.statuses.includes(BookmarkStatus.Archived)}
+          onChange={change({statuses: [BookmarkStatus.Archived]})}
         />Archived
       </label>
     </div>

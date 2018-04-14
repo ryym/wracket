@@ -19,5 +19,5 @@ export interface Bookmarks {
 }
 
 export interface SearchCondition {
-  readonly status: BookmarkStatus;
+  readonly statuses: BookmarkStatus[];
 }

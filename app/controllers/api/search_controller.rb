@@ -16,8 +16,10 @@ module Api
     private
 
     def search_params
+      statuses = params[:statuses]
+      statuses = [] if !statuses.is_a?(Array)
       {
-        status: params[:status],
+        statuses: statuses,
         offset_value: params[:offset_value],
       }
     end

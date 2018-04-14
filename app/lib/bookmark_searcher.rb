@@ -9,12 +9,12 @@ class BookmarkSearcher
     @limit = limit
   end
 
-  def condition(status:, offset_value:)
-    Condition.new(status: status || :unread, offset_value: offset_value)
+  def condition(statuses:, offset_value:)
+    Condition.new(statuses: statuses || [], offset_value: offset_value)
   end
 
   def search(user, cdtn)
-    q = user.bookmarks.includes(entry: :resolved).where(status: cdtn.status)
+    q = user.bookmarks.includes(entry: :resolved).where(status: cdtn.statuses)
     set_order_and_offset(q, cdtn).to_a
   end
 
@@ -22,8 +22,7 @@ class BookmarkSearcher
 
   def set_order_and_offset(query, cdtn)
     query =
-      case cdtn.status
-      when :archived
+      if cdtn.statuses == [:archived]
         query.
           where('archived_at < ?', cdtn.offset_value).
           order(archived_at: :desc)
@@ -38,12 +37,15 @@ end
 
 class BookmarkSearcher
   class Condition
-    attr_reader :status
+    attr_reader :statuses
     attr_reader :offset_value
 
-    def initialize(status:, offset_value:)
-      raise ArgumentError, "invalid status #{status}" if !Bookmark.statuses.key?(status)
-      @status = status.to_sym
+    def initialize(statuses:, offset_value:)
+      statuses = statuses.map(&:to_sym)
+      statuses.each do |s|
+        raise ArgumentError, "invalid status #{s}" if !Bookmark.statuses.key?(s)
+      end
+      @statuses = statuses
       @offset_value = offset_value ? Time.zone.parse(offset_value) : Time.current
     end
   end
