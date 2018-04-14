@@ -12,12 +12,15 @@ class Bookmark < ApplicationRecord
 
   # TODO: validation
 
+  # unread -> reading -> archived -> deleted
   enum status: {
-    unarchived: 0,
+    unread: 0,
     archived: 1,
     deleted: 2,
     reading: 3,
   }
+
+  scope :unarchived, -> { where(status: %i[unread reading]) }
 
   scope :by_user, ->(user) { where(user: user) }
 

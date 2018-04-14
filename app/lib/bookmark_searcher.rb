@@ -10,7 +10,7 @@ class BookmarkSearcher
   end
 
   def condition(status:, offset_value:)
-    Condition.new(status: status || :unarchived, offset_value: offset_value)
+    Condition.new(status: status || :unread, offset_value: offset_value)
   end
 
   def search(user, cdtn)

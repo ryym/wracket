@@ -17,10 +17,10 @@ export function BookmarkFilter({condition: cdtn, onConditionChange}: Props) {
         <input
           type="radio"
           name="status"
-          value={BookmarkStatus.Unarchived}
-          checked={cdtn.status === BookmarkStatus.Unarchived}
-          onChange={change({status: BookmarkStatus.Unarchived})}
-        />Unarchived
+          value={BookmarkStatus.Unread}
+          checked={cdtn.status === BookmarkStatus.Unread}
+          onChange={change({status: BookmarkStatus.Unread})}
+        />Unread
       </label>
       <label>
         <input
