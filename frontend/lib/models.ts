@@ -1,6 +1,7 @@
 export enum BookmarkStatus {
   Archived = 'archived',
   Unarchived = 'unarchived',
+  Reading = 'reading',
 }
 
 export interface Bookmark {

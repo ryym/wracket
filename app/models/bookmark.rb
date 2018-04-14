@@ -16,6 +16,7 @@ class Bookmark < ApplicationRecord
     unarchived: 0,
     archived: 1,
     deleted: 2,
+    reading: 3,
   }
 
   scope :by_user, ->(user) { where(user: user) }
