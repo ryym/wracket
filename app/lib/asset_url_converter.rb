@@ -10,12 +10,12 @@ class AssetUrlConverter
 
   def self.create(asset_host:, manifest_path:)
     helper = Helper.new(asset_host)
-    return HotConverter.new(helper) if manifest_path.nil?
+    return NoopConverter.new(helper) if manifest_path.nil?
     manifest = JSON.parse(File.read(Rails.root.join(manifest_path)))
-    StaticConverter.new(helper, manifest)
+    DynamicConverter.new(helper, manifest)
   end
 
-  class HotConverter
+  class NoopConverter
     def initialize(helper)
       @helper = helper
     end
@@ -25,7 +25,7 @@ class AssetUrlConverter
     end
   end
 
-  class StaticConverter
+  class DynamicConverter
     def initialize(helper, manifest)
       @helper = helper
       @manifest = manifest
