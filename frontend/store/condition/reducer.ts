@@ -1,11 +1,11 @@
 import {Action} from '../../action';
+import {newSearchConditionState as newState} from '../../state';
 import {BookmarkStatus, SearchCondition} from '../../lib/models';
 
-const init: SearchCondition = {
-  statuses: [BookmarkStatus.Unread],
-};
-
-export function reduceCondition(cdtn: SearchCondition = init, action: Action): SearchCondition {
+export function reduceCondition(
+  cdtn: SearchCondition = newState(),
+  action: Action,
+): SearchCondition {
   switch (action.type) {
     case 'SEARCH_SUCCESS':
       return action.condition;

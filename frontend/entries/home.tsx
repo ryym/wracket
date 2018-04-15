@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {IS_DEVELOPMENT} from '../consts';
 import {configureStore} from '../store';
+import {newBookmarkState} from '../state';
 import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
 import {findCSRFToken} from '../lib/csrf-token';
@@ -27,7 +28,9 @@ const bookmarks = JSON.parse($json.innerText) as Bookmarks;
 
 const store = configureStore({
   context: thunkCtx,
-  initialState: {bookmarks},
+  initialState: {
+    bookmarks: newBookmarkState(bookmarks),
+  },
 });
 
 if (IS_DEVELOPMENT) {

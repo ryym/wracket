@@ -1,13 +1,10 @@
-import {BookmarkState} from '../../state';
+import {BookmarkState, newBookmarkState} from '../../state';
 import {Action} from '../../action';
 
-const init: BookmarkState = {
-  ids: [],
-  byId: {},
-  nowLoading: false,
-};
-
-export function reduceBookmarks(bks: BookmarkState = init, action: Action): BookmarkState {
+export function reduceBookmarks(
+  bks: BookmarkState = newBookmarkState(),
+  action: Action,
+): BookmarkState {
   switch (action.type) {
     case 'SYNC_BOOKMARKS_START':
     case 'SEARCH_START':
