@@ -4,6 +4,7 @@ module Api
   class SyncController < ApiBaseController
     before_action do
       @syncer ||= PocketSynchronizer.create(current_user.access_token)
+      @searcher ||= BookmarkSearcher.create
       @json ||= JsonMaker.new
     end
 
@@ -15,8 +16,9 @@ module Api
         }
       end
 
-      bookmarks = @json.bookmarks(current_user.unarchived_bookmarks)
-      render json: bookmarks
+      cdtn = @searcher.condition_from_params(params)
+      bookmarks = @searcher.search(current_user, cdtn)
+      render json: @json.bookmarks(bookmarks)
     end
   end
 end

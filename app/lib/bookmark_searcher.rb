@@ -9,8 +9,13 @@ class BookmarkSearcher
     @limit = limit
   end
 
+  def condition_from_params(params)
+    condition(statuses: params[:statuses], offset_value: params[:offset_value])
+  end
+
   def condition(statuses:, offset_value:)
-    Condition.new(statuses: statuses || [], offset_value: offset_value)
+    statuses = [] if !statuses.is_a?(Array)
+    Condition.new(statuses: statuses, offset_value: offset_value)
   end
 
   def search(user, cdtn)

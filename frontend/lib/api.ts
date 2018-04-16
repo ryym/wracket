@@ -15,8 +15,8 @@ export class API {
     return await this.ajax<{hello: string}>('/ping', {method: 'get', params: {name}});
   }
 
-  async synchronize(): Promise<Bookmarks | null> {
-    const res = await this.ajax<Bookmarks>('/bookmarks/sync', {method: 'put'});
+  async synchronize(cdtn: SearchCondition): Promise<Bookmarks | null> {
+    const res = await this.ajax<Bookmarks>('/bookmarks/sync', {method: 'put', params: cdtn});
     if (!res.isSuccess) {
       throw new Error(`failed to synchronize bookmarks: ${res}`);
     }
