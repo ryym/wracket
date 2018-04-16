@@ -30,6 +30,14 @@ export class API {
     }
     return res.data;
   }
+
+  async openBookmark(bookmarkId: number): Promise<{} | null> {
+    const res = await this.ajax<{}>(`/bookmarks/${bookmarkId}/open`, {method: 'put'});
+    if (!res.isSuccess) {
+      throw new Error(`failed to mark bookmark ${bookmarkId} as opened: ${res}`);
+    }
+    return {};
+  }
 }
 
 export function createAPI(csrfToken: string): API {

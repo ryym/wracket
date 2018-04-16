@@ -35,3 +35,10 @@ export function search(cdtn: Partial<SearchCondition>): Thunk {
     }
   });
 }
+
+export function openBookmark(id: number): Thunk {
+  return thunk(async (dispatch, getState, {api}) => {
+    dispatch({type: 'OPEN_BOOKMARK', id});
+    api.openBookmark(id);
+  });
+}

@@ -9,7 +9,8 @@ export type Action =
   | {type: 'SYNC_BOOKMARKS_START'}
   | {type: 'SYNC_BOOKMARKS_SUCCESS'; bookmarks: Bookmarks}
   | {type: 'SEARCH_START'}
-  | {type: 'SEARCH_SUCCESS'; bookmarks: Bookmarks; condition: SearchCondition};
+  | {type: 'SEARCH_SUCCESS'; bookmarks: Bookmarks; condition: SearchCondition}
+  | {type: 'OPEN_BOOKMARK'; id: number};
 
 export type Thunk<R = void, T extends ThunkType = null> = ThunkAction<
   State,

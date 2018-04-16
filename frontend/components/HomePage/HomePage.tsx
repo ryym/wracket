@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {State} from '../../state';
 import {Dispatch} from '../../store';
-import {syncBookmarks, search} from '../../store/actions';
+import {syncBookmarks, search, openBookmark} from '../../store/actions';
 import {listBookmarks} from '../../store/selectors';
 import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
@@ -20,6 +20,10 @@ export class _HomePage extends React.Component<AllProps> {
     this.props.dispatch(search(cdtn));
   };
 
+  markBookmarkAsOpen = (b: Bookmark) => {
+    this.props.dispatch(openBookmark(b.id));
+  };
+
   render() {
     const {props} = this;
     const {dispatch} = props;
@@ -28,7 +32,7 @@ export class _HomePage extends React.Component<AllProps> {
         <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
         <BookmarkFilter condition={props.condition} onConditionChange={this.search} />
         {props.nowLoading && 'Now loading...'}
-        <BookmarkList bookmarks={props.bookmarks} />
+        <BookmarkList bookmarks={props.bookmarks} onBookmarkOpen={this.markBookmarkAsOpen} />
       </div>
     );
   }
