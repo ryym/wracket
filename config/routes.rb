@@ -13,5 +13,9 @@ Rails.application.routes.draw do
     get 'ping', to: 'ping#ping'
     get 'bookmarks/search', to: 'search#index'
     put 'bookmarks/sync', to: 'sync#import_updates'
+
+    scope 'bookmarks/:id' do
+      put '/open', to: 'bookmarks#open'
+    end
   end
 end
