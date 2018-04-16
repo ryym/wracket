@@ -8,29 +8,51 @@ export interface Props {
   onConditionChange: ChangeHandler;
 }
 
+interface StatusFilter {
+  name: string;
+  statuses: BookmarkStatus[];
+}
+
+const eqStatuses = (s1: BookmarkStatus[], s2: BookmarkStatus[]) =>
+  s1.length === s2.length && s1.every((s, i) => s === s2[i]);
+
+const statusFilters = [
+  {
+    name: 'new',
+    statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading],
+  },
+  {
+    name: 'reading',
+    statuses: [BookmarkStatus.Reading],
+  },
+  {
+    name: 'archived',
+    statuses: [BookmarkStatus.Archived],
+  },
+  {
+    name: 'all',
+    statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading, BookmarkStatus.Archived],
+  },
+];
+
 export function BookmarkFilter({condition: cdtn, onConditionChange}: Props) {
   const change = (cdtn: Partial<SearchCondition>) => () => onConditionChange(cdtn);
   return (
     <div>
-      Status:
-      <label>
-        <input
-          type="radio"
-          name="status"
-          value={BookmarkStatus.Unread}
-          checked={cdtn.statuses.includes(BookmarkStatus.Unread)}
-          onChange={change({statuses: [BookmarkStatus.Unread]})}
-        />Unread
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="status"
-          value={BookmarkStatus.Archived}
-          checked={cdtn.statuses.includes(BookmarkStatus.Archived)}
-          onChange={change({statuses: [BookmarkStatus.Archived]})}
-        />Archived
-      </label>
+      {statusFilters.map(({name, statuses}) => {
+        return (
+          <label key={name}>
+            <input
+              type="radio"
+              name="status"
+              value={name}
+              checked={eqStatuses(statuses, cdtn.statuses)}
+              onChange={change({statuses})}
+            />
+            {name}
+          </label>
+        );
+      })}
     </div>
   );
 }

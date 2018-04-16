@@ -21,5 +21,5 @@ export const newBookmarkState = (bks?: Bookmarks): BookmarkState => {
 };
 
 export const newSearchConditionState = (): SearchCondition => ({
-  statuses: [BookmarkStatus.Unread],
+  statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading],
 });
