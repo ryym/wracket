@@ -1,4 +1,4 @@
-// XXX: Copied from https://github.com/DefinitelyTyped/DefinitelyTyped/blob/b27c13d93a2debe51554ab9d39d508ca257e47e4/types/react-redux/index.d.ts
+// XXX: Copied from https://github.com/ryym/DefinitelyTyped/blob/932727f5785b3bdab808da5852467358dc09d588/types/react-redux/index.d.ts
 
 // Type definitions for react-redux 5.0.8
 // Project: https://github.com/rackt/react-redux
@@ -27,9 +27,8 @@ type ComponentClass<P> = React.ComponentClass<P>;
 type StatelessComponent<P> = React.StatelessComponent<P>;
 type Component<P> = React.ComponentType<P>;
 type ReactNode = React.ReactNode;
-type Action = Redux.Action;
 type Store<S> = Redux.Store<S>;
-type Dispatch<A extends Action = Redux.AnyAction> = Redux.Dispatch<A>;
+type Dispatch<A extends Redux.Action = Redux.AnyAction> = Redux.Dispatch<A>;
 type ActionCreator<A> = Redux.ActionCreator<A>;
 
 // Diff / Omit taken from https://github.com/Microsoft/TypeScript/issues/12215#issuecomment-311923766
@@ -37,7 +36,7 @@ type Diff<T extends string, U extends string> = ({[P in T]: P} &
   {[P in U]: never} & {[x: string]: never})[T];
 type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 
-export interface DispatchProp<A extends Action = Redux.AnyAction> {
+export interface DispatchProp<A extends Redux.Action = Redux.AnyAction> {
   dispatch?: Dispatch<A>;
 }
 
@@ -86,17 +85,17 @@ export interface Connect {
 
   <TStateProps = {}, no_dispatch = {}, TOwnProps = {}, State = {}>(
     mapStateToProps: MapStateToPropsParam<TStateProps, TOwnProps, State>,
-  ): InferableComponentEnhancerWithProps<TStateProps & DispatchProp, TOwnProps>;
+  ): InferableComponentEnhancerWithProps<TStateProps & DispatchProp & TOwnProps, TOwnProps>;
 
   <no_state = {}, TDispatchProps = {}, TOwnProps = {}>(
     mapStateToProps: null | undefined,
     mapDispatchToProps: MapDispatchToPropsParam<TDispatchProps, TOwnProps>,
-  ): InferableComponentEnhancerWithProps<TDispatchProps, TOwnProps>;
+  ): InferableComponentEnhancerWithProps<TDispatchProps & TOwnProps, TOwnProps>;
 
   <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = {}>(
     mapStateToProps: MapStateToPropsParam<TStateProps, TOwnProps, State>,
     mapDispatchToProps: MapDispatchToPropsParam<TDispatchProps, TOwnProps>,
-  ): InferableComponentEnhancerWithProps<TStateProps & TDispatchProps, TOwnProps>;
+  ): InferableComponentEnhancerWithProps<TStateProps & TDispatchProps & TOwnProps, TOwnProps>;
 
   <TStateProps = {}, no_dispatch = {}, TOwnProps = {}, TMergedProps = {}, State = {}>(
     mapStateToProps: MapStateToPropsParam<TStateProps, TOwnProps, State>,
