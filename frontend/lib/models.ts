@@ -9,6 +9,7 @@ export interface Bookmark {
   readonly title: string;
   readonly url: string;
   readonly status: BookmarkStatus;
+  readonly addedAt: number;
 }
 
 export interface Bookmarks {
