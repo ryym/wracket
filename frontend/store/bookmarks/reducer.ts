@@ -36,7 +36,18 @@ export function reduceBookmarks(
         ...bks,
         byId: {
           ...bks.byId,
-          [b.id]: markAsOpen(b),
+          [b.id]: changeStatus(b, BookmarkStatus.Reading),
+        },
+      };
+    }
+
+    case 'RESET_OPEN_BOOKMARK': {
+      const b = bks.byId[action.id]!;
+      return {
+        ...bks,
+        byId: {
+          ...bks.byId,
+          [b.id]: changeStatus(b, BookmarkStatus.Unread),
         },
       };
     }
@@ -46,10 +57,5 @@ export function reduceBookmarks(
   }
 }
 
-const markAsOpen = (b: Bookmark): Bookmark =>
-  b.status === BookmarkStatus.Reading
-    ? b
-    : {
-        ...b,
-        status: BookmarkStatus.Reading,
-      };
+const changeStatus = (b: Bookmark, status: BookmarkStatus): Bookmark =>
+  b.status === status ? b : {...b, status};

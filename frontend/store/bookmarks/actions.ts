@@ -42,3 +42,10 @@ export function openBookmark(id: number): Thunk {
     api.openBookmark(id);
   });
 }
+
+export function resetOpenBookmark(id: number): Thunk {
+  return thunk(async (dispatch, getState, {api}) => {
+    dispatch({type: 'RESET_OPEN_BOOKMARK', id});
+    api.resetOpenBookmark(id);
+  });
+}
