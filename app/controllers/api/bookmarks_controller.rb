@@ -17,5 +17,10 @@ module Api
         openedAt: bookmark.opened_at,
       }
     end
+
+    def reset_open
+      bookmark = @updater.reset_open(@bookmark_id)
+      render json: { bookmarkId: bookmark.id }
+    end
   end
 end

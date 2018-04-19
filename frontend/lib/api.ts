@@ -38,6 +38,14 @@ export class API {
     }
     return {};
   }
+
+  async resetOpenBookmark(bookmarkId: number): Promise<{} | null> {
+    const res = await this.ajax<{}>(`/bookmarks/${bookmarkId}/reset_open`, {method: 'put'});
+    if (!res.isSuccess) {
+      throw new Error(`failed to reset bookmark ${bookmarkId} open: ${res}`);
+    }
+    return {};
+  }
 }
 
 export function createAPI(csrfToken: string): API {
