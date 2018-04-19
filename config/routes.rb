@@ -17,5 +17,7 @@ Rails.application.routes.draw do
     scope 'bookmarks/:id' do
       put '/open', to: 'bookmarks#open'
     end
+
+    match '(*path)', via: :all, to: proc { [404, {}, ['api not found']] }
   end
 end
