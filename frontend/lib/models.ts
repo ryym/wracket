@@ -13,7 +13,7 @@ export interface Bookmark {
 }
 
 export interface BookmarkById {
-  readonly [id: number]: Bookmark;
+  readonly [id: string]: Bookmark;
 }
 
 export interface SearchCondition {

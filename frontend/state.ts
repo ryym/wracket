@@ -8,7 +8,7 @@ export interface State {
 export interface BookmarkState {
   readonly nowLoading: boolean;
   readonly byId: {
-    readonly [id: number]: Bookmark;
+    readonly [id: string]: Bookmark;
   };
 }
 
