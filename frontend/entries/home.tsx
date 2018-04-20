@@ -8,7 +8,7 @@ import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
 import {findCSRFToken} from '../lib/csrf-token';
 import {createAPI} from '../lib/api';
-import {Bookmarks} from '../lib/models';
+import {BookmarkById} from '../lib/models';
 import {ThunkContext} from '../thunk-ctx';
 
 const csrfToken = findCSRFToken();
@@ -24,7 +24,7 @@ if ($json == null) {
 const api = createAPI(csrfToken);
 const thunkCtx = new ThunkContext(api);
 
-const bookmarks = JSON.parse($json.innerText) as Bookmarks;
+const bookmarks = JSON.parse($json.innerText) as BookmarkById;
 
 const store = configureStore({
   context: thunkCtx,

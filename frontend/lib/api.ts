@@ -1,5 +1,5 @@
 import {Ajax, createAjax, Response} from './ajax';
-import {Bookmarks, SearchCondition} from '../lib/models';
+import {BookmarkById, SearchCondition} from '../lib/models';
 
 const createDefaultAjax = (csrfToken: string): Ajax =>
   createAjax({baseURL: '/api/', headers: {'X-CSRF-Token': csrfToken}});
@@ -15,16 +15,16 @@ export class API {
     return await this.ajax<{hello: string}>('/ping', {method: 'get', params: {name}});
   }
 
-  async synchronize(cdtn: SearchCondition): Promise<Bookmarks | null> {
-    const res = await this.ajax<Bookmarks>('/bookmarks/sync', {method: 'put', params: cdtn});
+  async synchronize(cdtn: SearchCondition): Promise<BookmarkById | null> {
+    const res = await this.ajax<BookmarkById>('/bookmarks/sync', {method: 'put', params: cdtn});
     if (!res.isSuccess) {
       throw new Error(`failed to synchronize bookmarks: ${res}`);
     }
     return res.data;
   }
 
-  async search(cdtn: SearchCondition): Promise<Bookmarks | null> {
-    const res = await this.ajax<Bookmarks>('/bookmarks/search', {params: cdtn});
+  async search(cdtn: SearchCondition): Promise<BookmarkById | null> {
+    const res = await this.ajax<BookmarkById>('/bookmarks/search', {params: cdtn});
     if (!res.isSuccess) {
       throw new Error(`failed to search bookmarks: ${res}`);
     }

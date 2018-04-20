@@ -16,16 +16,15 @@ export function reduceBookmarks(
 
     case 'SYNC_BOOKMARKS_SUCCESS':
       return {
-        ...action.bookmarks,
+        byId: action.bookmarks,
         nowLoading: false,
       };
 
     case 'SEARCH_SUCCESS':
       return {
-        ids: action.bookmarks.ids,
         byId: {
           ...bks.byId,
-          ...action.bookmarks.byId,
+          ...action.bookmarks,
         },
         nowLoading: false,
       };

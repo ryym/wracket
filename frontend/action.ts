@@ -1,5 +1,5 @@
 import {AnyThunkAction, ThunkAction, ThunkType} from 'redux-dutiful-thunk';
-import {Bookmarks, SearchCondition} from './lib/models';
+import {BookmarkById, SearchCondition} from './lib/models';
 import {State} from './state';
 import {ThunkContext} from './thunk-ctx';
 
@@ -7,9 +7,9 @@ export type Action =
   | AnyThunkAction
   | {type: 'PING'; name: string}
   | {type: 'SYNC_BOOKMARKS_START'}
-  | {type: 'SYNC_BOOKMARKS_SUCCESS'; bookmarks: Bookmarks}
+  | {type: 'SYNC_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById}
   | {type: 'SEARCH_START'}
-  | {type: 'SEARCH_SUCCESS'; bookmarks: Bookmarks; condition: SearchCondition}
+  | {type: 'SEARCH_SUCCESS'; bookmarks: BookmarkById; condition: SearchCondition}
   | {type: 'OPEN_BOOKMARK'; id: number}
   | {type: 'RESET_OPEN_BOOKMARK'; id: number};
 

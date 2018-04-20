@@ -1,21 +1,20 @@
-import {Bookmark, Bookmarks, BookmarkStatus, SearchCondition} from './lib/models';
+import {Bookmark, BookmarkById, BookmarkStatus, SearchCondition} from './lib/models';
 
 export interface State {
   readonly bookmarks: BookmarkState;
   readonly searchCondition: SearchCondition;
 }
 
-export interface BookmarkState extends Bookmarks {
+export interface BookmarkState {
   readonly nowLoading: boolean;
+  readonly byId: {
+    readonly [id: number]: Bookmark;
+  };
 }
 
-export const newBookmarkState = (bks?: Bookmarks): BookmarkState => {
-  if (bks !== undefined) {
-    return {...bks, nowLoading: false};
-  }
+export const newBookmarkState = (bks?: BookmarkById): BookmarkState => {
   return {
-    ids: [],
-    byId: {},
+    byId: bks || {},
     nowLoading: false,
   };
 };

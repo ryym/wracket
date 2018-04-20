@@ -12,11 +12,8 @@ export interface Bookmark {
   readonly addedAt: number;
 }
 
-export interface Bookmarks {
-  readonly ids: number[];
-  readonly byId: {
-    readonly [id: number]: Bookmark;
-  };
+export interface BookmarkById {
+  readonly [id: number]: Bookmark;
 }
 
 export interface SearchCondition {
