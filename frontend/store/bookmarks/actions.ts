@@ -23,14 +23,14 @@ export function search(condition: Partial<SearchCondition>): Action {
   return {type: 'SEARCH', condition};
 }
 
-export function openBookmark(id: number): Thunk {
+export function openBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
     dispatch({type: 'OPEN_BOOKMARK', id});
     api.openBookmark(id);
   });
 }
 
-export function resetOpenBookmark(id: number): Thunk {
+export function resetOpenBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
     dispatch({type: 'RESET_OPEN_BOOKMARK', id});
     api.resetOpenBookmark(id);

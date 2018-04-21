@@ -5,7 +5,7 @@ export enum BookmarkStatus {
 }
 
 export interface Bookmark {
-  readonly id: number;
+  readonly id: string;
   readonly title: string;
   readonly url: string;
   readonly status: BookmarkStatus;

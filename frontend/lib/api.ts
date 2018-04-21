@@ -31,7 +31,7 @@ export class API {
     return res.data;
   }
 
-  async openBookmark(bookmarkId: number): Promise<{} | null> {
+  async openBookmark(bookmarkId: string): Promise<{} | null> {
     const res = await this.ajax<{}>(`/bookmarks/${bookmarkId}/open`, {method: 'put'});
     if (!res.isSuccess) {
       throw new Error(`failed to mark bookmark ${bookmarkId} as opened: ${res}`);
@@ -39,7 +39,7 @@ export class API {
     return {};
   }
 
-  async resetOpenBookmark(bookmarkId: number): Promise<{} | null> {
+  async resetOpenBookmark(bookmarkId: string): Promise<{} | null> {
     const res = await this.ajax<{}>(`/bookmarks/${bookmarkId}/reset_open`, {method: 'put'});
     if (!res.isSuccess) {
       throw new Error(`failed to reset bookmark ${bookmarkId} open: ${res}`);

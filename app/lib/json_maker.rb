@@ -5,7 +5,7 @@ class JsonMaker
   def bookmarks(bookmarks)
     bookmarks.each_with_object({}) do |b, bs|
       bs[b.id] = {
-        id: b.id,
+        id: b.id.to_s,
         title: b.entry.resolved_title,
         url: b.entry.url,
         status: b.status,
