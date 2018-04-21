@@ -8,8 +8,7 @@ export type Action =
   | {type: 'PING'; name: string}
   | {type: 'SYNC_BOOKMARKS_START'}
   | {type: 'SYNC_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById}
-  | {type: 'SEARCH_START'}
-  | {type: 'SEARCH_SUCCESS'; bookmarks: BookmarkById; condition: SearchCondition}
+  | {type: 'SEARCH'; condition: Partial<SearchCondition>}
   | {type: 'OPEN_BOOKMARK'; id: number}
   | {type: 'RESET_OPEN_BOOKMARK'; id: number};
 

@@ -8,7 +8,6 @@ export function reduceBookmarks(
 ): BookmarkState {
   switch (action.type) {
     case 'SYNC_BOOKMARKS_START':
-    case 'SEARCH_START':
       return {
         ...bks,
         nowLoading: true,
@@ -17,15 +16,6 @@ export function reduceBookmarks(
     case 'SYNC_BOOKMARKS_SUCCESS':
       return {
         byId: action.bookmarks,
-        nowLoading: false,
-      };
-
-    case 'SEARCH_SUCCESS':
-      return {
-        byId: {
-          ...bks.byId,
-          ...action.bookmarks,
-        },
         nowLoading: false,
       };
 

@@ -19,7 +19,7 @@ const eqStatuses = (s1: BookmarkStatus[], s2: BookmarkStatus[]) =>
 const statusFilters = [
   {
     name: 'new',
-    statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading],
+    statuses: [BookmarkStatus.Reading, BookmarkStatus.Unread],
   },
   {
     name: 'reading',

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {State} from '../../state';
 import {Dispatch} from '../../store';
 import {syncBookmarks, search, openBookmark, resetOpenBookmark} from '../../store/actions';
-import {listBookmarks} from '../../store/selectors';
+import {listBookmarks, getSearchCondition} from '../../store/selectors';
 import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
 import {Bookmark, BookmarkStatus, SearchCondition} from '../../lib/models';
@@ -50,6 +50,6 @@ export const HomePage = connect((state: State): Props => {
   return {
     bookmarks: listBookmarks(state),
     nowLoading: state.bookmarks.nowLoading,
-    condition: state.searchCondition,
+    condition: getSearchCondition(state),
   };
 })(_HomePage);
