@@ -60,12 +60,12 @@ export class _HomePage extends React.PureComponent<AllProps> {
       <div>
         <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
         <BookmarkFilter condition={props.condition} onConditionChange={this.search} />
-        {props.nowLoading && 'Now loading...'}
         <BookmarkList
           bookmarks={props.bookmarks}
           onBookmarkOpen={this.markBookmarkAsOpen}
           onBackToUnread={this.backBookmarkToUnread}
         />
+        {props.nowLoading && 'Now loading...'}
       </div>
     );
   }
