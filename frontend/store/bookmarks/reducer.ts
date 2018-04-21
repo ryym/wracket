@@ -1,4 +1,5 @@
 import {Bookmark, BookmarkStatus} from '../../lib/models';
+import {updateObj} from '../../lib/obj';
 import {BookmarkState, newBookmarkState} from '../../state';
 import {Action} from '../../action';
 
@@ -8,6 +9,7 @@ export function reduceBookmarks(
 ): BookmarkState {
   switch (action.type) {
     case 'SYNC_BOOKMARKS_START':
+    case 'LOAD_MORE_BOOKMARKS_START':
       return {
         ...bks,
         nowLoading: true,
@@ -18,6 +20,14 @@ export function reduceBookmarks(
         byId: action.bookmarks,
         nowLoading: false,
       };
+
+    case 'LOAD_MORE_BOOKMARKS_SUCCESS': {
+      const isEmpty = Object.keys(action.bookmarks).length === 0;
+      return {
+        byId: isEmpty ? bks.byId : {...bks.byId, ...action.bookmarks},
+        nowLoading: false,
+      };
+    }
 
     case 'OPEN_BOOKMARK': {
       const b = bks.byId[action.id]!;
@@ -42,14 +52,3 @@ export function reduceBookmarks(
 
 const changeStatus = (status: BookmarkStatus) => (b: Bookmark): Bookmark =>
   b.status === status ? b : {...b, status};
-
-const updateObj = <O extends {}, K extends keyof O>(
-  obj: O,
-  key: K,
-  update: (v: O[K]) => O[K],
-): O => {
-  const cur = obj[key];
-  const next = update(cur);
-  // https://github.com/Microsoft/TypeScript/issues/13557
-  return cur === next ? obj : {...(obj as any), [key]: next};
-};

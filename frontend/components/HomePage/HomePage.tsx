@@ -2,11 +2,20 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {State} from '../../state';
 import {Dispatch} from '../../store';
-import {syncBookmarks, search, openBookmark, resetOpenBookmark} from '../../store/actions';
+import {
+  syncBookmarks,
+  search,
+  loadMoreBookmarks,
+  cacheBookmarkCount,
+  openBookmark,
+  resetOpenBookmark,
+} from '../../store/actions';
 import {listBookmarks, getSearchCondition} from '../../store/selectors';
 import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
 import {Bookmark, BookmarkStatus, SearchCondition} from '../../lib/models';
+
+const MIN_DISPLAY_COUNT = 30;
 
 export interface Props {
   bookmarks: Bookmark[];
@@ -15,7 +24,7 @@ export interface Props {
 }
 export type AllProps = Props & {dispatch: Dispatch};
 
-export class _HomePage extends React.Component<AllProps> {
+export class _HomePage extends React.PureComponent<AllProps> {
   search = (cdtn: Partial<SearchCondition>) => {
     this.props.dispatch(search(cdtn));
   };
@@ -27,6 +36,18 @@ export class _HomePage extends React.Component<AllProps> {
   backBookmarkToUnread = (b: Bookmark) => {
     this.props.dispatch(resetOpenBookmark(b.id));
   };
+
+  componentDidMount() {
+    const {bookmarks, dispatch} = this.props;
+    dispatch(cacheBookmarkCount(bookmarks.length));
+  }
+
+  componentDidUpdate(prev: AllProps) {
+    const {bookmarks, dispatch} = this.props;
+    if (prev.bookmarks !== bookmarks && bookmarks.length < MIN_DISPLAY_COUNT) {
+      dispatch(loadMoreBookmarks(bookmarks.length));
+    }
+  }
 
   render() {
     const {props} = this;

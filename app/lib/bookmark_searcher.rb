@@ -10,7 +10,7 @@ class BookmarkSearcher
   end
 
   def condition_from_params(params)
-    condition(statuses: params[:statuses], offset_value: params[:offset_value])
+    condition(statuses: params[:statuses], offset_value: params[:offset])
   end
 
   def condition(statuses:, offset_value:)
@@ -20,23 +20,15 @@ class BookmarkSearcher
 
   def search(user, cdtn)
     q = user.bookmarks.includes(entry: :resolved).where(status: cdtn.statuses)
-    set_order_and_offset(q, cdtn).to_a
+    set_offset(q, cdtn).to_a
   end
 
   private
 
-  def set_order_and_offset(query, cdtn)
-    query =
-      if cdtn.statuses == [:archived]
-        query.
-          where('archived_at < ?', cdtn.offset_value).
-          order(archived_at: :desc)
-      else
-        query.
-          where('added_to_pocket_at < ?', cdtn.offset_value).
-          order_by_newest
-      end
+  def set_offset(query, cdtn)
     query.limit(@limit)
+    return query if cdtn.offset_value.blank?
+    query.where('archived_at < ?', Time.zone.at(cdtn.offset_value.to_i))
   end
 end
 
@@ -51,7 +43,7 @@ class BookmarkSearcher
         raise ArgumentError, "invalid status #{s}" if !Bookmark.statuses.key?(s)
       end
       @statuses = statuses
-      @offset_value = offset_value ? Time.zone.parse(offset_value) : Time.current
+      @offset_value = offset_value
     end
   end
 end

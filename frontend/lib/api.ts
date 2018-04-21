@@ -1,5 +1,5 @@
 import {Ajax, createAjax, Response} from './ajax';
-import {BookmarkById, SearchCondition} from '../lib/models';
+import {Bookmark, BookmarkById, SearchCondition} from '../lib/models';
 
 const createDefaultAjax = (csrfToken: string): Ajax =>
   createAjax({baseURL: '/api/', headers: {'X-CSRF-Token': csrfToken}});
@@ -23,8 +23,12 @@ export class API {
     return res.data;
   }
 
-  async search(cdtn: SearchCondition): Promise<BookmarkById | null> {
-    const res = await this.ajax<BookmarkById>('/bookmarks/search', {params: cdtn});
+  async search(cdtn: SearchCondition, last: Bookmark | null = null): Promise<BookmarkById | null> {
+    let params: {} = cdtn;
+    if (last != null) {
+      params = {...params, offset: last.addedAt};
+    }
+    const res = await this.ajax<BookmarkById>('/bookmarks/search', {params});
     if (!res.isSuccess) {
       throw new Error(`failed to search bookmarks: ${res}`);
     }
