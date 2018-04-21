@@ -9,8 +9,11 @@ module Api
 
     def index
       cdtn = @searcher.condition_from_params(params)
-      bookmarks = @searcher.search(current_user, cdtn)
-      render json: @json.bookmarks(bookmarks)
+      result = @searcher.search(current_user, cdtn)
+      render json: {
+        bookmarks: @json.bookmarks(result.bookmarks),
+        isLast: result.is_last,
+      }
     end
   end
 end

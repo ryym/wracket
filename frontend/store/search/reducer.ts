@@ -3,7 +3,7 @@ import {conditionToQuery} from '../../lib/search-query';
 import {Action} from '../../action';
 import {SearchState, newSearchState} from '../../state';
 
-const initQueryState = {};
+const initQueryState = {allFetched: false};
 
 export function reduceSearch(state: SearchState = newSearchState(), action: Action): SearchState {
   switch (action.type) {
@@ -25,6 +25,15 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
         stateByQuery: updateObj(state.stateByQuery, state.currentQuery, s => ({
           ...(s || initQueryState),
           count: action.count,
+        })),
+      };
+
+    case 'LOAD_MORE_BOOKMARKS_SUCCESS':
+      return {
+        ...state,
+        stateByQuery: updateObj(state.stateByQuery, state.currentQuery, s => ({
+          ...s,
+          allFetched: action.isLast,
         })),
       };
 

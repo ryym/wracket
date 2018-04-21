@@ -20,7 +20,8 @@ class BookmarkSearcher
 
   def search(user, cdtn)
     q = user.bookmarks.includes(entry: :resolved).where(status: cdtn.statuses)
-    set_offset(q, cdtn).to_a
+    bookmarks = set_offset(q, cdtn).to_a
+    self.class::Result.new(bookmarks, bookmarks.size < @limit)
   end
 
   private
@@ -46,4 +47,6 @@ class BookmarkSearcher
       @offset_value = offset_value
     end
   end
+
+  Result = Struct.new(:bookmarks, :is_last)
 end

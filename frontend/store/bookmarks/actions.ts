@@ -1,7 +1,7 @@
 import {thunk, thunkAs} from 'redux-dutiful-thunk';
 import {Action, Thunk} from '../../action';
 import {SearchCondition} from '../../lib/models';
-import {listBookmarks, getSearchCondition, getLastBookmarkCount} from '../selectors';
+import {listBookmarks, getSearchCondition, getCurrentQueryState} from '../selectors';
 
 export function syncBookmarks(): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
@@ -37,21 +37,20 @@ export function cacheBookmarkCount(count: number): Action {
 export function loadMoreBookmarks(count: number): Thunk {
   return thunkAs('loadMoreBookmarks', async (dispatch, getState, {api}) => {
     const state = getState();
-
-    const lastCount = getLastBookmarkCount(state);
-    if (lastCount != null && lastCount === count) {
+    const qs = getCurrentQueryState(state);
+    if (qs != null && qs.allFetched) {
       return;
     }
-    dispatch(cacheBookmarkCount(count));
 
     dispatch({type: 'LOAD_MORE_BOOKMARKS_START'});
 
     const lastBookmark = listBookmarks(state)[count - 1];
-    const bookmarks = await api.search(getSearchCondition(state), lastBookmark);
-    if (bookmarks) {
+    const result = await api.search(getSearchCondition(state), lastBookmark);
+    if (result) {
       dispatch({
         type: 'LOAD_MORE_BOOKMARKS_SUCCESS',
-        bookmarks,
+        bookmarks: result.bookmarks,
+        isLast: result.isLast,
       });
     }
   });

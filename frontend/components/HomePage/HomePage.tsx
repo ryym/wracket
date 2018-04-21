@@ -44,7 +44,11 @@ export class _HomePage extends React.PureComponent<AllProps> {
 
   componentDidUpdate(prev: AllProps) {
     const {bookmarks, dispatch} = this.props;
-    if (prev.bookmarks !== bookmarks && bookmarks.length < MIN_DISPLAY_COUNT) {
+    if (prev.bookmarks === bookmarks) {
+      return;
+    }
+    dispatch(cacheBookmarkCount(bookmarks.length));
+    if (bookmarks.length < MIN_DISPLAY_COUNT) {
       dispatch(loadMoreBookmarks(bookmarks.length));
     }
   }

@@ -30,6 +30,7 @@ export interface SearchState {
 
 export interface QueryState {
   readonly count: number;
+  readonly allFetched: boolean;
 }
 
 export const newSearchConditionState = (): SearchCondition => ({

@@ -10,7 +10,7 @@ export type Action =
   | {type: 'SYNC_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById}
   | {type: 'SEARCH'; condition: Partial<SearchCondition>}
   | {type: 'LOAD_MORE_BOOKMARKS_START'}
-  | {type: 'LOAD_MORE_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById}
+  | {type: 'LOAD_MORE_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById; isLast: boolean}
   | {type: 'OPEN_BOOKMARK'; id: string}
   | {type: 'RESET_OPEN_BOOKMARK'; id: string}
   | {type: 'UPDATE_QUERY_COUNT'; count: number};
