@@ -23,10 +23,7 @@ export function reduceBookmarks(
       const b = bks.byId[action.id]!;
       return {
         ...bks,
-        byId: {
-          ...bks.byId,
-          [b.id]: changeStatus(b, BookmarkStatus.Reading),
-        },
+        byId: updateObj(bks.byId, String(b.id), changeStatus(BookmarkStatus.Reading)),
       };
     }
 
@@ -34,10 +31,7 @@ export function reduceBookmarks(
       const b = bks.byId[action.id]!;
       return {
         ...bks,
-        byId: {
-          ...bks.byId,
-          [b.id]: changeStatus(b, BookmarkStatus.Unread),
-        },
+        byId: updateObj(bks.byId, String(b.id), changeStatus(BookmarkStatus.Unread)),
       };
     }
 
@@ -46,5 +40,16 @@ export function reduceBookmarks(
   }
 }
 
-const changeStatus = (b: Bookmark, status: BookmarkStatus): Bookmark =>
+const changeStatus = (status: BookmarkStatus) => (b: Bookmark): Bookmark =>
   b.status === status ? b : {...b, status};
+
+const updateObj = <O extends {}, K extends keyof O>(
+  obj: O,
+  key: K,
+  update: (v: O[K]) => O[K],
+): O => {
+  const cur = obj[key];
+  const next = update(cur);
+  // https://github.com/Microsoft/TypeScript/issues/13557
+  return cur === next ? obj : {...(obj as any), [key]: next};
+};
