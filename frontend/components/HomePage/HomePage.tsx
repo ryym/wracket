@@ -6,7 +6,6 @@ import {
   syncBookmarks,
   search,
   loadMoreBookmarks,
-  cacheBookmarkCount,
   openBookmark,
   resetOpenBookmark,
 } from '../../store/actions';
@@ -39,7 +38,6 @@ export class _HomePage extends React.PureComponent<AllProps> {
 
   componentDidMount() {
     const {bookmarks, dispatch} = this.props;
-    dispatch(cacheBookmarkCount(bookmarks.length));
   }
 
   componentDidUpdate(prev: AllProps) {
@@ -47,7 +45,6 @@ export class _HomePage extends React.PureComponent<AllProps> {
     if (prev.bookmarks === bookmarks) {
       return;
     }
-    dispatch(cacheBookmarkCount(bookmarks.length));
     if (bookmarks.length < MIN_DISPLAY_COUNT) {
       dispatch(loadMoreBookmarks(bookmarks.length));
     }

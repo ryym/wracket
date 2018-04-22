@@ -19,17 +19,6 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
       };
     }
 
-    case 'UPDATE_QUERY_COUNT':
-      return {
-        ...state,
-        stateByQuery: updateObj(state.stateByQuery, state.currentQuery, s => {
-          if (s != null && s.count === action.count) {
-            return s;
-          }
-          return {...s, count: action.count};
-        }),
-      };
-
     case 'LOAD_MORE_BOOKMARKS_SUCCESS':
       return {
         ...state,

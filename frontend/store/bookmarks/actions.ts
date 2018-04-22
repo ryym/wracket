@@ -23,10 +23,6 @@ export function search(condition: Partial<SearchCondition>): Action {
   return {type: 'SEARCH', condition};
 }
 
-export function cacheBookmarkCount(count: number): Action {
-  return {type: 'UPDATE_QUERY_COUNT', count};
-}
-
 // Flow:
 //   1. Render a component with current bookmarks.
 //   2. This action is called on the component update (when bookmarks changed).
@@ -36,23 +32,7 @@ export function cacheBookmarkCount(count: number): Action {
 // Be careful not to cause an infinite loop!
 export function loadMoreBookmarks(count: number): Thunk {
   return thunkAs('loadMoreBookmarks', async (dispatch, getState, {api}) => {
-    const state = getState();
-    const qs = getCurrentQueryState(state);
-    if (qs != null && qs.allFetched) {
-      return;
-    }
-
-    dispatch({type: 'LOAD_MORE_BOOKMARKS_START'});
-
-    const lastBookmark = listBookmarks(state)[count - 1];
-    const result = await api.search(getSearchCondition(state), lastBookmark);
-    if (result) {
-      dispatch({
-        type: 'LOAD_MORE_BOOKMARKS_SUCCESS',
-        bookmarks: result.bookmarks,
-        isLast: result.isLast,
-      });
-    }
+    // TODO: reimplement.
   });
 }
 
