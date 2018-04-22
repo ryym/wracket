@@ -1,5 +1,14 @@
-import {Iter} from './iter';
-import {Bookmark, SearchCondition} from './models';
+import {iter, Iter} from './iter';
+import {Bookmark, BookmarkById, SearchCondition} from './models';
+
+// TODO: Use iterator more efficiently.
+export const selectShownIds = (byId: BookmarkById, cdtn: SearchCondition): string[] => {
+  const bks = iter(Object.keys(byId))
+    .map(id => byId[id]!)
+    .use(filterBookmarks(cdtn))
+    .collect();
+  return sortBookmarks(bks, cdtn).map(b => b.id);
+};
 
 export const filterBookmarks = (cdtn: SearchCondition) => {
   const statuses = new Set(cdtn.statuses);

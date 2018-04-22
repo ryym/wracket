@@ -9,6 +9,7 @@ export type Action =
   | {type: 'SYNC_BOOKMARKS_START'}
   | {type: 'SYNC_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById}
   | {type: 'SEARCH'; condition: Partial<SearchCondition>}
+  | {type: 'UPDATE_SHOWN_BOOKMARKS'; ids: string[]}
   | {type: 'LOAD_MORE_BOOKMARKS_START'}
   | {type: 'LOAD_MORE_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById; isLast: boolean}
   | {type: 'OPEN_BOOKMARK'; id: string}

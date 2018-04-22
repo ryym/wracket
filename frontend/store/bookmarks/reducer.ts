@@ -31,6 +31,12 @@ export function reduceBookmarks(
       };
     }
 
+    case 'UPDATE_SHOWN_BOOKMARKS':
+      return {
+        ...bks,
+        shownIds: action.ids,
+      };
+
     case 'OPEN_BOOKMARK': {
       const b = bks.byId[action.id]!;
       return {

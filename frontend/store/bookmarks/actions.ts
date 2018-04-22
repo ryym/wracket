@@ -1,7 +1,8 @@
 import {thunk, thunkAs} from 'redux-dutiful-thunk';
 import {Action, Thunk} from '../../action';
 import {SearchCondition} from '../../lib/models';
-import {listBookmarks, getSearchCondition, getCurrentQueryState} from '../selectors';
+import {selectShownIds} from '../../lib/bookmark-lister';
+import {listBookmarks, getBookmarksById, getSearchCondition} from '../selectors';
 
 export function syncBookmarks(): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
@@ -21,6 +22,16 @@ export function syncBookmarks(): Thunk {
 
 export function search(condition: Partial<SearchCondition>): Action {
   return {type: 'SEARCH', condition};
+}
+
+export function updateShownBookmarks({conditionChangeOnly}: {conditionChangeOnly: boolean}): Thunk {
+  return thunk(async (dispatch, getState) => {
+    const state = getState();
+
+    // XXX: Use conditionChangeOnly
+    const ids = selectShownIds(getBookmarksById(state), getSearchCondition(state));
+    dispatch({type: 'UPDATE_SHOWN_BOOKMARKS', ids});
+  });
 }
 
 // Flow:

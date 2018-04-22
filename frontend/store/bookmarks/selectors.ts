@@ -1,5 +1,10 @@
 import {State} from '../../state';
-import {Bookmark} from '../../lib/models';
+import {Bookmark, BookmarkById} from '../../lib/models';
 
-// TODO: reimplement.
-export const listBookmarks = (_state: State): Bookmark[] => [];
+export const listBookmarks = ({bookmarks}: State): Bookmark[] => {
+  return bookmarks.shownIds.map(id => bookmarks.byId[id]!);
+};
+
+export const getBookmarksById = ({bookmarks}: State): BookmarkById => {
+  return bookmarks.byId;
+};
