@@ -39,9 +39,15 @@ export function initShownBookmarks(): Thunk {
 export function updateShownBookmarks({conditionChangeOnly}: {conditionChangeOnly: boolean}): Thunk {
   return thunkAs('updateShownBookmarks', async (dispatch, getState) => {
     const state = getState();
+    const bookmarksById = getBookmarksById(state);
+    const cdtn = getSearchCondition(state);
 
-    // XXX: Use conditionChangeOnly
-    const ids = selectShownIds(getBookmarksById(state), getSearchCondition(state));
+    if (!conditionChangeOnly) {
+      dispatch({type: 'CLEAR_QUERY_COUNT_CACHES'});
+    }
+
+    const qs = getCurrentQueryState(state);
+    const ids = selectShownIds(bookmarksById, cdtn, qs ? qs.count : null);
     dispatch({type: 'UPDATE_SHOWN_BOOKMARKS', ids});
   });
 }

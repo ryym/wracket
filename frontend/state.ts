@@ -25,13 +25,15 @@ export const newBookmarkState = (bks?: BookmarkById): BookmarkState => {
 export interface SearchState {
   readonly condition: SearchCondition;
   readonly currentQuery: string;
-  readonly stateByQuery: {
-    readonly [query: string]: QueryState;
-  };
+  readonly stateByQuery: SearchStateByQuery;
+}
+
+export interface SearchStateByQuery {
+  readonly [query: string]: QueryState;
 }
 
 export interface QueryState {
-  readonly count: number;
+  readonly count: number | null;
   readonly allFetched: boolean;
 }
 

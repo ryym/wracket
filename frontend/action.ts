@@ -13,7 +13,8 @@ export type Action =
   | {type: 'LOAD_MORE_BOOKMARKS_START'}
   | {type: 'LOAD_MORE_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById; isLast: boolean}
   | {type: 'OPEN_BOOKMARK'; id: string}
-  | {type: 'RESET_OPEN_BOOKMARK'; id: string};
+  | {type: 'RESET_OPEN_BOOKMARK'; id: string}
+  | {type: 'CLEAR_QUERY_COUNT_CACHES'};
 
 export type Thunk<R = void, T extends ThunkType = any> = ThunkAction<
   State,

@@ -25,6 +25,10 @@ export class Iter<T> implements Iterable<T> {
     return converter(this);
   }
 
+  tap(f: (me: Iter<T>) => Iter<T>): Iter<T> {
+    return f(this);
+  }
+
   collect(): T[] {
     const xs = [];
     for (let v of this.src) {
