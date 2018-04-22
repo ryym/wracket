@@ -18,7 +18,6 @@ export function enableBookmarkSearch(): Middleware<{}, State, Dispatch<Action>> 
     const conditionChanged = getSearchCondition(prev) !== getSearchCondition(state);
     const dataChanged = getBookmarksById(prev) !== getBookmarksById(state);
 
-    console.log('[CHECK]', conditionChanged, dataChanged);
     if (conditionChanged || dataChanged) {
       dispatch(updateShownBookmarks({conditionChangeOnly: !dataChanged}));
     }
