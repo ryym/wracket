@@ -17,6 +17,7 @@ export function reduceBookmarks(
 
     case 'SYNC_BOOKMARKS_SUCCESS':
       return {
+        ...bks,
         byId: action.bookmarks,
         nowLoading: false,
       };
@@ -24,6 +25,7 @@ export function reduceBookmarks(
     case 'LOAD_MORE_BOOKMARKS_SUCCESS': {
       const isEmpty = Object.keys(action.bookmarks).length === 0;
       return {
+        ...bks,
         byId: isEmpty ? bks.byId : {...bks.byId, ...action.bookmarks},
         nowLoading: false,
       };

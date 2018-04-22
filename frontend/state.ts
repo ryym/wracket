@@ -7,14 +7,16 @@ export interface State {
 }
 
 export interface BookmarkState {
-  readonly nowLoading: boolean;
+  readonly shownIds: string[];
   readonly byId: {
     readonly [id: string]: Bookmark;
   };
+  readonly nowLoading: boolean;
 }
 
 export const newBookmarkState = (bks?: BookmarkById): BookmarkState => {
   return {
+    shownIds: [],
     byId: bks || {},
     nowLoading: false,
   };
