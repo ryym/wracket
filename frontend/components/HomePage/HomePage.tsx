@@ -5,6 +5,7 @@ import {Dispatch} from '../../store';
 import {
   syncBookmarks,
   search,
+  initShownBookmarks,
   loadMoreBookmarks,
   openBookmark,
   resetOpenBookmark,
@@ -38,15 +39,13 @@ export class _HomePage extends React.PureComponent<AllProps> {
 
   componentDidMount() {
     const {bookmarks, dispatch} = this.props;
+    dispatch(initShownBookmarks());
   }
 
   componentDidUpdate(prev: AllProps) {
     const {bookmarks, dispatch} = this.props;
-    if (prev.bookmarks === bookmarks) {
-      return;
-    }
-    if (bookmarks.length < MIN_DISPLAY_COUNT) {
-      dispatch(loadMoreBookmarks(bookmarks.length));
+    if (prev.bookmarks !== bookmarks && bookmarks.length < MIN_DISPLAY_COUNT) {
+      dispatch(loadMoreBookmarks());
     }
   }
 
