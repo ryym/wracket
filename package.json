@@ -13,21 +13,17 @@
   "lint-staged": {
     "*.js": [
       "npx prettier --write",
-      "npx eslint",
-      "git add"
+      "npx eslint"
     ],
     "*.{ts,tsx}": [
       "npx prettier --write",
-      "npx tslint -p .",
-      "git add"
+      "npx tslint -p ."
     ],
     "*.{css,scss}": [
-      "npx prettier --write",
-      "git add"
+      "npx prettier --write"
     ],
     "*.{rb,rake}": [
-      "bundle exec rubocop -a --force-exclusion",
-      "git add"
+      "bundle exec rubocop -a --force-exclusion"
     ]
   },
   "devDependencies": {
