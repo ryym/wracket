@@ -10,9 +10,9 @@ export const selectShownIds = (
   const bks = iter(Object.keys(byId))
     .map(id => byId[id]!)
     .use(filterBookmarks(cdtn))
-    .tap(it => (count == null ? it : it.take(count)))
     .collect();
-  return sortBookmarks(bks, cdtn).map(b => b.id);
+  const sorted = sortBookmarks(bks, cdtn);
+  return (count ? sorted.slice(0, count) : sorted).map(b => b.id);
 };
 
 export const filterBookmarks = (cdtn: SearchCondition) => {
