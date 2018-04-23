@@ -32,7 +32,7 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
           if (s != null && s.count === action.ids.length) {
             return s;
           }
-          return {...s, count: action.ids.length};
+          return {...(s || initQueryState), count: action.ids.length};
         }),
       };
 

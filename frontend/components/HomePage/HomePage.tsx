@@ -40,7 +40,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
   };
 
   componentDidMount() {
-    const {bookmarks, dispatch} = this.props;
+    const {dispatch} = this.props;
     dispatch(initShownBookmarks());
   }
 

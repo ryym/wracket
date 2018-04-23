@@ -8,11 +8,6 @@ export interface Props {
   onConditionChange: ChangeHandler;
 }
 
-interface StatusFilter {
-  name: string;
-  statuses: BookmarkStatus[];
-}
-
 const eqStatuses = (s1: BookmarkStatus[], s2: BookmarkStatus[]) =>
   s1.length === s2.length && s1.every((s, i) => s === s2[i]);
 

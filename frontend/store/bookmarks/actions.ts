@@ -3,7 +3,6 @@ import {Action, Thunk} from '../../action';
 import {SearchCondition} from '../../lib/models';
 import {selectShownIds} from '../../lib/bookmark-lister';
 import {
-  listBookmarks,
   getLastBookmark,
   getBookmarksById,
   getSearchCondition,
