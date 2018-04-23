@@ -30,7 +30,9 @@ export class _HomePage extends React.PureComponent<AllProps> {
   };
 
   markBookmarkAsOpen = (b: Bookmark) => {
-    this.props.dispatch(openBookmark(b.id));
+    if (b.status !== BookmarkStatus.Archived) {
+      this.props.dispatch(openBookmark(b.id));
+    }
   };
 
   backBookmarkToUnread = (b: Bookmark) => {
