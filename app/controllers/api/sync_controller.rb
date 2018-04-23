@@ -17,8 +17,8 @@ module Api
       end
 
       cdtn = @searcher.condition_from_params(params)
-      bookmarks = @searcher.search(current_user, cdtn)
-      render json: @json.bookmarks(bookmarks)
+      result = @searcher.search(current_user, cdtn)
+      render json: @json.bookmarks(result.bookmarks)
     end
   end
 end

@@ -18,6 +18,7 @@ export function reduceBookmarks(
     case 'SYNC_BOOKMARKS_SUCCESS':
       return {
         ...bks,
+        shownIds: [],
         byId: action.bookmarks,
         nowLoading: false,
       };

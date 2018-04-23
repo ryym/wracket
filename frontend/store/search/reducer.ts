@@ -19,6 +19,12 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
       };
     }
 
+    case 'SYNC_BOOKMARKS_SUCCESS':
+      return {
+        ...state,
+        stateByQuery: {},
+      };
+
     case 'UPDATE_SHOWN_BOOKMARKS':
       return {
         ...state,
