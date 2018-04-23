@@ -18,7 +18,7 @@
     ],
     "*.{ts,tsx}": [
       "npx prettier --write",
-      "npx tslint",
+      "npx tslint -p .",
       "git add"
     ],
     "*.{css,scss}": [
