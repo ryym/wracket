@@ -11,6 +11,11 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :access_token, presence: true
 
+  enum first_sync: {
+    incomplete: 0,
+    done: 1,
+  }, _prefix: true
+
   def self.login(name, token)
     user = User.find_by(username: name)
     if user
