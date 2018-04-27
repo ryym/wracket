@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PocketSynchronizer
+  PER_PAGE = 100
+
   def self.create(access_token)
     client = PocketClient.create(access_token)
     new(
@@ -18,34 +20,64 @@ class PocketSynchronizer
     @logger = logger
   end
 
-  def import_updates(user)
-    return [false, 'first synchronization is not supported yet'] if user.last_synced_at.nil?
+  def synchronize(user)
+    return import_all(user, user.bookmarks.count) if user.first_sync_incomplete?
 
-    @pocket.retrieve_each(50, {
-      since: user.last_synced_at.to_i,
+    bookmark = user.bookmarks.order(updated_on_pocket_at: :desc).first
+    last_updated_at = bookmark ? bookmark.updated_on_pocket_at : user.created_at
+    import_updates(user.id, last_updated_at)
+  end
+
+  # This is for a first synchronization. It synchronizes all of the user data.
+  def import_all(user, offset = 0)
+    @pocket.retrieve_each(PER_PAGE, {
+      offset: offset,
+      state: 'all',
+      detailType: 'complete',
+      sort: 'oldest',
+    }) do |ret, json|
+      ok, message = import_retrieved_data(user.id, ret, json)
+      return [ok, message] if !ok
+      sleep(0.5)
+    end
+
+    user.update!(first_sync: :done)
+    [true, nil]
+  end
+
+  def import_updates(user_id, last_updated_at)
+    @pocket.retrieve_each(PER_PAGE, {
+      since: last_updated_at.to_i + 1,
       state: 'all',
       detailType: 'complete',
     }) do |ret, json|
-      if ret.err?
-        @logger.error(<<~MSG)
-          failed to retrieve: #{ret.response.code} [err code: #{ret.error_code}] #{ret.message}
-        MSG
-        return [false, ret.message]
-      end
+      ok, message = import_retrieved_data(user_id, ret, json)
+      return [ok, message] if !ok
+      sleep(0.5)
+    end
 
-      next if @converter.empty_items?(json)
-      converted = @converter.convert(user.id, json)
-      result = @saver.save(user.id, converted)
+    [true, nil]
+  end
+
+  private
+
+  def import_retrieved_data(user_id, ret, json)
+    if ret.err?
+      @logger.error(<<~MSG)
+        failed to retrieve: #{ret.response.code} [err code: #{ret.error_code}] #{ret.message}
+      MSG
+      return [false, ret.message]
+    end
+
+    if !@converter.empty_items?(json)
+      converted = @converter.convert(user_id, json)
+      result = @saver.save(user_id, converted)
 
       if result.any_failure?
         @logger.error("failed to import some records: #{result}")
         return [false, 'failed to import some records']
       end
-
-      sleep(0.5)
     end
-
-    user.update(last_synced_at: Time.current)
 
     [true, nil]
   end

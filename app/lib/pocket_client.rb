@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# TODO: Check rate limits before all API calls.
+# (https://getpocket.com/developer/docs/rate-limits)
+
 class PocketClient
   def self.create(access_token)
     http = Http.new('getpocket.com', ssl: true, headers: {
@@ -30,7 +33,7 @@ class PocketClient
   # It stops the loop when a response is not a success, or the items are empty.
   # But the given block is called on both cases.
   def retrieve_each(count, params = {})
-    offset = 0
+    offset = params.fetch(:offset, 0)
     loop do
       ret = retrieve(params.merge(count: count, offset: offset))
       if ret.err?
