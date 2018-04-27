@@ -27,7 +27,7 @@ class BookmarkSearcher
   private
 
   def set_offset(query, cdtn)
-    query.limit(@limit)
+    query = query.limit(@limit)
     return query if cdtn.offset_value.blank?
     query.where('added_to_pocket_at < ?', Time.zone.at(cdtn.offset_value.to_i))
   end
