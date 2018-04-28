@@ -9,7 +9,7 @@ module Api
     end
 
     def import_updates
-      ok, message = @syncer.import_updates(current_user)
+      ok, message = @syncer.synchronize(current_user)
       unless ok
         return render status: :internal_server_error, json: {
           message: message,
