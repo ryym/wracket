@@ -1,4 +1,5 @@
 import React from 'react';
+import {IS_DEVELOPMENT} from '../../consts';
 import {Bookmark, BookmarkStatus} from '../../lib/models';
 
 export interface Props {
@@ -14,7 +15,7 @@ export function BookmarkList({
 }: Props) {
   const items = bookmarks.map(b => {
     return (
-      <li key={b.id}>
+      <li key={b.id} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
         <a href={b.url} target="_blank" onClick={() => onBookmarkOpen(b)}>
           {b.title}
         </a>
