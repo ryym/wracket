@@ -63,9 +63,7 @@ class PocketSynchronizer
 
   def import_retrieved_data(user_id, ret, json)
     if ret.err?
-      @logger.error(<<~MSG)
-        failed to retrieve: #{ret.response.code} [err code: #{ret.error_code}] #{ret.message}
-      MSG
+      @logger.error("failed to retrieve: #{ret}")
       return [false, ret.message]
     end
 

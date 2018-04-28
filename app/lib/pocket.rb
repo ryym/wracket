@@ -22,5 +22,11 @@ module Pocket
       @error_code = res.header('X-Error-Code')
       @message = res.header('X-Error')
     end
+
+    def to_s
+      '[pocket response error] ' \
+        "http status code: #{@response.code}, "\
+        "error code: #{@error_code}, message: #{@message}"
+    end
   end
 end
