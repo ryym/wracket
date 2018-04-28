@@ -2,12 +2,15 @@
 
 class BookmarkUpdater
   def self.create(user)
-    new(user)
+    new(user, {
+      pocket: PocketClient.create(user.access_token),
+    })
   end
 
-  def initialize(user)
+  def initialize(user, pocket:)
     raise ArgumentError, 'invalid user' if !user.is_a?(User)
     @user = user
+    @pocket = pocket
   end
 
   def open(bookmark_id)
@@ -22,11 +25,31 @@ class BookmarkUpdater
     end
   end
 
+  def favorite(bookmark_id)
+    bk = find_bookmark(bookmark_id)
+
+    now = Time.current
+    ret = @pocket.favorite(bk.entry_id, now)
+    raise "failed to favorite bookmark #{bk.id}: #{ret}" if ret.err?
+
+    bk.update!(favorite: true, favorited_at: now)
+    bk
+  end
+
+  def unfavorite(bookmark_id)
+    bk = find_bookmark(bookmark_id)
+
+    now = Time.current
+    ret = @pocket.unfavorite(bk.entry_id, now)
+    raise "failed to unfavorite bookmark #{bk.id}: #{ret}" if ret.err?
+
+    bk.update!(favorite: false)
+    bk
+  end
+
   # TODO: implement modifications.
   # def archive(bookmark_id); end
   # def unarchive(bookmark_id); end
-  # def favorite(bookmark_id); end
-  # def unfavorite(bookmark_id); end
   # def delete(bookmark_id); end
 
   private
