@@ -22,10 +22,7 @@ class PocketClient
   end
 
   def retrieve(params = {})
-    res = @http.post_json('/v3/get', params.merge(
-      consumer_key: @consumer_key,
-      access_token: @access_token,
-    ))
+    res = @http.post_json('/v3/get', with_creds(params))
     res.success? ? ResRetrieve.new(res) : Pocket::ResErr.new(res)
   end
 
@@ -47,9 +44,55 @@ class PocketClient
       offset += count
     end
   end
+
+  def favorite(entry_id, time = Time.current)
+    modify({
+      action: 'favorite',
+      item_id: entry_id,
+      time: time.to_i,
+    })
+  end
+
+  def unfavorite(entry_id, time = Time.current)
+    modify({
+      action: 'unfavorite',
+      item_id: entry_id,
+      time: time.to_i,
+    })
+  end
+
+  def modify(*actions)
+    res = @http.post_json('/v3/send', with_creds({ actions: actions }))
+    res.success? ? ResModify.new(res) : Pocket::ResErr.new(res)
+  end
+
+  private
+
+  def with_creds(params)
+    params.merge({
+      consumer_key: @consumer_key,
+      access_token: @access_token,
+    })
+  end
 end
 
 class PocketClient
   class ResRetrieve < Pocket::Result
+  end
+
+  # https://getpocket.com/developer/docs/v3/modify
+  class ResModify < Pocket::Result
+    STATUS_OK = '1'
+    STATUS_ERR = '0'
+
+    alias request_err? err?
+
+    def modification_err?
+      @response.body_json['status'] == STATUS_OK
+    end
+
+    def err?
+      request_err? || modification_err?
+    end
   end
 end
