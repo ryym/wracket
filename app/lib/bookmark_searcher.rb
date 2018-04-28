@@ -28,8 +28,10 @@ class BookmarkSearcher
 
   def set_offset(query, cdtn)
     query = query.limit(@limit)
-    return query if cdtn.offset_value.blank?
-    query.where('added_to_pocket_at < ?', Time.zone.at(cdtn.offset_value.to_i))
+    return query.order(added_to_pocket_at: :desc) if cdtn.offset_value.blank?
+    query.
+      order(added_to_pocket_at: :desc).
+      where('added_to_pocket_at < ?', Time.zone.at(cdtn.offset_value.to_i))
   end
 end
 
