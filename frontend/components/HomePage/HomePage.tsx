@@ -10,7 +10,7 @@ import {
   openBookmark,
   resetOpenBookmark,
 } from '../../store/actions';
-import {listBookmarks, getSearchCondition} from '../../store/selectors';
+import {listBookmarks, getSearchCondition, canLoadMore} from '../../store/selectors';
 import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
 import {Bookmark, BookmarkStatus, SearchCondition} from '../../lib/models';
@@ -20,6 +20,7 @@ const MIN_DISPLAY_COUNT = 30;
 export interface Props {
   bookmarks: Bookmark[];
   nowLoading: boolean;
+  canLoadMore: boolean;
   condition: SearchCondition;
 }
 export type AllProps = Props & {dispatch: Dispatch};
@@ -45,11 +46,15 @@ export class _HomePage extends React.PureComponent<AllProps> {
   }
 
   componentDidUpdate(prev: AllProps) {
-    const {bookmarks, dispatch} = this.props;
+    const {bookmarks} = this.props;
     if (prev.bookmarks !== bookmarks && bookmarks.length < MIN_DISPLAY_COUNT) {
-      dispatch(loadMoreBookmarks());
+      this.loadMoreBookmarks();
     }
   }
+
+  loadMoreBookmarks = () => {
+    this.props.dispatch(loadMoreBookmarks());
+  };
 
   render() {
     const {props} = this;
@@ -63,6 +68,12 @@ export class _HomePage extends React.PureComponent<AllProps> {
           onBookmarkOpen={this.markBookmarkAsOpen}
           onBackToUnread={this.backBookmarkToUnread}
         />
+        {/* TODO: Load more automatically on scroll. */}
+        {props.canLoadMore && (
+          <button type="button" onClick={this.loadMoreBookmarks}>
+            Load more
+          </button>
+        )}
         {props.nowLoading && 'Now loading...'}
       </div>
     );
@@ -73,6 +84,7 @@ export const HomePage = connect((state: State): Props => {
   return {
     bookmarks: listBookmarks(state),
     nowLoading: state.bookmarks.nowLoading,
+    canLoadMore: canLoadMore(state),
     condition: getSearchCondition(state),
   };
 })(_HomePage);

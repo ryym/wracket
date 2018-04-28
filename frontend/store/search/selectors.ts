@@ -8,3 +8,8 @@ export const getSearchCondition = (state: State): SearchCondition => {
 export const getCurrentQueryState = ({search}: State): QueryState | null => {
   return search.stateByQuery[search.currentQuery];
 };
+
+export const canLoadMore = (state: State): boolean => {
+  const qs = getCurrentQueryState(state);
+  return qs == null || !qs.allFetched;
+};
