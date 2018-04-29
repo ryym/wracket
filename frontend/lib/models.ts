@@ -13,6 +13,8 @@ export interface Bookmark {
   readonly url: string;
   readonly status: BookmarkStatus;
   readonly addedAt: UnixTime;
+  readonly favorite: boolean;
+  readonly favoritedAt: UnixTime | null;
 }
 
 export interface BookmarkById {
