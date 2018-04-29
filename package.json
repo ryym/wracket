@@ -26,7 +26,14 @@
       "bundle exec rubocop -a --force-exclusion"
     ]
   },
+  "//": [
+    "TODO: Remove @types/node from devDependencies",
+    "@types/react-dom depends on @types/node, and its lates version is 10.0.0.",
+    "But it has a bug https://github.com/DefinitelyTyped/DefinitelyTyped/issues/25342.",
+    "So use @types/node 8.10.10 explicitly for now."
+  ],
   "devDependencies": {
+    "@types/node": "8.10.10",
     "awesome-typescript-loader": "^3.5.0",
     "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.28.10",
