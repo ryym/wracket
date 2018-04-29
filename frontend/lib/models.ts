@@ -4,12 +4,15 @@ export enum BookmarkStatus {
   Archived = 'archived',
 }
 
+// We represents a timestamp by just a number for now.
+export type UnixTime = number;
+
 export interface Bookmark {
   readonly id: string;
   readonly title: string;
   readonly url: string;
   readonly status: BookmarkStatus;
-  readonly addedAt: number;
+  readonly addedAt: UnixTime;
 }
 
 export interface BookmarkById {
