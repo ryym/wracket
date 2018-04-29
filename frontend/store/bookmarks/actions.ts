@@ -9,6 +9,8 @@ import {
   getCurrentQueryState,
 } from '../selectors';
 
+// TODO: Handle errors properly.
+
 export function syncBookmarks(): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
     dispatch({type: 'SYNC_BOOKMARKS_START'});
@@ -96,18 +98,20 @@ export function resetOpenBookmark(id: string): Thunk {
 
 export function favoriteBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
+    dispatch({type: 'FAVORITE_BOOKMARK_START', id});
     const res = await api.favoriteBookmark(id);
     if (res != null) {
-      dispatch({type: 'FAVORITE_BOOKMARK', id, favoritedAt: res.favoritedAt});
+      dispatch({type: 'FAVORITE_BOOKMARK_SUCCESS', id, favoritedAt: res.favoritedAt});
     }
   });
 }
 
 export function unfavoriteBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
+    dispatch({type: 'UNFAVORITE_BOOKMARK_START', id});
     const res = await api.unfavoriteBookmark(id);
     if (res != null) {
-      dispatch({type: 'UNFAVORITE_BOOKMARK', id});
+      dispatch({type: 'UNFAVORITE_BOOKMARK_SUCCESS', id});
     }
   });
 }

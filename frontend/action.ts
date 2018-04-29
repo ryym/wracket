@@ -14,8 +14,10 @@ export type Action =
   | {type: 'LOAD_MORE_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById; isLast: boolean}
   | {type: 'OPEN_BOOKMARK'; id: string}
   | {type: 'RESET_OPEN_BOOKMARK'; id: string}
-  | {type: 'FAVORITE_BOOKMARK'; id: string; favoritedAt: UnixTime}
-  | {type: 'UNFAVORITE_BOOKMARK'; id: string}
+  | {type: 'FAVORITE_BOOKMARK_START'; id: string}
+  | {type: 'FAVORITE_BOOKMARK_SUCCESS'; id: string; favoritedAt: UnixTime}
+  | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
+  | {type: 'UNFAVORITE_BOOKMARK_SUCCESS'; id: string}
   | {type: 'CLEAR_QUERY_COUNT_CACHES'};
 
 export type Thunk<R = void, T extends ThunkType = any> = ThunkAction<

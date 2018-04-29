@@ -54,19 +54,29 @@ export function reduceBookmarks(
       };
     }
 
-    case 'FAVORITE_BOOKMARK': {
+    case 'FAVORITE_BOOKMARK_START': {
       const b = bks.byId[action.id]!;
       return {
         ...bks,
         byId: updateObj(bks.byId, b.id, b => ({
           ...b,
           favorite: true,
+        })),
+      };
+    }
+
+    case 'FAVORITE_BOOKMARK_SUCCESS': {
+      const b = bks.byId[action.id]!;
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, b.id, b => ({
+          ...b,
           favoritedAt: action.favoritedAt,
         })),
       };
     }
 
-    case 'UNFAVORITE_BOOKMARK': {
+    case 'UNFAVORITE_BOOKMARK_START': {
       const b = bks.byId[action.id]!;
       return {
         ...bks,
