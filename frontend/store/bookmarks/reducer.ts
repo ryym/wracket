@@ -54,6 +54,26 @@ export function reduceBookmarks(
       };
     }
 
+    case 'FAVORITE_BOOKMARK': {
+      const b = bks.byId[action.id]!;
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, b.id, b => ({
+          ...b,
+          favorite: true,
+          favoritedAt: action.favoritedAt,
+        })),
+      };
+    }
+
+    case 'UNFAVORITE_BOOKMARK': {
+      const b = bks.byId[action.id]!;
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, b.id, b => ({...b, favorite: false})),
+      };
+    }
+
     default:
       return bks;
   }

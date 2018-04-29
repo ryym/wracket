@@ -9,6 +9,8 @@ import {
   loadMoreBookmarks,
   openBookmark,
   resetOpenBookmark,
+  favoriteBookmark,
+  unfavoriteBookmark,
 } from '../../store/actions';
 import {listBookmarks, getSearchCondition, canLoadMore} from '../../store/selectors';
 import {BookmarkList} from '../BookmarkList';
@@ -40,6 +42,11 @@ export class _HomePage extends React.PureComponent<AllProps> {
     this.props.dispatch(resetOpenBookmark(b.id));
   };
 
+  toggleFavorite = (b: Bookmark, favorite: boolean) => {
+    const action = favorite ? favoriteBookmark(b.id) : unfavoriteBookmark(b.id);
+    this.props.dispatch(action);
+  };
+
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(initShownBookmarks());
@@ -67,6 +74,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
           bookmarks={props.bookmarks}
           onBookmarkOpen={this.markBookmarkAsOpen}
           onBackToUnread={this.backBookmarkToUnread}
+          onFavoriteToggle={this.toggleFavorite}
         />
         {/* TODO: Load more automatically on scroll. */}
         {props.canLoadMore && (

@@ -6,12 +6,16 @@ export interface Props {
   readonly bookmarks: Bookmark[];
   readonly onBookmarkOpen?: (b: Bookmark) => void;
   readonly onBackToUnread?: (b: Bookmark) => void;
+  readonly onFavoriteToggle?: (b: Bookmark, favorite: boolean) => void;
 }
+
+const noop = () => {};
 
 export function BookmarkList({
   bookmarks,
-  onBookmarkOpen = () => {},
-  onBackToUnread = () => {},
+  onBookmarkOpen = noop,
+  onBackToUnread = noop,
+  onFavoriteToggle = noop,
 }: Props) {
   const items = bookmarks.map(b => {
     return (
@@ -23,6 +27,9 @@ export function BookmarkList({
           {b.status === BookmarkStatus.Reading && (
             <button onClick={() => onBackToUnread(b)}>unread</button>
           )}
+          <button onClick={() => onFavoriteToggle(b, !b.favorite)}>
+            {b.favorite ? 'unfavorite' : 'favorite'}
+          </button>
         </div>
       </li>
     );

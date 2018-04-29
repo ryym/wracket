@@ -82,14 +82,32 @@ export function loadMoreBookmarks(): Thunk {
 
 export function openBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
+    await api.openBookmark(id);
     dispatch({type: 'OPEN_BOOKMARK', id});
-    api.openBookmark(id);
   });
 }
 
 export function resetOpenBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
+    await api.resetOpenBookmark(id);
     dispatch({type: 'RESET_OPEN_BOOKMARK', id});
-    api.resetOpenBookmark(id);
+  });
+}
+
+export function favoriteBookmark(id: string): Thunk {
+  return thunk(async (dispatch, getState, {api}) => {
+    const res = await api.favoriteBookmark(id);
+    if (res != null) {
+      dispatch({type: 'FAVORITE_BOOKMARK', id, favoritedAt: res.favoritedAt});
+    }
+  });
+}
+
+export function unfavoriteBookmark(id: string): Thunk {
+  return thunk(async (dispatch, getState, {api}) => {
+    const res = await api.unfavoriteBookmark(id);
+    if (res != null) {
+      dispatch({type: 'UNFAVORITE_BOOKMARK', id});
+    }
   });
 }
