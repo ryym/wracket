@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     scope 'bookmarks/:id' do
       put '/open', to: 'bookmarks#open'
       put '/reset_open', to: 'bookmarks#reset_open'
+      put '/favorite', to: 'bookmarks#favorite'
+      put '/unfavorite', to: 'bookmarks#unfavorite'
     end
 
     match '(*path)', via: :all, to: proc { [404, {}, ['api not found']] }

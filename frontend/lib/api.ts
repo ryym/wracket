@@ -1,9 +1,13 @@
 import {Ajax, createAjax, Response} from './ajax';
-import {Bookmark, BookmarkById, SearchCondition} from '../lib/models';
+import {Bookmark, BookmarkById, SearchCondition, UnixTime} from '../lib/models';
 
 export interface SearchResult {
   bookmarks: BookmarkById;
   isLast: boolean;
+}
+
+export interface FavoriteResult {
+  favoritedAt: UnixTime;
 }
 
 const createDefaultAjax = (csrfToken: string): Ajax =>
@@ -52,6 +56,26 @@ export class API {
     const res = await this.ajax<{}>(`/bookmarks/${bookmarkId}/reset_open`, {method: 'put'});
     if (!res.isSuccess) {
       throw new Error(`failed to reset bookmark ${bookmarkId} open: ${res}`);
+    }
+    return {};
+  }
+
+  async favoriteBookmark(bookmarkId: string): Promise<FavoriteResult | null> {
+    const res = await this.ajax<FavoriteResult | null>(`/bookmarks/${bookmarkId}/favorite`, {
+      method: 'put',
+    });
+    if (!res.isSuccess) {
+      throw new Error(`failed to favorite bookmark ${bookmarkId}: ${res}`);
+    }
+    return res.data;
+  }
+
+  async unfavoriteBookmark(bookmarkId: string): Promise<{} | null> {
+    const res = await this.ajax<{} | null>(`/bookmarks/${bookmarkId}/unfavorite`, {
+      method: 'put',
+    });
+    if (!res.isSuccess) {
+      throw new Error(`failed to unfavorite bookmark ${bookmarkId}: ${res}`);
     }
     return {};
   }
