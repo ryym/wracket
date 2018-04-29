@@ -21,7 +21,7 @@ export function BookmarkList({
     return (
       <li key={b.id} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
         <a href={b.url} target="_blank" onClick={() => onBookmarkOpen(b)}>
-          {b.title}
+          {b.title || b.url}
         </a>
         <div>
           {b.status === BookmarkStatus.Reading && (
