@@ -42,7 +42,7 @@ export function reduceBookmarks(
       const b = bks.byId[action.id]!;
       return {
         ...bks,
-        byId: updateObj(bks.byId, String(b.id), changeStatus(BookmarkStatus.Reading)),
+        byId: updateObj(bks.byId, b.id, changeStatus(BookmarkStatus.Reading)),
       };
     }
 
@@ -50,7 +50,7 @@ export function reduceBookmarks(
       const b = bks.byId[action.id]!;
       return {
         ...bks,
-        byId: updateObj(bks.byId, String(b.id), changeStatus(BookmarkStatus.Unread)),
+        byId: updateObj(bks.byId, b.id, changeStatus(BookmarkStatus.Unread)),
       };
     }
 
