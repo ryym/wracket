@@ -19,7 +19,7 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
       };
     }
 
-    case 'SYNC_BOOKMARKS_SUCCESS':
+    case 'SYNC_BOOKMARKS_OK':
       return {
         ...state,
         stateByQuery: {},
@@ -42,7 +42,7 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
         stateByQuery: clearCountCaches(state.stateByQuery),
       };
 
-    case 'LOAD_MORE_BOOKMARKS_SUCCESS':
+    case 'LOAD_MORE_BOOKMARKS_OK':
       return {
         ...state,
         stateByQuery: updateObj(state.stateByQuery, state.currentQuery, s => ({

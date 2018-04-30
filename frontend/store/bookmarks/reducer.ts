@@ -15,7 +15,7 @@ export function reduceBookmarks(
         nowLoading: true,
       };
 
-    case 'SYNC_BOOKMARKS_SUCCESS':
+    case 'SYNC_BOOKMARKS_OK':
       return {
         ...bks,
         shownIds: [],
@@ -23,7 +23,7 @@ export function reduceBookmarks(
         nowLoading: false,
       };
 
-    case 'LOAD_MORE_BOOKMARKS_SUCCESS': {
+    case 'LOAD_MORE_BOOKMARKS_OK': {
       const isEmpty = Object.keys(action.bookmarks).length === 0;
       return {
         ...bks,
@@ -65,7 +65,7 @@ export function reduceBookmarks(
       };
     }
 
-    case 'FAVORITE_BOOKMARK_SUCCESS': {
+    case 'FAVORITE_BOOKMARK_OK': {
       const b = bks.byId[action.id]!;
       return {
         ...bks,

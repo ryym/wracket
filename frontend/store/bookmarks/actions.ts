@@ -20,7 +20,7 @@ export function syncBookmarks(): Thunk {
 
     if (bookmarks) {
       dispatch({
-        type: 'SYNC_BOOKMARKS_SUCCESS',
+        type: 'SYNC_BOOKMARKS_OK',
         bookmarks,
       });
     }
@@ -74,7 +74,7 @@ export function loadMoreBookmarks(): Thunk {
     const result = await api.search(getSearchCondition(state), lastBookmark);
     if (result) {
       dispatch({
-        type: 'LOAD_MORE_BOOKMARKS_SUCCESS',
+        type: 'LOAD_MORE_BOOKMARKS_OK',
         bookmarks: result.bookmarks,
         isLast: result.isLast,
       });
@@ -101,7 +101,7 @@ export function favoriteBookmark(id: string): Thunk {
     dispatch({type: 'FAVORITE_BOOKMARK_START', id});
     const res = await api.favoriteBookmark(id);
     if (res != null) {
-      dispatch({type: 'FAVORITE_BOOKMARK_SUCCESS', id, favoritedAt: res.favoritedAt});
+      dispatch({type: 'FAVORITE_BOOKMARK_OK', id, favoritedAt: res.favoritedAt});
     }
   });
 }
@@ -111,7 +111,7 @@ export function unfavoriteBookmark(id: string): Thunk {
     dispatch({type: 'UNFAVORITE_BOOKMARK_START', id});
     const res = await api.unfavoriteBookmark(id);
     if (res != null) {
-      dispatch({type: 'UNFAVORITE_BOOKMARK_SUCCESS', id});
+      dispatch({type: 'UNFAVORITE_BOOKMARK_OK', id});
     }
   });
 }

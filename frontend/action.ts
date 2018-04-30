@@ -8,17 +8,17 @@ export type Action =
   | {type: 'PING'; name: string}
   | {type: 'CATCH_ERR'; err: Error}
   | {type: 'SYNC_BOOKMARKS_START'}
-  | {type: 'SYNC_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById}
+  | {type: 'SYNC_BOOKMARKS_OK'; bookmarks: BookmarkById}
   | {type: 'SEARCH'; condition: Partial<SearchCondition>}
   | {type: 'UPDATE_SHOWN_BOOKMARKS'; ids: string[]}
   | {type: 'LOAD_MORE_BOOKMARKS_START'}
-  | {type: 'LOAD_MORE_BOOKMARKS_SUCCESS'; bookmarks: BookmarkById; isLast: boolean}
+  | {type: 'LOAD_MORE_BOOKMARKS_OK'; bookmarks: BookmarkById; isLast: boolean}
   | {type: 'OPEN_BOOKMARK'; id: string}
   | {type: 'RESET_OPEN_BOOKMARK'; id: string}
   | {type: 'FAVORITE_BOOKMARK_START'; id: string}
-  | {type: 'FAVORITE_BOOKMARK_SUCCESS'; id: string; favoritedAt: UnixTime}
+  | {type: 'FAVORITE_BOOKMARK_OK'; id: string; favoritedAt: UnixTime}
   | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
-  | {type: 'UNFAVORITE_BOOKMARK_SUCCESS'; id: string}
+  | {type: 'UNFAVORITE_BOOKMARK_OK'; id: string}
   | {type: 'CLEAR_QUERY_COUNT_CACHES'};
 
 export type Thunk<R = void, T extends ThunkType = any> = ThunkAction<
