@@ -11,7 +11,6 @@ class JsonMaker
         status: b.status,
         addedAt: b.added_to_pocket_at.to_i,
         favorite: b.favorite,
-        favoritedAt: b.favorited_at&.to_i,
       }
     end
   end

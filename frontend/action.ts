@@ -1,6 +1,6 @@
 import {Action as ReduxAction} from 'redux';
 import {AnyThunkAction, ThunkAction, ThunkType} from 'redux-dutiful-thunk';
-import {BookmarkById, SearchCondition, UnixTime} from './lib/models';
+import {BookmarkById, SearchCondition} from './lib/models';
 import {State} from './state';
 import {ThunkContext} from './thunk-ctx';
 
@@ -28,10 +28,8 @@ export type Action =
   | {type: 'OPEN_BOOKMARK'; id: string}
   | {type: 'RESET_OPEN_BOOKMARK'; id: string}
   | {type: 'FAVORITE_BOOKMARK_START'; id: string}
-  | {type: 'FAVORITE_BOOKMARK_OK'; id: string; favoritedAt: UnixTime}
   | Err<{type: 'FAVORITE_BOOKMARK_ERR'; id: string}>
   | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
-  | {type: 'UNFAVORITE_BOOKMARK_OK'; id: string}
   | Err<{type: 'UNFAVORITE_BOOKMARK_ERR'; id: string}>
   | {type: 'CLEAR_QUERY_COUNT_CACHES'};
 

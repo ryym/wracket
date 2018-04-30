@@ -104,12 +104,9 @@ export function favoriteBookmark(id: string): Thunk {
 
     dispatch({type: 'FAVORITE_BOOKMARK_START', id});
 
-    const res = await api.favoriteBookmark(id).catch(err => {
+    await api.favoriteBookmark(id).catch(err => {
       dispatch({type: 'FAVORITE_BOOKMARK_ERR', id, err});
     });
-    if (res != null) {
-      dispatch({type: 'FAVORITE_BOOKMARK_OK', id, favoritedAt: res.favoritedAt});
-    }
   });
 }
 
@@ -122,11 +119,8 @@ export function unfavoriteBookmark(id: string): Thunk {
 
     dispatch({type: 'UNFAVORITE_BOOKMARK_START', id});
 
-    const res = await api.unfavoriteBookmark(id).catch(err => {
+    await api.unfavoriteBookmark(id).catch(err => {
       dispatch({type: 'UNFAVORITE_BOOKMARK_ERR', id, err});
     });
-    if (res != null) {
-      dispatch({type: 'UNFAVORITE_BOOKMARK_OK', id});
-    }
   });
 }

@@ -14,7 +14,6 @@ export interface Bookmark {
   readonly status: BookmarkStatus;
   readonly addedAt: UnixTime;
   readonly favorite: boolean;
-  readonly favoritedAt: UnixTime | null;
 }
 
 export interface BookmarkById {

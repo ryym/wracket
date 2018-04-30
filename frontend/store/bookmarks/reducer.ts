@@ -59,12 +59,6 @@ export function reduceBookmarks(
         })),
       };
 
-    case 'FAVORITE_BOOKMARK_OK':
-      return {
-        ...bks,
-        byId: updateObj(bks.byId, action.id, b => ({...b, favoritedAt: action.favoritedAt})),
-      };
-
     case 'FAVORITE_BOOKMARK_ERR':
       return {
         ...bks,
