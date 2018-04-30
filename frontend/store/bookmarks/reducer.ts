@@ -76,11 +76,27 @@ export function reduceBookmarks(
       };
     }
 
+    case 'FAVORITE_BOOKMARK_ERR': {
+      const b = bks.byId[action.id]!;
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, b.id, b => ({...b, favorite: false})),
+      };
+    }
+
     case 'UNFAVORITE_BOOKMARK_START': {
       const b = bks.byId[action.id]!;
       return {
         ...bks,
         byId: updateObj(bks.byId, b.id, b => ({...b, favorite: false})),
+      };
+    }
+
+    case 'UNFAVORITE_BOOKMARK_ERR': {
+      const b = bks.byId[action.id]!;
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, b.id, b => ({...b, favorite: true})),
       };
     }
 

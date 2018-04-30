@@ -29,8 +29,10 @@ export type Action =
   | {type: 'RESET_OPEN_BOOKMARK'; id: string}
   | {type: 'FAVORITE_BOOKMARK_START'; id: string}
   | {type: 'FAVORITE_BOOKMARK_OK'; id: string; favoritedAt: UnixTime}
+  | Err<{type: 'FAVORITE_BOOKMARK_ERR'; id: string}>
   | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
   | {type: 'UNFAVORITE_BOOKMARK_OK'; id: string}
+  | Err<{type: 'UNFAVORITE_BOOKMARK_ERR'; id: string}>
   | {type: 'CLEAR_QUERY_COUNT_CACHES'};
 
 export function isErrorAction(action: Action): action is ErrorAction {
