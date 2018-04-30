@@ -18,3 +18,5 @@ export const getLastBookmark = ({bookmarks: {shownIds, byId}}: State): Bookmark 
 export const getBookmarksById = ({bookmarks}: State): BookmarkById => {
   return bookmarks.byId;
 };
+
+export const getBookmark = ({bookmarks}: State, id: string): Bookmark | null => bookmarks.byId[id];

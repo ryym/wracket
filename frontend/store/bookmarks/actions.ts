@@ -5,6 +5,7 @@ import {selectShownIds} from '../../lib/bookmark-lister';
 import {
   getLastBookmark,
   getBookmarksById,
+  getBookmark,
   getSearchCondition,
   getCurrentQueryState,
 } from '../selectors';
@@ -96,6 +97,11 @@ export function resetOpenBookmark(id: string): Thunk {
 
 export function favoriteBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
+    const bk = getBookmark(getState(), id);
+    if (bk == null || bk.favorite) {
+      return;
+    }
+
     dispatch({type: 'FAVORITE_BOOKMARK_START', id});
 
     const res = await api.favoriteBookmark(id).catch(err => {
@@ -109,6 +115,11 @@ export function favoriteBookmark(id: string): Thunk {
 
 export function unfavoriteBookmark(id: string): Thunk {
   return thunk(async (dispatch, getState, {api}) => {
+    const bk = getBookmark(getState(), id);
+    if (bk == null || !bk.favorite) {
+      return;
+    }
+
     dispatch({type: 'UNFAVORITE_BOOKMARK_START', id});
 
     const res = await api.unfavoriteBookmark(id).catch(err => {
