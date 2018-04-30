@@ -1,7 +1,7 @@
 import {Dispatch, Middleware} from 'redux';
 import {isThunkAction} from 'redux-dutiful-thunk';
 import {State} from '../state';
-import {Action} from '../action';
+import {Action, isErrorAction} from '../action';
 import {catchError} from './actions';
 
 const getActionType = (act: Action): String => {
@@ -21,6 +21,8 @@ export function errorCatchMiddleware(): Middleware<{}, State, Dispatch<Action>> 
         const result = next(action);
         if (isThunkAction(result)) {
           result.promise.catch(storeCaughtErr(action));
+        } else if (isErrorAction(action)) {
+          storeCaughtErr(action)(action.err);
         }
       } catch (err) {
         storeCaughtErr(action)(err);
