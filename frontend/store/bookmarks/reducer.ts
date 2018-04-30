@@ -38,67 +38,50 @@ export function reduceBookmarks(
         shownIds: action.ids,
       };
 
-    case 'OPEN_BOOKMARK': {
-      const b = bks.byId[action.id]!;
+    case 'OPEN_BOOKMARK':
       return {
         ...bks,
-        byId: updateObj(bks.byId, b.id, changeStatus(BookmarkStatus.Reading)),
+        byId: updateObj(bks.byId, action.id, changeStatus(BookmarkStatus.Reading)),
       };
-    }
 
-    case 'RESET_OPEN_BOOKMARK': {
-      const b = bks.byId[action.id]!;
+    case 'RESET_OPEN_BOOKMARK':
       return {
         ...bks,
-        byId: updateObj(bks.byId, b.id, changeStatus(BookmarkStatus.Unread)),
+        byId: updateObj(bks.byId, action.id, changeStatus(BookmarkStatus.Unread)),
       };
-    }
 
-    case 'FAVORITE_BOOKMARK_START': {
-      const b = bks.byId[action.id]!;
+    case 'FAVORITE_BOOKMARK_START':
       return {
         ...bks,
-        byId: updateObj(bks.byId, b.id, b => ({
+        byId: updateObj(bks.byId, action.id, b => ({
           ...b,
           favorite: true,
         })),
       };
-    }
 
-    case 'FAVORITE_BOOKMARK_OK': {
-      const b = bks.byId[action.id]!;
+    case 'FAVORITE_BOOKMARK_OK':
       return {
         ...bks,
-        byId: updateObj(bks.byId, b.id, b => ({
-          ...b,
-          favoritedAt: action.favoritedAt,
-        })),
+        byId: updateObj(bks.byId, action.id, b => ({...b, favoritedAt: action.favoritedAt})),
       };
-    }
 
-    case 'FAVORITE_BOOKMARK_ERR': {
-      const b = bks.byId[action.id]!;
+    case 'FAVORITE_BOOKMARK_ERR':
       return {
         ...bks,
-        byId: updateObj(bks.byId, b.id, b => ({...b, favorite: false})),
+        byId: updateObj(bks.byId, action.id, b => ({...b, favorite: false})),
       };
-    }
 
-    case 'UNFAVORITE_BOOKMARK_START': {
-      const b = bks.byId[action.id]!;
+    case 'UNFAVORITE_BOOKMARK_START':
       return {
         ...bks,
-        byId: updateObj(bks.byId, b.id, b => ({...b, favorite: false})),
+        byId: updateObj(bks.byId, action.id, b => ({...b, favorite: false})),
       };
-    }
 
-    case 'UNFAVORITE_BOOKMARK_ERR': {
-      const b = bks.byId[action.id]!;
+    case 'UNFAVORITE_BOOKMARK_ERR':
       return {
         ...bks,
-        byId: updateObj(bks.byId, b.id, b => ({...b, favorite: true})),
+        byId: updateObj(bks.byId, action.id, b => ({...b, favorite: true})),
       };
-    }
 
     default:
       return bks;
