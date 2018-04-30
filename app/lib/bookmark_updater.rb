@@ -32,7 +32,7 @@ class BookmarkUpdater
     ret = @pocket.favorite(bk.entry_id, now)
     raise "failed to favorite bookmark #{bk.id}: #{ret}" if ret.err?
 
-    bk.update!(favorite: true, favorited_at: now)
+    bk.update_with_pocket!(now, favorite: true, favorited_at: now)
     bk
   end
 
@@ -43,7 +43,7 @@ class BookmarkUpdater
     ret = @pocket.unfavorite(bk.entry_id, now)
     raise "failed to unfavorite bookmark #{bk.id}: #{ret}" if ret.err?
 
-    bk.update!(favorite: false)
+    bk.update_with_pocket!(now, favorite: false)
     bk
   end
 

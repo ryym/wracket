@@ -25,4 +25,12 @@ class Bookmark < ApplicationRecord
   scope :by_user, ->(user) { where(user: user) }
 
   scope :order_by_newest, -> { order(added_to_pocket_at: :desc) }
+
+  def update_with_pocket(time, attrs)
+    update(attrs.merge(updated_on_pocket_at: time))
+  end
+
+  def update_with_pocket!(time, attrs)
+    update!(attrs.merge(updated_on_pocket_at: time))
+  end
 end
