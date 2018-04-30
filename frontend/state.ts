@@ -4,6 +4,7 @@ import {conditionToQuery} from './lib/search-query';
 export interface State {
   readonly bookmarks: BookmarkState;
   readonly search: SearchState;
+  readonly errors: ErrorsState;
 }
 
 export interface BookmarkState {
@@ -51,3 +52,9 @@ export const newSearchState = (): SearchState => {
     stateByQuery: {},
   };
 };
+
+export interface ErrorsState {
+  readonly err: Error | null;
+}
+
+export const newErrorsState = (): ErrorsState => ({err: null});

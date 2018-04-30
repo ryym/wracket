@@ -5,6 +5,7 @@ import {State} from '../state';
 import {Action} from '../action';
 import {ThunkContext} from '../thunk-ctx';
 import {rootReducer} from './reducer';
+import {errorCatchMiddleware} from './middlewares';
 import {enableBookmarkSearch} from './bookmarks/middlewares';
 
 export type Dispatch = ReduxDispatch<Action>;
@@ -20,7 +21,12 @@ export function configureStore(conf: StoreConfig): Store {
   const store = createStore<State, Action, {}, {}>(
     rootReducer,
     conf.initialState || {},
-    applyMiddleware(logger, enableBookmarkSearch(), createThunkMiddleware(conf.context)),
+    applyMiddleware(
+      logger,
+      errorCatchMiddleware(),
+      enableBookmarkSearch(),
+      createThunkMiddleware(conf.context),
+    ),
   );
 
   // I don't know how to pass the type check for this store.
