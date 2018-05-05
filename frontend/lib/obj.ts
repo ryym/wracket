@@ -8,3 +8,13 @@ export const updateObj = <O extends {}, K extends keyof O>(
   // https://github.com/Microsoft/TypeScript/issues/13557
   return cur === next ? obj : {...(obj as any), [key]: next};
 };
+
+export const pick = <T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> => {
+  return keys.reduce(
+    (o, key) => {
+      o[key] = obj[key];
+      return o;
+    },
+    {} as Pick<T, K>,
+  );
+};
