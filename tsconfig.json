@@ -13,8 +13,7 @@
       "*": ["./frontend/@types/*"]
     }
   },
-  "include": [
-    "./frontend/**/*"
-  ]
+  "include": ["./frontend/**/*"],
+  "exclude": ["**/*_test.ts"]
 }
 
