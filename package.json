@@ -19,7 +19,7 @@
     ],
     "*.{ts,tsx}": [
       "npx prettier --write",
-      "npx tslint -p ."
+      "npx tslint -p tsconfig.precommit.json"
     ],
     "*.{css,scss}": [
       "npx prettier --write"

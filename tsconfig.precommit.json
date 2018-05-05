@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "//": "Make TSLint check test files as well.",
+  "exclude": []
+}
