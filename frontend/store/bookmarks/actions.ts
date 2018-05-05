@@ -2,6 +2,7 @@ import {thunk, thunkAs} from 'redux-dutiful-thunk';
 import {Action, Thunk} from '../../action';
 import {SearchCondition} from '../../lib/models';
 import {selectShownIds} from '../../lib/bookmark-lister';
+import * as api from '../../lib/api';
 import {
   getLastBookmark,
   getBookmarksById,
@@ -10,12 +11,17 @@ import {
   getCurrentQueryState,
 } from '../selectors';
 
-export function syncBookmarks(): Thunk {
-  return thunk(async (dispatch, getState, {api}) => {
+export function syncBookmarks(
+  d = {
+    getSearchCondition,
+    synchronize: api.synchronize,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
     dispatch({type: 'SYNC_BOOKMARKS_START'});
 
-    const cdtn = getSearchCondition(getState());
-    const bookmarks = await api.synchronize(cdtn);
+    const cdtn = d.getSearchCondition(getState());
+    const bookmarks = await d.synchronize(cdtn);
 
     if (bookmarks) {
       dispatch({
@@ -31,23 +37,31 @@ export function search(condition: Partial<SearchCondition>): Action {
 }
 
 export function initShownBookmarks(): Thunk {
-  return thunkAs('initShownBookmarks', async (dispatch, getState) => {
+  return thunkAs(initShownBookmarks.name, async (dispatch, getState) => {
     dispatch(updateShownBookmarks({conditionChangeOnly: true}));
   });
 }
 
-export function updateShownBookmarks({conditionChangeOnly}: {conditionChangeOnly: boolean}): Thunk {
-  return thunkAs('updateShownBookmarks', async (dispatch, getState) => {
+export function updateShownBookmarks(
+  {conditionChangeOnly}: {conditionChangeOnly: boolean},
+  d = {
+    getBookmarksById,
+    getSearchCondition,
+    getCurrentQueryState,
+    selectShownIds,
+  },
+): Thunk {
+  return thunkAs(updateShownBookmarks.name, async (dispatch, getState) => {
     const state = getState();
-    const bookmarksById = getBookmarksById(state);
-    const cdtn = getSearchCondition(state);
+    const bookmarksById = d.getBookmarksById(state);
+    const cdtn = d.getSearchCondition(state);
 
     if (!conditionChangeOnly) {
       dispatch({type: 'CLEAR_QUERY_COUNT_CACHES'});
     }
 
-    const qs = getCurrentQueryState(state);
-    const ids = selectShownIds(bookmarksById, cdtn, qs ? qs.count : null);
+    const qs = d.getCurrentQueryState(state);
+    const ids = d.selectShownIds(bookmarksById, cdtn, qs ? qs.count : null);
     dispatch({type: 'UPDATE_SHOWN_BOOKMARKS', ids});
   });
 }
@@ -59,18 +73,25 @@ export function updateShownBookmarks({conditionChangeOnly}: {conditionChangeOnly
 //   4. This action is called again because of the new loaded bookmarks.
 //   5. Do not load again if our server does not return new bookmarks.
 // Be careful not to cause an infinite loop!
-export function loadMoreBookmarks(): Thunk {
-  return thunkAs('loadMoreBookmarks', async (dispatch, getState, {api}) => {
+export function loadMoreBookmarks(
+  d = {
+    getCurrentQueryState,
+    getLastBookmark,
+    getSearchCondition,
+    search: api.search,
+  },
+): Thunk {
+  return thunkAs(loadMoreBookmarks.name, async (dispatch, getState) => {
     const state = getState();
-    const qs = getCurrentQueryState(state);
+    const qs = d.getCurrentQueryState(state);
     if (qs != null && qs.allFetched) {
       return;
     }
 
     dispatch({type: 'LOAD_MORE_BOOKMARKS_START'});
-    const lastBookmark = getLastBookmark(state);
+    const lastBookmark = d.getLastBookmark(state);
 
-    const result = await api.search(getSearchCondition(state), lastBookmark);
+    const result = await d.search(d.getSearchCondition(state), lastBookmark);
     if (result) {
       dispatch({
         type: 'LOAD_MORE_BOOKMARKS_OK',
@@ -81,45 +102,67 @@ export function loadMoreBookmarks(): Thunk {
   });
 }
 
-export function openBookmark(id: string): Thunk {
-  return thunk(async (dispatch, getState, {api}) => {
-    await api.openBookmark(id);
+export function openBookmark(
+  id: string,
+  d = {
+    openBookmark: api.openBookmark,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
+    await d.openBookmark(id);
     dispatch({type: 'OPEN_BOOKMARK', id});
   });
 }
 
-export function resetOpenBookmark(id: string): Thunk {
-  return thunk(async (dispatch, getState, {api}) => {
-    await api.resetOpenBookmark(id);
+export function resetOpenBookmark(
+  id: string,
+  d = {
+    resetOpenBookmark: api.resetOpenBookmark,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
+    await d.resetOpenBookmark(id);
     dispatch({type: 'RESET_OPEN_BOOKMARK', id});
   });
 }
 
-export function favoriteBookmark(id: string): Thunk {
-  return thunk(async (dispatch, getState, {api}) => {
-    const bk = getBookmark(getState(), id);
+export function favoriteBookmark(
+  id: string,
+  d = {
+    getBookmark,
+    favoriteBookmark: api.favoriteBookmark,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
+    const bk = d.getBookmark(getState(), id);
     if (bk == null || bk.favorite) {
       return;
     }
 
     dispatch({type: 'FAVORITE_BOOKMARK_START', id});
 
-    await api.favoriteBookmark(id).catch(err => {
+    await d.favoriteBookmark(id).catch(err => {
       dispatch({type: 'FAVORITE_BOOKMARK_ERR', id, err});
     });
   });
 }
 
-export function unfavoriteBookmark(id: string): Thunk {
-  return thunk(async (dispatch, getState, {api}) => {
-    const bk = getBookmark(getState(), id);
+export function unfavoriteBookmark(
+  id: string,
+  d = {
+    getBookmark,
+    unfavoriteBookmark: api.unfavoriteBookmark,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
+    const bk = d.getBookmark(getState(), id);
     if (bk == null || !bk.favorite) {
       return;
     }
 
     dispatch({type: 'UNFAVORITE_BOOKMARK_START', id});
 
-    await api.unfavoriteBookmark(id).catch(err => {
+    await d.unfavoriteBookmark(id).catch(err => {
       dispatch({type: 'UNFAVORITE_BOOKMARK_ERR', id, err});
     });
   });

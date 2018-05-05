@@ -7,6 +7,12 @@ export interface State {
   readonly errors: ErrorsState;
 }
 
+export const newState = (): State => ({
+  bookmarks: newBookmarkState(),
+  search: newSearchState(),
+  errors: newErrorsState(),
+});
+
 export interface BookmarkState {
   readonly shownIds: string[];
   readonly byId: {

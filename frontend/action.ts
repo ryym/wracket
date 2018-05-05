@@ -2,7 +2,6 @@ import {Action as ReduxAction} from 'redux';
 import {AnyThunkAction, ThunkAction, ThunkType} from 'redux-dutiful-thunk';
 import {BookmarkById, SearchCondition} from './lib/models';
 import {State} from './state';
-import {ThunkContext} from './thunk-ctx';
 
 export type ErrorAction = {
   type: any;
@@ -40,7 +39,7 @@ export function isErrorAction(action: Action): action is ErrorAction {
 export type Thunk<R = void, T extends ThunkType = any> = ThunkAction<
   State,
   Action,
-  ThunkContext,
+  undefined,
   R,
   T
 >;

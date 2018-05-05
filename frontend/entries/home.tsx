@@ -6,28 +6,16 @@ import {configureStore} from '../store';
 import {newBookmarkState} from '../state';
 import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
-import {findCSRFToken} from '../lib/csrf-token';
-import {createAPI} from '../lib/api';
 import {BookmarkById} from '../lib/models';
-import {ThunkContext} from '../thunk-ctx';
-
-const csrfToken = findCSRFToken();
-if (csrfToken == null) {
-  throw new Error('could not find CSRF token');
-}
 
 const $json = document.getElementById('bookmarks-data');
 if ($json == null) {
   throw new Error('initial data script not found');
 }
 
-const api = createAPI(csrfToken);
-const thunkCtx = new ThunkContext(api);
-
 const bookmarks = JSON.parse($json.innerText) as BookmarkById;
 
 const store = configureStore({
-  context: thunkCtx,
   initialState: {
     bookmarks: newBookmarkState(bookmarks),
   },
