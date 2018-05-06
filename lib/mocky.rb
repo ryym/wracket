@@ -40,4 +40,15 @@ class Mocky
   def call_count(method_name)
     args(method_name).size
   end
+
+  def uncalled_methods
+    @args_array_by_method.each_with_object([]) do |(name, args), names|
+      names << name if args.empty?
+    end
+  end
+
+  def verify_all_used!
+    methods = uncalled_methods
+    raise "uncalled methods: #{methods}" if methods.present?
+  end
 end

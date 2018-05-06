@@ -17,6 +17,8 @@ class PocketAuthenticatorTest < ActiveSupport::TestCase
     )
 
     res = auth.obtain_request_token
+    http.verify_all_used!
+
     assert_equal('request-token', res.request_token, 'request token')
 
     assert_equal(
