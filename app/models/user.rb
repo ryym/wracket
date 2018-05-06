@@ -27,6 +27,6 @@ class User < ApplicationRecord
   end
 
   def unarchived_bookmarks
-    bookmarks.includes(entry: :resolved).unarchived.order_by_newest
+    bookmarks.includes(entry: %i[resolved images]).unarchived.order_by_newest
   end
 end

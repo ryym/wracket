@@ -8,6 +8,7 @@ class JsonMaker
         id: b.id.to_s,
         title: b.entry.resolved_title,
         url: b.entry.url,
+        thumbnailUrl: b.entry.images.first&.src,
         status: b.status,
         addedAt: b.added_to_pocket_at.to_i,
         favorite: b.favorite,

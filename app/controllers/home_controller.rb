@@ -6,6 +6,7 @@ class HomeController < ViewBaseController
   end
 
   def index
+    # TODO: Use BookmarkSearcher instead to avoid logic duplication.
     bookmarks = @json.bookmarks(current_user.unarchived_bookmarks.limit(30))
     render locals: {
       user: current_user,

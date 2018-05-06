@@ -19,7 +19,7 @@ class BookmarkSearcher
   end
 
   def search(user, cdtn)
-    q = user.bookmarks.includes(entry: :resolved).where(status: cdtn.statuses)
+    q = user.bookmarks.includes(entry: %i[resolved images]).where(status: cdtn.statuses)
     bookmarks = set_offset(q, cdtn).to_a
     self.class::Result.new(bookmarks, bookmarks.size < @limit)
   end
