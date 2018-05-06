@@ -17,13 +17,15 @@ class PocketAuthenticatorTest < ActiveSupport::TestCase
     )
 
     res = auth.obtain_request_token
-    assert { res.request_token == 'request-token' }
+    assert_equal('request-token', res.request_token, 'request token')
 
-    assert do
-      http.args(:post_form)[0][1] == {
+    assert_equal(
+      {
         consumer_key: 'consumer-key',
         redirect_uri: '/callback',
-      }
-    end
+      },
+      http.args(:post_form)[0][1],
+      'argument of post_form',
+    )
   end
 end
