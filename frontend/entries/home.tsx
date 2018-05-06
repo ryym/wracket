@@ -8,6 +8,8 @@ import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
 import {BookmarkById} from '../lib/models';
 
+import '../base.scss';
+
 const $json = document.getElementById('bookmarks-data');
 if ($json == null) {
   throw new Error('initial data script not found');

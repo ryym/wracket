@@ -1,0 +1,34 @@
+/* Base styles */
+
+:root {
+  --pad: 6px;
+  --pad2: 12px;
+  --pad4: 24px;
+  --pad6: 36px;
+  --pad8: 48px;
+
+  /* Colors */
+  --cl-black: #111;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
+  font-size: 1.6rem;
+  color: var(--cl-black);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
