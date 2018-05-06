@@ -19,24 +19,29 @@ export function BookmarkList({
 }: Props) {
   const items = bookmarks.map(b => {
     return (
-      <li key={b.id} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
-        <a href={b.url} target="_blank" onClick={() => onBookmarkOpen(b)}>
-          {b.title || b.url}
+      <li className="bookmark-list_item" key={b.id} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
+        <a
+          className="bookmark-list_bookmark"
+          href={b.url}
+          target="_blank"
+          onClick={() => onBookmarkOpen(b)}
+        >
+          <div className="bookmark-list_bookmark-title">{b.title || b.url}</div>
+          <div className="bookmark-list_actions">
+            {b.status === BookmarkStatus.Reading && (
+              <button onClick={() => onBackToUnread(b)}>unread</button>
+            )}
+            <button onClick={() => onFavoriteToggle(b, !b.favorite)}>
+              {b.favorite ? 'unfavorite' : 'favorite'}
+            </button>
+          </div>
         </a>
-        <div>
-          {b.status === BookmarkStatus.Reading && (
-            <button onClick={() => onBackToUnread(b)}>unread</button>
-          )}
-          <button onClick={() => onFavoriteToggle(b, !b.favorite)}>
-            {b.favorite ? 'unfavorite' : 'favorite'}
-          </button>
-        </div>
       </li>
     );
   });
   return (
-    <div>
-      <ul>{items}</ul>
+    <div className="bookmark-list">
+      <ul className="bookmark-list_list">{items}</ul>
     </div>
   );
 }

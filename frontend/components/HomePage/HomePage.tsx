@@ -67,7 +67,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
     const {props} = this;
     const {dispatch} = props;
     return (
-      <div>
+      <div className="home-page">
         <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
         <BookmarkFilter condition={props.condition} onConditionChange={this.search} />
         <BookmarkList
