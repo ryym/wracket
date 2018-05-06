@@ -186,12 +186,12 @@ DEPENDENCIES
   dotenv-rails
   jbuilder
   listen
-  loofah (>= 2.2.1)
   pg (>= 0.18, < 2.0)
   pry-byebug
   pry-rails
   puma (~> 3.7)
   rails (~> 5.1.5)
+  rails-html-sanitizer (<= 1.0.4)
   rubocop (>= 0.54)
   selenium-webdriver
   spring

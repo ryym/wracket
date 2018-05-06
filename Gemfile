@@ -14,8 +14,8 @@ gem 'jbuilder'
 gem 'dotenv-rails'
 gem 'activerecord-import'
 
-# https://github.com/flavorjones/loofah/issues/144
-gem 'loofah', '>= 2.2.1'
+# https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a35f2ba7f941c15e239a1cb379d56ae
+gem 'rails-html-sanitizer', '<= 1.0.4'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
