@@ -94,6 +94,7 @@ describe('loadMoreBookmarks', () => {
       status: BookmarkStatus.Unread,
       addedAt: Date.now(),
       favorite: false,
+      thumbnailUrl: null,
     };
     const searchCdtn = {statuses: []};
 
