@@ -1,3 +1,5 @@
+import '../base.scss';
+
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
@@ -7,8 +9,6 @@ import {newBookmarkState} from '../state';
 import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
 import {BookmarkById} from '../lib/models';
-
-import '../base.scss';
 
 const $json = document.getElementById('bookmarks-data');
 if ($json == null) {
