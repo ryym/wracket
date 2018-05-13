@@ -3,6 +3,7 @@
     "outDir": "./tsdest",
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "strict": true,
     "strictNullChecks": true,
     "module": "es6",
     "allowSyntheticDefaultImports": true,
