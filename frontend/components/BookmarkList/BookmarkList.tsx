@@ -1,8 +1,10 @@
 import * as React from 'react';
 import {IS_DEVELOPMENT} from '../../consts';
 import {Bookmark, BookmarkStatus} from '../../lib/models';
+import {Styles} from '../types';
 
 export interface Props {
+  readonly styles?: Styles;
   readonly bookmarks: Bookmark[];
   readonly onBookmarkOpen?: (b: Bookmark) => void;
   readonly onBackToUnread?: (b: Bookmark) => void;
@@ -16,10 +18,11 @@ export function BookmarkList({
   onBookmarkOpen = noop,
   onBackToUnread = noop,
   onFavoriteToggle = noop,
+  styles = {},
 }: Props) {
   const items = bookmarks.map(b => {
     return (
-      <li className="bookmark-list_item" key={b.id} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
+      <li className={styles.item} key={b.id} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
         <a
           className="bookmark-list_bookmark"
           href={b.url}
@@ -27,7 +30,7 @@ export function BookmarkList({
           onClick={() => onBookmarkOpen(b)}
         >
           <div className="bookmark-list_bookmark-title">{b.title || b.url}</div>
-          <div className="bookmark-list_actions">
+          <div className={styles.actions}>
             {b.status === BookmarkStatus.Reading && (
               <button onClick={() => onBackToUnread(b)}>unread</button>
             )}
