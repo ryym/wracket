@@ -16,7 +16,7 @@ export type StoreConfig = {
 };
 
 export function configureStore(conf: StoreConfig): Store {
-  const store = createStore<State, Action, {}, {}>(
+  return createStore<State, Action, {}, {}>(
     rootReducer,
     conf.initialState || {},
     applyMiddleware(
@@ -26,7 +26,4 @@ export function configureStore(conf: StoreConfig): Store {
       createThunkMiddleware(),
     ),
   );
-
-  // I don't know how to pass the type check for this store.
-  return store as Store;
 }
