@@ -10,6 +10,11 @@ const Adapter = require('enzyme-adapter-react-16');
 
 Enzyme.configure({adapter: new Adapter()});
 
+// XXX: Ignore SCSS loadings during test.
+// But this API is deprecated. It seems we should use webpack for test.
+// https://nodejs.org/api/modules.html#modules_require_extensions
+require.extensions['.scss'] = () => ({});
+
 /*
  * Set up component tests on Node.js environment using JSDOM.
  * Note that we don't need JSDOM when using 'shallow'.

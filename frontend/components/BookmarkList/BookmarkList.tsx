@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {IS_DEVELOPMENT} from '../../consts';
 import {Bookmark, BookmarkStatus} from '../../lib/models';
-import {Styles} from '../types';
+
+const styles = require('./BookmarkList_styles.scss');
 
 export interface Props {
-  readonly styles?: Styles;
   readonly bookmarks: Bookmark[];
   readonly onBookmarkOpen?: (b: Bookmark) => void;
   readonly onBackToUnread?: (b: Bookmark) => void;
@@ -18,7 +18,6 @@ export function BookmarkList({
   onBookmarkOpen = noop,
   onBackToUnread = noop,
   onFavoriteToggle = noop,
-  styles = {},
 }: Props) {
   const items = bookmarks.map(b => {
     return (
