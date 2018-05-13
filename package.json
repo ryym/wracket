@@ -9,7 +9,7 @@
     "lint:js": "eslint .",
     "lint:ts": "tslint -p . -t verbose 'frontend/**/*.ts?(x)'",
     "precommit": "lint-staged",
-    "test": "TS_NODE_CACHE=0 TS_NODE_PROJECT=tsconfig.test.json mocha --require ts-node/register 'frontend/**/*_test.ts'",
+    "test": "mocha --opts mocha.opts 'frontend/**/*_test.ts'",
     "test:w": "npm run test -- --watch --watch-extensions ts"
   },
   "lint-staged": {
