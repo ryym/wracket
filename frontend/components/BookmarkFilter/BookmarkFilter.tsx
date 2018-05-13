@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {SearchCondition, BookmarkStatus} from '../../lib/models';
 
 type ChangeHandler = (cdtn: Partial<SearchCondition>) => void;

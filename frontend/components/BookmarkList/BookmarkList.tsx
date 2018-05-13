@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {IS_DEVELOPMENT} from '../../consts';
 import {Bookmark, BookmarkStatus} from '../../lib/models';
 

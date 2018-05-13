@@ -1,6 +1,6 @@
 import '../base.scss';
 
-import React from 'react';
+import * as React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {IS_DEVELOPMENT} from '../consts';

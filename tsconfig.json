@@ -6,7 +6,6 @@
     "strict": true,
     "strictNullChecks": true,
     "module": "es6",
-    "allowSyntheticDefaultImports": true,
     "target": "es2016",
     "jsx": "react",
     "baseUrl": ".",
@@ -15,6 +14,14 @@
     }
   },
   "include": ["./frontend/**/*"],
-  "exclude": ["**/*_test.ts"]
+  "exclude": ["**/*_test.ts"],
+
+  "//": [
+    "NOTE: We cannot use allowSyntheticDefaultImports on test",
+    "To test TypeScript files using 'import/export's on Node.js environment,",
+    "we need to compile them with 'module: commonjs' configuration.",
+    "But allowSyntheticDefaultImports cannot be used with it.",
+    "(https://github.com/TypeStrong/ts-node/issues/86)"
+  ]
 }
 
