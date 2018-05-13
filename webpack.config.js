@@ -78,7 +78,16 @@ module.exports = {
         include: FRONTEND_ROOT,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [{loader: 'css-loader'}, {loader: 'postcss-loader'}],
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                localIdentName: '[name]_[local]_[hash:base64:5]',
+              },
+            },
+            {loader: 'postcss-loader'},
+          ],
         }),
       },
     ],
