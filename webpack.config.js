@@ -33,6 +33,14 @@ const byEnv = ({dev, test, prod}, defaultValue = null) => {
   }
 };
 
+// Since ExtractTextPlugin seems not to work well with hot reloading of CSS modules,
+// disable it on development.
+// https://github.com/css-modules/webpack-demo/issues/8
+const cssExtractor = new ExtractTextPlugin({
+  disable: byEnv({dev: true, prod: false}),
+  filename: '[name]-[chunkhash].css',
+});
+
 module.exports = {
   entry: {
     app: path.join(ENTRY_ROOT, 'app'),
@@ -85,21 +93,23 @@ module.exports = {
       {
         test: /\.scss$/,
         include: GLOBAL_STYLES_ROOT,
-        use: [
-          {loader: 'style-loader'},
-          {loader: 'css-loader'},
-          {
-            loader: 'sass-loader',
-            options: {includePaths: ['./node_modules']},
-          },
-        ],
+        use: cssExtractor.extract({
+          fallback: 'style-loader',
+          use: [
+            {loader: 'css-loader'},
+            {
+              loader: 'sass-loader',
+              options: {includePaths: ['./node_modules']},
+            },
+          ],
+        }),
       },
 
       {
         test: /\.scss$/,
         include: FRONTEND_ROOT,
         exclude: GLOBAL_STYLES_ROOT,
-        use: ExtractTextPlugin.extract({
+        use: cssExtractor.extract({
           fallback: 'style-loader',
           use: [
             {
@@ -126,12 +136,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin([DEST_DIR]),
 
-    new ExtractTextPlugin({
-      filename: byEnv({
-        dev: '[name].css',
-        prod: '[name]-[chunkhash].css',
-      }),
-    }),
+    cssExtractor,
 
     new ManifestPlugin({
       fileName: 'assets-manifest.json',

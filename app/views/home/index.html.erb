@@ -1,5 +1,7 @@
 <%= content_for(:head) do %>
-  <link rel="stylesheet" href="<%= asset_url('home.css') %>">
+  <% if should_load_css? %>
+    <link rel="stylesheet" href="<%= asset_url('home.css') %>">
+  <% end %>
 <% end %>
 
 <h1>My List</h1>

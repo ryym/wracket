@@ -23,6 +23,11 @@ class AssetUrlConverter
     def convert(path)
       @helper.asset_url(path)
     end
+
+    # In development, CSS are added dynamically.
+    def should_load_css?
+      false
+    end
   end
 
   class DynamicConverter
@@ -33,6 +38,10 @@ class AssetUrlConverter
 
     def convert(path)
       @manifest.key?(path) ? @helper.asset_url(@manifest[path]) : path
+    end
+
+    def should_load_css?
+      true
     end
   end
 
