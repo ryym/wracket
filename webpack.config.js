@@ -13,6 +13,7 @@ dotenv.config();
 const ROOT = __dirname;
 const FRONTEND_ROOT = path.join(ROOT, 'frontend');
 const ENTRY_ROOT = path.join(FRONTEND_ROOT, 'entries');
+const GLOBAL_STYLES_ROOT = path.join(FRONTEND_ROOT, 'global-styles');
 const DEST_DIR = path.join(ROOT, 'public', 'assets');
 
 const ENV = process.env.NODE_ENV || 'development';
@@ -73,9 +74,24 @@ module.exports = {
         use: [{loader: 'awesome-typescript-loader'}],
       },
 
+      // Global CSS (which does not use CSS modules)
+      {
+        test: /\.scss$/,
+        include: GLOBAL_STYLES_ROOT,
+        use: [
+          {loader: 'style-loader'},
+          {loader: 'css-loader'},
+          {
+            loader: 'sass-loader',
+            options: {includePaths: ['./node_modules']},
+          },
+        ],
+      },
+
       {
         test: /\.scss$/,
         include: FRONTEND_ROOT,
+        exclude: GLOBAL_STYLES_ROOT,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -84,13 +100,15 @@ module.exports = {
               options: {
                 modules: true,
                 localIdentName: '[name]_[local]_[hash:base64:5]',
+
+                // Apply sass-loader to `@import`ed CSS files.
+                // https://github.com/webpack-contrib/css-loader#importloaders
+                importLoaders: 1,
               },
             },
             {
               loader: 'sass-loader',
-              options: {
-                includePaths: ['./node_modules'],
-              },
+              options: {includePaths: ['./node_modules']},
             },
           ],
         }),
