@@ -74,6 +74,13 @@ module.exports = {
         use: [{loader: 'awesome-typescript-loader'}],
       },
 
+      // material-component-web-react
+      {
+        test: /\.js$/,
+        include: path.join(ROOT, 'node_modules', '@material'),
+        use: [{loader: 'babel-loader'}],
+      },
+
       // Global CSS (which does not use CSS modules)
       {
         test: /\.scss$/,
