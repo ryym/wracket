@@ -86,7 +86,12 @@ module.exports = {
                 localIdentName: '[name]_[local]_[hash:base64:5]',
               },
             },
-            {loader: 'postcss-loader'},
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: ['./node_modules'],
+              },
+            },
           ],
         }),
       },
