@@ -13,9 +13,10 @@ import {
   unfavoriteBookmark,
 } from '../../store/actions';
 import {listBookmarks, getSearchCondition, canLoadMore} from '../../store/selectors';
+import {Bookmark, BookmarkStatus, SearchCondition} from '../../lib/models';
 import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
-import {Bookmark, BookmarkStatus, SearchCondition} from '../../lib/models';
+import {TopAppBar} from '../TopAppBar';
 
 const MIN_DISPLAY_COUNT = 30;
 
@@ -68,6 +69,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
     const {dispatch} = props;
     return (
       <div className="home-page">
+        <TopAppBar />
         <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
         <BookmarkFilter condition={props.condition} onConditionChange={this.search} />
         <BookmarkList
