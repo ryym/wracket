@@ -31,6 +31,15 @@
     "@material/animation" "^0.34.0"
     "@material/theme" "^0.4.0"
 
+"@material/list@0.34":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@material/list/-/list-0.34.1.tgz#0c900c69e777a837b7e9d9737345f0bf90aef46a"
+  dependencies:
+    "@material/ripple" "^0.34.1"
+    "@material/rtl" "^0.34.0"
+    "@material/theme" "^0.34.0"
+    "@material/typography" "^0.34.0"
+
 "@material/react-material-icon@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@material/react-material-icon/-/react-material-icon-0.1.0.tgz#3ea868f2c0ea51d325a4364c3e4230a670a9e535"
