@@ -24,10 +24,6 @@ export function BookmarkList({
   const items = bookmarks.map(b => {
     return (
       <li key={b.id} className={cls.listItem} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
-        <div className={cls.itemThumbnail}>
-          {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
-          {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
-        </div>
         <a
           href={b.url}
           target="_blank"
@@ -35,8 +31,14 @@ export function BookmarkList({
           className={cls.itemLink}
           onClick={() => onBookmarkOpen(b)}
         >
-          <span className={cls.itemTitle}>{b.title || b.url}</span>
-          <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
+          <div className={cls.itemThumbnail}>
+            {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
+            {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
+          </div>
+          <span className={cls.itemLinkText}>
+            <span className={cls.itemTitle}>{b.title || b.url}</span>
+            <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
+          </span>
         </a>
         <div className={cls.actions}>
           {b.status === BookmarkStatus.Reading && (

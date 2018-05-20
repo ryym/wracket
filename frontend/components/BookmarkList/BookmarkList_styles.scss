@@ -37,10 +37,20 @@
 }
 
 .itemLink {
-  composes: mdc-list-item__text from global;
-  font-size: 1.6rem;
   color: var(--mdc-theme-text-primary-on-background);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.itemLinkText {
+  composes: mdc-list-item__text from global;
+  font-size: 1.6rem;
 }
 
 .itemTitle {
