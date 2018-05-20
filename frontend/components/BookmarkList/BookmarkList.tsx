@@ -24,7 +24,17 @@ export function BookmarkList({
   const items = bookmarks.map(b => {
     return (
       <li key={b.id} className={cls.listItem} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
-        <a href={b.url} target="_blank" className={cls.itemLink} onClick={() => onBookmarkOpen(b)}>
+        <div className={cls.itemThumbnail}>
+          {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
+          {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
+        </div>
+        <a
+          href={b.url}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          className={cls.itemLink}
+          onClick={() => onBookmarkOpen(b)}
+        >
           <span className={cls.itemTitle}>{b.title || b.url}</span>
           <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
         </a>

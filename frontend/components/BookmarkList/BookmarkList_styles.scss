@@ -1,10 +1,39 @@
 .list {
   composes: mdc-list mdc-list--two-line from global;
+
+  .listItem {
+    // Override default height 72px of '.mdc-list--two-line .mdc-list-item'.
+    height: auto;
+  }
 }
 
 .listItem {
   composes: mdc-list-item from global;
   border-bottom: 1px solid #eee;
+  min-height: 72px;
+}
+
+.itemThumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--pad4);
+  flex: 0 0 92px;
+  height: 92px;
+  width: 92px;
+
+  > img {
+    border-radius: var(--pad);
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.itemBlankThumbnail {
+  background-color: rgba(#d3e6ee, 0.3);
+  border-radius: var(--pad);
+  width: 72%;
+  height: 72%;
 }
 
 .itemLink {
@@ -12,14 +41,10 @@
   font-size: 1.6rem;
   color: var(--mdc-theme-text-primary-on-background);
   text-decoration: none;
-  width: 100%;
 }
 
 .itemTitle {
   line-height: 2em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .itemDomain {
