@@ -1,6 +1,30 @@
-.item {
-  border-bottom: 1px solid #ccc;
-  padding: var(--pad2);
+.list {
+  composes: mdc-list mdc-list--two-line from global;
+}
+
+.listItem {
+  composes: mdc-list-item from global;
+  border-bottom: 1px solid #eee;
+}
+
+.itemLink {
+  composes: mdc-list-item__text from global;
+  font-size: 1.6rem;
+  color: var(--mdc-theme-text-primary-on-background);
+  text-decoration: none;
+  width: 100%;
+}
+
+.itemTitle {
+  line-height: 2em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.itemDomain {
+  composes: mdc-list-item__secondary-text from global;
+  font-size: 1.4rem;
 }
 
 .actions {

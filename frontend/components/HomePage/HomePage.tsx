@@ -18,6 +18,8 @@ import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
 import {TopAppBar} from '../TopAppBar';
 
+const cls = require('./HomePage_styles.scss');
+
 const MIN_DISPLAY_COUNT = 30;
 
 export interface Props {
@@ -73,6 +75,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
         <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
         <BookmarkFilter condition={props.condition} onConditionChange={this.search} />
         <BookmarkList
+          className={cls.bookmarkList}
           bookmarks={props.bookmarks}
           onBookmarkOpen={this.markBookmarkAsOpen}
           onBackToUnread={this.backBookmarkToUnread}
