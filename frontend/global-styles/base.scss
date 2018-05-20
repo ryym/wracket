@@ -1,14 +1,13 @@
 /* Base styles */
 
+@import '../styles';
+
 :root {
   --pad: 6px;
   --pad2: 12px;
   --pad4: 24px;
   --pad6: 36px;
   --pad8: 48px;
-
-  /* Colors */
-  --cl-black: #111;
 }
 
 *,
@@ -22,9 +21,10 @@ html {
 }
 
 body {
+  background-color: $cl-background;
   font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
   font-size: 1.6rem;
-  color: var(--cl-black);
+  margin: 0;
 }
 
 ul {

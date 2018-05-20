@@ -1,0 +1,9 @@
+@import '../styles';
+
+// MDC automatically calculates other themes such as 'on-primary'
+// from these values.
+$mdc-theme-primary: $cl-primary;
+$mdc-theme-secondary: $cl-secondary;
+$mdc-theme-background: $cl-background;
+
+// Import MDC SASS files.

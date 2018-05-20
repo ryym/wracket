@@ -1,4 +1,5 @@
 import '../global-styles/base.scss';
+import '../global-styles/mdc.scss';
 
 import * as React from 'react';
 import {render} from 'react-dom';
@@ -34,5 +35,5 @@ render(
       <HomePage />
     </ErrorBoundary>
   </Provider>,
-  document.getElementById('bookmark-list'),
+  document.getElementById('root'),
 );
