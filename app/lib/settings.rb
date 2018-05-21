@@ -9,12 +9,11 @@ class Settings
     new(env)
   end
 
-  attr_reader :asset_host, :asset_manifest_path
+  attr_reader :asset_url, :asset_manifest_path
   attr_reader :pocket_consumer_key
 
   def initialize(env)
-    @asset_host = env.fetch('ASSET_HOST')
-    @asset_host += ":#{env['ASSET_PORT']}" if env.key?('ASSET_PORT')
+    @asset_url = env.fetch('ASSET_URL')
     asset_manifest_path = env['ASSET_MANIFEST_PATH']
     @asset_manifest_path = Rails.root.join(asset_manifest_path) if asset_manifest_path
 

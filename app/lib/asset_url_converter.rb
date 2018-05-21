@@ -3,13 +3,13 @@
 class AssetUrlConverter
   def self.singleton(settings: Settings.singleton)
     @_singleton ||= create(
-      asset_host: settings.asset_host,
+      asset_url: settings.asset_url,
       manifest_path: settings.asset_manifest_path,
     )
   end
 
-  def self.create(asset_host:, manifest_path:)
-    helper = Helper.new(asset_host)
+  def self.create(asset_url:, manifest_path:)
+    helper = Helper.new(asset_url)
     return NoopConverter.new(helper) if manifest_path.nil?
     manifest = JSON.parse(File.read(Rails.root.join(manifest_path)))
     DynamicConverter.new(helper, manifest)
@@ -46,12 +46,12 @@ class AssetUrlConverter
   end
 
   class Helper
-    def initialize(asset_host)
-      @asset_host = asset_host
+    def initialize(asset_url)
+      @asset_url = asset_url
     end
 
     def asset_url(path)
-      "#{@asset_host}/#{path}"
+      "#{@asset_url}/#{path}"
     end
   end
 end
