@@ -4,6 +4,8 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
+  next if !Wracket::RELEASED
+
   post '/login', to: 'sessions#login'
   get '/oauth_callback', to: 'sessions#create'
 
