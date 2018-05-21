@@ -15,7 +15,8 @@ class Settings
   def initialize(env)
     @asset_host = env.fetch('ASSET_HOST')
     @asset_host += ":#{env['ASSET_PORT']}" if env.key?('ASSET_PORT')
-    @asset_manifest_path = env['ASSET_MANIFEST_PATH']
+    asset_manifest_path = env['ASSET_MANIFEST_PATH']
+    @asset_manifest_path = Rails.root.join(asset_manifest_path) if asset_manifest_path
 
     @pocket_consumer_key = env.fetch('POCKET_CONSUMER_KEY')
   end
