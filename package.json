@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
+    "build:prod": "NODE_ENV=production webpack",
     "lint": "yarn lint:js && yarn lint:ts",
     "lint:js": "eslint .",
     "lint:ts": "tslint -p . -t verbose 'frontend/**/*.ts?(x)'",
