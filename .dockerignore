@@ -1,0 +1,7 @@
+public/assets
+node_modules
+tmp
+tsdest
+log
+_work
+.env

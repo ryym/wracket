@@ -64,6 +64,7 @@ module.exports = {
   devServer: {
     contentBase: DEST_DIR,
     port: PORT,
+    host: '0.0.0.0',
     headers: {
       'Access-Control-Allow-Origin': '*',
     },

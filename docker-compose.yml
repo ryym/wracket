@@ -1,0 +1,75 @@
+# docker-compose configuration for development.
+
+# To run the application:
+#
+#   docker-compose run --rm --service-ports server
+#
+# Using `docker-compose run` instead of `docker-compose up` allows us to
+# use `binding.pry` easily as if we run the server on a host machine.
+#
+# To run rails commands such as `console` or `test`:
+#
+#   docker-compose exec spring bin/rails c
+#
+# Since the `spring` container runs the spring server,
+# it speeds up those rails commands launching.
+
+version: '3'
+
+services:
+  db:
+    image: postgres:10.4
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  server:
+    build: &server_build
+      context: .
+      dockerfile: Dockerfile.server
+    volumes: &server_volumes
+      - .:/server
+      - bundle:/usr/local/bundle
+    environment: &server_environment
+      - WRACKET_DB_HOST=db
+      - WRACKET_DB_USER=postgres
+    depends_on:
+      - db
+      - front
+      - spring
+    ports:
+      - '3000:3000'
+    command: bin/rails s -b '0.0.0.0'
+
+  spring:
+    build: *server_build
+    volumes: *server_volumes
+    environment: *server_environment
+    depends_on:
+      - db
+      - front
+    tty: false
+    stdin_open: false
+    # HACK: I don't know why but the first spring preloading is too slow.
+    # So execute preloading beforehand by running `rails runner` command.
+    command: /bin/bash -c 'bin/rails r "0" & bin/spring server'
+
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    volumes:
+      - .:/front
+      - node_modules:/front/node_modules
+    environment:
+      - ASSET_PORT=3001
+    ports:
+      - '3001:3001'
+    command: yarn start
+
+volumes:
+  postgres:
+    driver: local
+  bundle:
+    driver: local
+  node_modules:
+    driver: local

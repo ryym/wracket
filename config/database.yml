@@ -1,6 +1,8 @@
 default: &default
   adapter: postgresql
   encoding: utf8
+  host: <%= ENV["WRACKET_DB_HOST"] %>
+  username: <%= ENV["WRACKET_DB_USER"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -15,4 +17,4 @@ production:
   <<: *default
   database: wracket_production
   username: wracket
-  password: <%= ENV['WRACKET_DATABASE_PASSWORD'] %>
+  password: <%= ENV['WRACKET_DB_PASSWORD'] %>
