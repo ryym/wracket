@@ -1,5 +1,9 @@
-# docker-compose configuration for development.
+# docker-compose configuration for DEVELOPMENT.
 
+# First, we are using docker-sync to speed up file syncing of Docker for Mac.
+# https://github.com/EugenMayer/docker-sync
+# So do not forget to run `docker-sync start` before starting development.
+#
 # To run the application:
 #
 #   docker-compose run --rm --service-ports server
@@ -27,7 +31,7 @@ services:
       context: .
       dockerfile: Dockerfile.server
     volumes: &server_volumes
-      - .:/server
+      - root-sync:/server:nocopy
       - bundle:/usr/local/bundle
     environment: &server_environment
       - WRACKET_DB_HOST=db
@@ -49,16 +53,14 @@ services:
       - front
     tty: false
     stdin_open: false
-    # HACK: I don't know why but the first spring preloading is too slow.
-    # So execute preloading beforehand by running `rails runner` command.
-    command: /bin/bash -c 'bin/rails r "0" & bin/spring server'
+    command: bin/spring server
 
   front:
     build:
       context: .
       dockerfile: Dockerfile.front
     volumes:
-      - .:/front
+      - root-sync:/front:nocopy
       - node_modules:/front/node_modules
     environment:
       - ASSET_PORT=3001
@@ -67,6 +69,8 @@ services:
     command: yarn start
 
 volumes:
+  root-sync:
+    external: true
   postgres:
     driver: local
   bundle:

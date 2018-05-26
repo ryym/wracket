@@ -3,5 +3,6 @@ node_modules
 tmp
 tsdest
 log
-_work
 .env
+.docker-sync
+_work

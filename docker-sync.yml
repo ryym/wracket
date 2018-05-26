@@ -1,0 +1,6 @@
+version: '2'
+
+syncs:
+  root-sync:
+    src: '.'
+    sync_excludes: ['node_modules', 'tsdest', '.git']

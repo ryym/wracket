@@ -24,4 +24,6 @@ node_modules/
 tags
 /tsdest
 
+.docker-sync/
+
 _work
