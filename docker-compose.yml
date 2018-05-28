@@ -29,7 +29,7 @@ services:
   server:
     build: &server_build
       context: .
-      dockerfile: Dockerfile.server
+      dockerfile: Dockerfile-server
     volumes: &server_volumes
       - root-sync:/server:nocopy
       - bundle:/usr/local/bundle
@@ -58,7 +58,7 @@ services:
   front:
     build:
       context: .
-      dockerfile: Dockerfile.front
+      dockerfile: Dockerfile-front
     volumes:
       - root-sync:/front:nocopy
       - node_modules:/front/node_modules
