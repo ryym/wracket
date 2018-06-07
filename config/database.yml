@@ -3,6 +3,7 @@ default: &default
   encoding: utf8
   host: <%= ENV["WRACKET_DB_HOST"] %>
   username: <%= ENV["WRACKET_DB_USER"] %>
+  password: <%= ENV['WRACKET_DB_PASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -16,5 +17,3 @@ test:
 production:
   <<: *default
   database: wracket_production
-  username: wracket
-  password: <%= ENV['WRACKET_DB_PASSWORD'] %>
