@@ -1,0 +1,36 @@
+- name: install Nginx
+  yum:
+    update_cache: yes
+    name: nginx
+  tags: ['yum']
+
+- name: prepare sites-available directory
+  file:
+    path: /etc/nginx/sites-available
+    state: directory
+
+- name: prepare sites-enabled directory
+  file:
+    path: /etc/nginx/sites-enabled
+    state: directory
+
+- name: put nginx.conf
+  template:
+    src: templates/nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: put conf for wracket
+  template:
+    src: templates/nginx-wracket.conf
+    dest: /etc/nginx/sites-available/wracket.conf
+  vars:
+    backend_port: '{{ports["blue"]}}'
+
+- name: put conf symlink
+  file:
+    src: /etc/nginx/sites-available/wracket.conf
+    dest: /etc/nginx/sites-enabled/wracket.conf
+    state: link
+
+- name: enable httpd_can_network_connect of SELinux
+  shell: setsebool httpd_can_network_connect 1

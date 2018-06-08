@@ -1,0 +1,31 @@
+- name: clone app
+  git:
+    force: yes
+    repo: git://github.com/ryym/wracket.git
+    version: '{{deployment_branch}}'
+    dest: '{{workdir}}/{{color}}/app'
+
+- name: bundle install
+  shell: /bin/bash -lc 'bundle install'
+  args:
+    chdir: '{{workdir}}/{{color}}/app'
+
+- name: store environment variables
+  template:
+    src: templates/envs.sh
+    dest: '{{workdir}}/{{color}}/app/envs.sh'
+  vars:
+    env_vars:
+      PORT: '{{port}}'
+      RAILS_ENV: production
+      ASSET_MANIFEST_PATH: 'public/assets/assets-manifest.json'
+      WRACKET_DB_HOST: localhost
+      WRACKET_DB_USER: wracket
+      WRACKET_DB_PASSWORD: '{{db_password}}'
+      POCKET_CONSUMER_KEY: '{{pocket_consumer_key}}'
+      SECRET_KEY_BASE: '{{rails_secret_key_base}}'
+      RAILS_LOG_TO_STDOUT: 1
+
+      # XXX: Serve assets from this server for now.
+      ASSET_URL: 'http://{{app_host}}/assets'
+      RAILS_SERVE_STATIC_FILES: 1

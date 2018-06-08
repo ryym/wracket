@@ -1,0 +1,19 @@
+- debug:
+    msg: 'Deploy to {{color}}'
+
+- import_tasks: _deploy.yml
+  become: yes
+  become_user: '{{app_user}}'
+
+- name: 'start {{color}} app'
+  systemd:
+    name: 'wracket-{{color}}'
+    state: restarted
+
+- name: toggle current directory
+  file:
+    src: '{{workdir}}/{{color}}'
+    dest: '{{workdir}}/current'
+    state: link
+    owner: '{{app_user}}'
+    group: '{{app_group}}'

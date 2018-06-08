@@ -1,0 +1,11 @@
+- name: put conf for wracket
+  template:
+    src: templates/nginx-wracket.conf
+    dest: /etc/nginx/sites-available/wracket.conf
+  vars:
+    backend_port: '{{port}}'
+
+- name: reload nginx
+  systemd:
+    name: nginx
+    state: restarted

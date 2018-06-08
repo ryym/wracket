@@ -1,0 +1,67 @@
+- name: install PostgreSQL rpm
+  yum:
+    name: '{{rpm_url}}'
+    update_cache: yes
+  tags: ['yum']
+
+- name: install PostgreSQL
+  yum:
+    name: '{{item}}'
+    update_cache: yes
+  with_items:
+    - postgresql-devel
+    - 'postgresql{{version}}'
+    - 'postgresql{{version}}-server'
+  tags: ['yum']
+
+
+- name: get stat of PostgreSQL data directory
+  stat:
+    path: '{{lib_path}}/data/postgresql.conf'
+  register: postgresql_conf
+
+- name: initialize PostgreSQL
+  shell: '/usr/pgsql-{{version}}/bin/postgresql-{{version}}-setup initdb'
+  when: not postgresql_conf.stat.exists
+
+# Customize pg_hba.conf
+- block:
+  - name: get stat of default pg_hba.conf
+    stat:
+      path: '{{lib_path}}/data/_pg_hba_default.conf'
+    register: pg_hba_default_conf
+
+  - name: backup default pg_hba.conf
+    command: 'cp {{lib_path}}/data/pg_hba.conf {{lib_path}}/data/_pg_hba_default.conf'
+    when: not pg_hba_default_conf.stat.exists
+
+  # Though `psql` can connect to the PostgreSQL server using unix domain socket,
+  # connecting  using IPv4 fails with the default ident authentication.
+  # I don't know why. So we use the password authentication instead for now.
+  # ref: https://www.postgresql.org/docs/8.3/static/auth-methods.html
+  - name: put pg_hba.conf
+    template:
+      src: templates/pg_hba.conf
+      dest: '{{lib_path}}/data/pg_hba.conf'
+
+- name: enable and start PostgreSQL
+  systemd:
+    name: 'postgresql-{{version}}'
+    enabled: yes
+    state: restarted
+
+# Create DB user for app.
+- block:
+  - name: check app user exists
+    become: yes
+    become_user: '{{app_user}}'
+    command: psql -l
+    register: psql_result
+    ignore_errors: true
+
+  - name: create app user
+    become: yes
+    become_user: postgres
+    command: >
+      psql -c "create role {{app_user}} login createdb password '{{db_password}}'"
+    when: psql_result.rc != 0

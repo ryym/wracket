@@ -1,0 +1,13 @@
+- block:
+  - import_tasks: _setup_repo.yml
+
+  - name: initialize DB
+    shell: /bin/bash -lc 'bin/rake {{item}}'
+    args:
+      chdir: '{{workdir}}/{{color}}/app'
+    with_items:
+      - 'db:create'
+      - 'db:schema:load'
+
+  become: yes
+  become_user: '{{app_user}}'

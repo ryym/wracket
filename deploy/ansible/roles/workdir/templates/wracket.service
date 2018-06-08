@@ -1,0 +1,11 @@
+[Unit]
+Description = Wracket Puma daemon {{color}}
+After = network.target
+
+[Service]
+User={{app_user}}
+Group={{app_group}}
+WorkingDirectory = {{workdir}}/{{color}}/app
+ExecStart = {{workdir}}/{{color}}/service
+KillSignal = SIGINT
+Restart = always

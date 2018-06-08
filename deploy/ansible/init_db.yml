@@ -1,0 +1,10 @@
+- name: Create app database and schema
+  hosts: web
+  become: yes
+  tasks:
+    - import_role:
+        name: roles/deployment
+        tasks_from: init_db.yml
+      vars:
+        color: 'blue'
+        port: '{{ports["blue"]}}'

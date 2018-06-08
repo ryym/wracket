@@ -1,0 +1,7 @@
+*.retry
+
+# ansible-vault password file
+vault_id
+
+# environment variables to run Ansible playbooks.
+/envs.sh

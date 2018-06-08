@@ -1,0 +1,31 @@
+- name: create workdir
+  file:
+    dest: '{{workdir}}'
+    state: directory
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
+
+- name: create blue app directory
+  import_tasks: appdir.yml
+  vars:
+    color: blue
+  tags: ["appdir"]
+
+- name: create green app directory
+  import_tasks: appdir.yml
+  vars:
+    color: green
+  tags: ["appdir"]
+
+- name: reload systemd daemon
+  systemd:
+    daemon_reload: yes
+
+- name: "create 'current' directory"
+  file:
+    src: '{{workdir}}/blue'
+    dest: '{{workdir}}/current'
+    state: link
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
+

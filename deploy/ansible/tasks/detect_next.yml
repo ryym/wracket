@@ -1,0 +1,11 @@
+- name: check current app color
+  command: 'cat {{workdir}}/current/id'
+  register: current_id
+
+- name: store current color
+  set_fact:
+    current: '{{current_id.stdout}}'
+
+- name: determine next color
+  set_fact:
+    next: "{{'green' if current == 'blue' else 'blue'}}"

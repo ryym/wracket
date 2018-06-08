@@ -1,0 +1,47 @@
+# rbenv: https://github.com/rbenv/rbenv
+
+- name: install essential packages
+  become: yes
+  become_user: root
+  yum:
+    name: '{{item}}'
+    update_cache: yes
+  with_items: ['gcc', 'make', 'openssl-devel', 'libffi-devel', 'readline-devel']
+  tags: ['yum']
+
+- name: install rbenv
+  git:
+    repo: git://github.com/rbenv/rbenv.git
+    dest: '{{rbenv_root}}'
+
+- name: create plugins directory
+  file:
+    path: '{{rbenv_root}}/plugins'
+    state: directory
+
+- name: install ruby-build
+  git:
+    repo: git://github.com/rbenv/ruby-build.git
+    dest: '{{rbenv_root}}/plugins/ruby-build'
+
+- name: check current installed versions
+  command: '{{rbenv_root}}/bin/rbenv versions'
+  register: current_versions
+  ignore_errors: true
+
+- name: install ruby if necessary
+  command: '{{rbenv_root}}/bin/rbenv install {{ruby_version}}'
+  when: current_versions.rc != 0 or not current_versions.stdout is search(ruby_version)
+
+- name: set global ruby version
+  shell: '{{rbenv_root}}/bin/rbenv global {{ruby_version}} && {{rbenv_root}}/bin/rbenv rehash'
+
+- name: configure gemrc
+  copy:
+    content: |
+      install: --no-document
+      update: --no-document
+    dest: '/home/{{app_user}}/.gemrc'
+
+- name: install bundler
+  command: '{{rbenv_root}}/shims/gem install bundler'

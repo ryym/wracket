@@ -1,0 +1,9 @@
+- import_tasks: _setup_repo.yml
+
+- name: set up app
+  shell: /bin/bash -lc '{{item}}'
+  args:
+    chdir: '{{workdir}}/{{color}}/app'
+  with_items:
+    - 'bin/rake db:migrate'
+    - 'bundle binstubs puma --path ./sbin'

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source "{{app_profile_path}}"
+source {{workdir}}/{{color}}/app/envs.sh
+
+{{workdir}}/{{color}}/app/sbin/puma -C {{workdir}}/{{color}}/app/config/puma.rb

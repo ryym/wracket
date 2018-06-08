@@ -1,0 +1,30 @@
+- name: '{{color}}: create directory'
+  file:
+    dest: '{{workdir}}/{{color}}'
+    state: directory
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
+    mode: '700'
+
+- name: '{{color}}: create id file'
+  copy:
+    content: '{{color}}'
+    dest: '{{workdir}}/{{color}}/id'
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
+
+- name: '{{color}}: add executable'
+  template:
+    src: templates/service
+    dest: '{{workdir}}/{{color}}/service'
+    mode: '0755'
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
+
+- name: '{{color}}: define systemd unit'
+  template:
+    src: templates/wracket.service
+    dest: '/etc/systemd/system/wracket-{{color}}.service'
+    owner: root
+    group: root
+    mode: '0644'

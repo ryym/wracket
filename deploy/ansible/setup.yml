@@ -1,0 +1,44 @@
+- name: Set up web server
+  hosts: web
+  become: yes
+  tasks:
+    - import_role:
+        name: roles/common
+      vars:
+        # It seems that we cannot pass an vault variable 'app_user_password' to
+        # the 'password_hash' filter directly so we extract its value beforehand
+        # here by assiging to another variable.
+        user_password: '{{app_user_password}}'
+      tags: ['common']
+
+    - name: create app_profile file
+      template:
+        src: templates/app_profile.sh
+        dest: '/home/{{app_user}}/app_profile.sh'
+      tags: ['profile']
+
+    - name: load app_profile on login
+      lineinfile:
+        dest: '/home/{{app_user}}/.bash_profile'
+        line: 'source {{app_profile_path}}'
+      tags: ['profile']
+
+    - import_role:
+        name: roles/workdir
+      tags: ['workdir']
+
+    - import_role:
+        name: roles/nginx
+      tags: ['nginx']
+
+    - import_role:
+        name: roles/postgres
+      tags: ['db']
+
+    - import_role:
+        name: rbenv
+      become: yes
+      become_user: '{{app_user}}'
+      vars:
+        ruby_version: '{{app_ruby_version}}'
+      tags: ['rbenv']

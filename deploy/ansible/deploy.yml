@@ -1,0 +1,23 @@
+- name: Deploy app
+  hosts: web
+  become: yes
+
+  tasks:
+    # This selects a deployment target directory green or blue alternately.
+    # It means this is not an idempotent task.
+    - import_tasks: tasks/detect_next.yml
+      when: next is not defined
+
+    - import_role:
+        name: roles/deployment
+      vars:
+        color: '{{next}}'
+        port: '{{ports[next]}}'
+      tags: ['deployment']
+
+    - import_role:
+        name: roles/nginx
+        tasks_from: toggle
+      vars:
+        port: "{{ports[next]}}"
+      tags: ['nginx']

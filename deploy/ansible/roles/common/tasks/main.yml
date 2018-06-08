@@ -1,0 +1,23 @@
+- name: add group for app
+  group:
+    name: '{{app_group}}'
+
+- name: add user for app
+  user:
+    name: '{{app_user}}'
+    password: '{{ user_password | password_hash("sha512") }}'
+    shell: /bin/bash
+    groups:
+      - '{{app_group}}'
+      - wheel
+    update_password: on_create
+    append: yes
+
+- name: install basic packages
+  yum:
+    update_cache: yes
+    name: '{{item}}'
+  with_items:
+    - git
+    - epel-release
+  tags: ['yum']
