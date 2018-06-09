@@ -6,7 +6,13 @@
   yum:
     name: '{{item}}'
     update_cache: yes
-  with_items: ['gcc', 'make', 'openssl-devel', 'libffi-devel', 'readline-devel']
+  with_items:
+    - gcc
+    - make
+    - openssl-devel
+    - libffi-devel
+    - readline-devel
+    - bzip2
   tags: ['yum']
 
 - name: install rbenv
