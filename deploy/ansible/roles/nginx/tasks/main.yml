@@ -14,6 +14,15 @@
     path: /etc/nginx/sites-enabled
     state: directory
 
+- name: get stat of default nginx.conf backup
+  stat:
+    path: /etc/nginx/nginx.conf.default
+  register: nginx_conf_backup
+
+- name: back up default nginx.conf
+  command: mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default
+  when: not nginx_conf_backup.stat.exists
+
 - name: put nginx.conf
   template:
     src: templates/nginx.conf
@@ -33,4 +42,4 @@
     state: link
 
 - name: enable httpd_can_network_connect of SELinux
-  shell: setsebool httpd_can_network_connect 1
+  command: setsebool httpd_can_network_connect 1
