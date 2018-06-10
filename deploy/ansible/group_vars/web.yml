@@ -3,7 +3,7 @@ app_user: wracket
 app_group: wracket
 app_profile_path: '/home/{{app_user}}/app_profile.sh'
 
-app_host: '192.168.33.100' # XXX: Temporary
+app_domain: '192.168.33.100' # XXX: Temporary
 
 app_ruby_version: '2.4.1'
 
