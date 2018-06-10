@@ -10,6 +10,9 @@ app_ruby_version: '2.4.1'
 
 rbenv_root: '/home/{{app_user}}/.rbenv'
 
+letsencrypt_root: '/etc/letsencrypt'
+letsencrypt_app_cert_root: '{{letsencrypt_root}}/live/{{app_domain}}'
+
 deployment_branch: precompiled
 
 ports:
