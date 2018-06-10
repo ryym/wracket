@@ -42,3 +42,9 @@
       vars:
         ruby_version: '{{app_ruby_version}}'
       tags: ['rbenv']
+
+    - import_role:
+        name: letsencrypt
+      vars:
+        admin_email: 'ryym.64@gmail.com'
+      tags: ['letsencrypt']

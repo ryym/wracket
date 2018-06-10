@@ -24,7 +24,7 @@
 - name: '{{color}}: define systemd unit'
   template:
     src: templates/wracket.service
-    dest: '/etc/systemd/system/wracket-{{color}}.service'
+    dest: '{{systemd_unit_dir}}/wracket-{{color}}.service'
     owner: root
     group: root
     mode: '0644'

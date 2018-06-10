@@ -1,0 +1,46 @@
+# Configure Let's Encrypt for Nginx.
+# https://letsencrypt.org/
+# https://certbot.eff.org/lets-encrypt/centosrhel7-nginx
+#
+# Note that this role does not modify Nginx configuration at all.
+
+- name: install certbot for Nginx
+  yum:
+    name: python2-certbot-nginx
+
+- name: get stat of domain archive directory
+  stat:
+    path: '/etc/letsencrypt/archive/{{app_domain}}'
+  register: cert_archive_dir
+
+- name: install certificate for app
+  command: >
+    certbot --nginx certonly
+      -n
+      -d '{{app_domain}}'
+      -m '{{admin_email}}'
+      --agree-tos
+  when: not cert_archive_dir.stat.exists
+
+- name: define certificate renewal service
+  template:
+    src: templates/cert-renew.service
+    dest: '{{systemd_unit_dir}}/cert-renew.service'
+  register: renew_service
+
+- name: define certificate renewal timer
+  template:
+    src: templates/cert-renew.timer
+    dest: '{{systemd_unit_dir}}/cert-renew.timer'
+  register: renew_timer
+
+- name: reload systemd daemon
+  systemd:
+    daemon_reload: yes
+  when: renew_service.changed or renew_timer.changed
+
+- name: enable certificate renewal timer
+  systemd:
+    name: cert-renew.timer
+    enabled: yes
+    state: started

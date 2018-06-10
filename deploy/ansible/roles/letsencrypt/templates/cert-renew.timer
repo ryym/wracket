@@ -1,0 +1,9 @@
+[Unit]
+Description = A timer for certificate renewal
+
+[Timer]
+OnCalendar = *-*-* 05:00:00
+Persistent = true
+
+[Install]
+WantedBy = timers.target

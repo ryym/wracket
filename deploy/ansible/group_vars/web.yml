@@ -16,6 +16,8 @@ ports:
   blue: 8000
   green: 8001
 
+systemd_unit_dir: /etc/systemd/system
+
 app_user_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           30326466303538356161613835643834346235626664633936313661343433373233656631313962

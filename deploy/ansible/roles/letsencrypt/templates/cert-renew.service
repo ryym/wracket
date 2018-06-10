@@ -1,0 +1,7 @@
+[Unit]
+Description = Renew app certificate if necessary
+
+[Service]
+Type = oneshot
+ExecStart = /bin/bash -c "certbot renew"
+User = root
