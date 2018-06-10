@@ -50,7 +50,6 @@ services:
     environment: *server_environment
     depends_on:
       - db
-      - front
     tty: false
     stdin_open: false
     command: bin/spring server
