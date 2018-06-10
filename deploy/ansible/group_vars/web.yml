@@ -3,7 +3,8 @@ app_user: wracket
 app_group: wracket
 app_profile_path: '/home/{{app_user}}/app_profile.sh'
 
-app_domain: '192.168.33.100' # XXX: Temporary
+# XXX: Use the domain of my blog site for now.
+app_domain: 'wracket.ryym.tokyo'
 
 app_ruby_version: '2.4.1'
 
