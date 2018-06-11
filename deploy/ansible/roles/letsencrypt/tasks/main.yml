@@ -4,6 +4,18 @@
 #
 # Note that this role does not modify Nginx configuration at all.
 
+# XXX:
+# If you run this role as a step of 'setup.yml' playbook for the first time,
+# currently the certificate installation will fail.
+# This is because the Nginx configuration file already contains
+# settings for HTTPS that loads certificates from the 'letsencrypt' directory.
+# But since these files does not exist yet, `nginx -t` fails and 'certbot' command
+# fails too.
+# In addition, a Nginx process still remains after certificates installation.
+# I fixed these problems manually at that time. Next time, I think
+# we should try to use certbot as a standalone mode.
+# In that case certbot does not use Nginx.
+
 - name: install certbot for Nginx
   yum:
     name: python2-certbot-nginx

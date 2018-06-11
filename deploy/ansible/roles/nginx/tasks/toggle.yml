@@ -1,7 +1,4 @@
-- name: put conf for wracket
-  template:
-    src: templates/nginx-wracket.conf
-    dest: /etc/nginx/sites-available/wracket.conf
+- import_tasks: _app_conf.yml
   vars:
     backend_port: '{{port}}'
 

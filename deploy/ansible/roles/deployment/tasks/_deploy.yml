@@ -1,7 +1,7 @@
 - import_tasks: _setup_repo.yml
 
 - name: set up app
-  shell: /bin/bash -lc '{{item}}'
+  shell: /bin/bash -lc 'source envs.sh && {{item}}'
   args:
     chdir: '{{workdir}}/{{color}}/app'
   with_items:
