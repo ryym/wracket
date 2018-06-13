@@ -9,3 +9,6 @@ WorkingDirectory = {{workdir}}/{{color}}/app
 ExecStart = {{workdir}}/{{color}}/service
 KillSignal = SIGINT
 Restart = always
+
+[Install]
+WantedBy = multi-user.target

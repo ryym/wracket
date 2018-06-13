@@ -39,4 +39,9 @@
     state: link
 
 - name: enable httpd_can_network_connect of SELinux
-  command: setsebool httpd_can_network_connect 1
+  command: setsebool -P httpd_can_network_connect 1
+
+- name: enable nginx systemd daemon
+  systemd:
+    name: nginx
+    enabled: yes

@@ -28,3 +28,8 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: '{{color}}: enable systemd daemon'
+  systemd:
+    name: 'wracket-{{color}}'
+    enabled: yes
