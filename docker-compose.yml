@@ -39,7 +39,6 @@ services:
     depends_on:
       - db
       - front
-      - spring
     ports:
       - '3000:3000'
     command: bin/rails s -b '0.0.0.0'
