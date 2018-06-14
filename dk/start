@@ -1,0 +1,4 @@
+#!/bin/sh
+
+docker-sync start > /dev/null
+docker-compose run --rm --service-ports server

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+docker-sync start > /dev/null
+docker-compose up -d spring
+docker-compose exec spring rails "$@"
