@@ -25,7 +25,4 @@
       POCKET_CONSUMER_KEY: '{{pocket_consumer_key}}'
       SECRET_KEY_BASE: '{{rails_secret_key_base}}'
       RAILS_LOG_TO_STDOUT: 1
-
-      # XXX: Serve assets from this server for now.
       ASSET_URL: 'https://{{app_domain}}/assets'
-      RAILS_SERVE_STATIC_FILES: 1

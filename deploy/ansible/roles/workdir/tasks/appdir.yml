@@ -33,3 +33,10 @@
   systemd:
     name: 'wracket-{{color}}'
     enabled: yes
+
+# Add 'public_content_t' type for files in the public directory
+# to allow Nginx to serve static files inside it.
+- name: '{{color}}: define SELinux context for public directory'
+  command: >
+    semanage fcontext -a -t public_content_t --
+    "{{workdir}}/{{color}}/app/public(/.*)?"
