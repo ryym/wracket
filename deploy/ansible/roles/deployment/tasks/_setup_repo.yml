@@ -4,6 +4,7 @@
     repo: git://github.com/ryym/wracket.git
     version: '{{deployment_branch}}'
     dest: '{{workdir}}/{{color}}/app'
+    depth: 10
 
 - name: bundle install
   shell: /bin/bash -lc 'bundle install'
