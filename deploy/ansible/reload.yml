@@ -1,0 +1,23 @@
+# NOTE: Since this restarts the running app,
+# the service becomes unavailable temporarily during the restarting.
+- name: Reload current running app
+  hosts: web
+  become: yes
+
+  tasks:
+    - import_tasks: tasks/detect_next.yml
+
+    - import_role:
+        name: roles/deployment
+      vars:
+        color: '{{current}}'
+        port: '{{ports[current]}}'
+      tags: ['deployment']
+
+    - import_role:
+        name: roles/nginx
+        tasks_from: toggle
+      vars:
+        port: "{{ports[current]}}"
+      tags: ['nginx']
+

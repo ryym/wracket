@@ -10,7 +10,7 @@
     name: 'wracket-{{color}}'
     state: restarted
 
-- name: toggle current directory
+- name: 'set current directory to {{color}}'
   file:
     src: '{{workdir}}/{{color}}'
     dest: '{{workdir}}/current'
