@@ -2,6 +2,11 @@
   vars:
     backend_port: '{{port}}'
 
+- name: put nginx.conf
+  template:
+    src: templates/nginx.conf
+    dest: /etc/nginx/nginx.conf
+
 - name: reload nginx
   systemd:
     name: nginx
