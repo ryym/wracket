@@ -1,6 +1,6 @@
 - name: put conf for wracket
   template:
-    src: templates/nginx-wracket.conf
+    src: templates/wracket.nginx.conf
     dest: /etc/nginx/sites-available/wracket.conf
   vars:
     certificate_path: '{{letsencrypt_app_cert_root}}/fullchain.pem'

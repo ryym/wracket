@@ -6,13 +6,13 @@
     group: '{{app_group}}'
 
 - name: create blue app directory
-  import_tasks: appdir.yml
+  import_tasks: _appdir.yml
   vars:
     color: blue
   tags: ["appdir"]
 
 - name: create green app directory
-  import_tasks: appdir.yml
+  import_tasks: _appdir.yml
   vars:
     color: green
   tags: ["appdir"]
