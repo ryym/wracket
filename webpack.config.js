@@ -3,7 +3,6 @@
 // TODO:
 // - Split chunks properly.
 // - Minify CSS for production.
-// - Replace webpack-dev-server with webpack-serve if possible.
 
 const path = require('path');
 const dotenv = require('dotenv');
