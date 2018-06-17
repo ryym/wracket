@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 // Load environment variables from .env file.
 dotenv.config();
@@ -148,5 +149,13 @@ module.exports = {
         NODE_ENV: `'${ENV}'`,
       },
     }),
+
+    // https://webpack.js.org/plugins/commons-chunk-plugin/
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: module => module.context && module.context.includes('node_modules'),
+    }),
+
+    ...(process.env.BUNDLE_ANALYZE ? [new BundleAnalyzerPlugin()] : []),
   ],
 };
