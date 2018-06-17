@@ -44,7 +44,6 @@ const cssExtractor = new ExtractTextPlugin({
 
 module.exports = {
   entry: {
-    app: path.join(ENTRY_ROOT, 'app'),
     home: path.join(ENTRY_ROOT, 'home'),
     welcome: path.join(ENTRY_ROOT, 'welcome'),
   },
