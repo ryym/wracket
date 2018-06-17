@@ -13,6 +13,8 @@
 
   <body>
     <%= yield %>
+    <script crossorigin src="<%= asset_url('react-redux.js') %>"></script>
+    <script crossorigin src="<%= asset_url('vendors.js') %>"></script>
     <%= yield :scripts %>
   </body>
 </html>

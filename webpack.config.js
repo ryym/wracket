@@ -1,7 +1,6 @@
 /* eslint-env node */
 
 // TODO:
-// - Split chunks properly.
 // - Minify CSS for production.
 
 const path = require('path');
@@ -44,6 +43,24 @@ module.exports = {
   entry: {
     home: path.join(ENTRY_ROOT, 'home'),
     welcome: path.join(ENTRY_ROOT, 'welcome'),
+  },
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        'react-redux': {
+          test: /[\\/]node_modules[\\/](react|redux)/,
+          name: 'react-redux',
+          chunks: 'all',
+          priority: 1,
+        },
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
 
   resolve: {
