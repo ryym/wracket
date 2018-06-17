@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build:prod": "NODE_ENV=production webpack",
+    "build:analyze": "NODE_ENV=production BUNDLE_ANALYZE=1 webpack",
     "lint": "yarn lint:js && yarn lint:ts",
     "lint:js": "eslint .",
     "lint:ts": "tslint -p . -t verbose 'frontend/**/*.ts?(x)'",
