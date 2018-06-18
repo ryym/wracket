@@ -9,6 +9,11 @@
 
     <%= csrf_meta_tags %>
     <%= yield :head %>
+    <% if should_load_css? %>
+      <link rel="stylesheet" href="<%= asset_url('global-styles.css') %>">
+    <% else %>
+      <script src="<%= asset_url('global-styles.js') %>"></script>
+    <% end %>
   </head>
 
   <body>

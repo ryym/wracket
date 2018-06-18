@@ -1,6 +1,3 @@
-import '../global-styles/base.scss';
-import '../global-styles/mdc.scss';
-
 import * as React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';

@@ -41,6 +41,7 @@ module.exports = {
   mode: byEnv({dev: 'development', prod: 'production'}),
 
   entry: {
+    'global-styles': GLOBAL_STYLES_ROOT,
     home: path.join(ENTRY_ROOT, 'home'),
     welcome: path.join(ENTRY_ROOT, 'welcome'),
   },
