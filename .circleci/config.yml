@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - run: node --version
+      - run: npm --version
+
+      - checkout
+
+      - restore_cache:
+          keys:
+            - node_modules-{{checksum "yarn.lock"}}
+      - run: yarn install
+      - save_cache:
+          key: node_modules-{{checksum "yarn.lock"}}
+          paths:
+            - node_modules
+
+      - run: yarn lint
+      - run: yarn test
