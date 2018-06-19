@@ -9,11 +9,16 @@
 
     <%= csrf_meta_tags %>
     <%= yield :head %>
+    <% if should_load_css? %>
+      <link rel="stylesheet" href="<%= asset_url('global-styles.css') %>">
+    <% end %>
   </head>
 
   <body>
     <%= yield %>
-    <script crossorigin src="<%= asset_url('app.js') %>"></script>
+    <% common_javascript_assets.each do |path| %>
+      <script crossorigin src="<%= asset_url(path) %>"></script>
+    <% end %>
     <%= yield :scripts %>
   </body>
 </html>

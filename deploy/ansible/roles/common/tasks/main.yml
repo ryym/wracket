@@ -13,11 +13,18 @@
     update_password: on_create
     append: yes
 
-- name: install basic packages
+- name: install epel-release
   yum:
     update_cache: yes
-    name: '{{item}}'
-  with_items:
-    - git
-    - epel-release
+    name: epel-release
   tags: ['yum']
+
+- name: check if git exists
+  command: which git
+  register: which_git
+  ignore_errors: true
+  tags: ['git']
+
+- import_tasks: _git.yml
+  when: which_git.rc != 0
+  tags: ['git']

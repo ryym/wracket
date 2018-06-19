@@ -5,3 +5,7 @@ vault_id
 
 # environment variables to run Ansible playbooks.
 /envs.sh
+
+# For now. Though the server's global IP address is not a secret,
+# I'm not sure it is good to expose the address in a public repository.
+/hosts

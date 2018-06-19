@@ -1,0 +1,28 @@
+# Since the Git binary Yum provides is too old,
+# we should build and install Git from the source.
+# ref: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+- name: install dependencies
+  yum:
+    name: '{{item}}'
+  with_items:
+    - gcc
+    - make
+    - autoconf
+    - openssl-devel
+    - perl-ExtUtils-MakeMaker
+
+- name: download source
+  shell: 'curl -L {{git_source_url}} | tar zx -C /tmp'
+  args:
+    warn: False
+
+- name: build
+  command: '{{item}}'
+  args:
+    chdir: '/tmp/git-{{git_version}}'
+  with_items:
+    - make configure
+    - ./configure --prefix=/usr
+    - make all
+    - make install

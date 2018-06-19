@@ -1,0 +1,5 @@
+git_version: '2.17.1'
+
+# XXX: This link just redirects to an actual URL.
+# So you need to follow redirects to download the tarball.
+git_source_url: 'https://github.com/git/git/archive/v{{git_version}}.tar.gz'
