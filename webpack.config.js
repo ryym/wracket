@@ -1,8 +1,5 @@
 /* eslint-env node */
 
-// TODO:
-// - Minify CSS for production.
-
 const path = require('path');
 const dotenv = require('dotenv');
 const webpack = require('webpack');
@@ -10,6 +7,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // Load environment variables from .env file.
 dotenv.config();
@@ -62,6 +61,14 @@ module.exports = {
         },
       },
     },
+
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
   },
 
   resolve: {
@@ -115,7 +122,7 @@ module.exports = {
             dev: 'style-loader',
             prod: MiniCssExtractPlugin.loader,
           }),
-          'css-loader',
+          {loader: 'css-loader'},
           {
             loader: 'sass-loader',
             options: {includePaths: ['./node_modules']},
