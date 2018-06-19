@@ -11,15 +11,14 @@
     <%= yield :head %>
     <% if should_load_css? %>
       <link rel="stylesheet" href="<%= asset_url('global-styles.css') %>">
-    <% else %>
-      <script src="<%= asset_url('global-styles.js') %>"></script>
     <% end %>
   </head>
 
   <body>
     <%= yield %>
-    <script crossorigin src="<%= asset_url('react-redux.js') %>"></script>
-    <script crossorigin src="<%= asset_url('vendors.js') %>"></script>
+    <% common_javascript_assets.each do |path| %>
+      <script crossorigin src="<%= asset_url(path) %>"></script>
+    <% end %>
     <%= yield :scripts %>
   </body>
 </html>
