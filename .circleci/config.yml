@@ -6,12 +6,15 @@ jobs:
     steps:
       - run: node --version
       - run: npm --version
+
       - checkout
 
       - restore_cache:
           keys:
             - node_modules-{{checksum "yarn.lock"}}
+
       - run: yarn install
+
       - save_cache:
           key: node_modules-{{checksum "yarn.lock"}}
           paths:
@@ -38,12 +41,15 @@ jobs:
     steps:
       - run: ruby --version
       - run: bundle --version
+
       - checkout
 
       - restore_cache:
           keys:
             - bundle-{{checksum "Gemfile.lock"}}
+
       - run: bundle check || bundle install
+
       - save_cache:
           key: bundle-{{checksum "Gemfile.lock"}}
           paths:
@@ -65,9 +71,12 @@ jobs:
 
       - run: yarn build:prod
 
-      - persist_to_workspace:
-          root: public/assets
-          paths: ["."]
+      - run: git config --global user.email ryym.64@gmail.com
+      - run: git config --global user.name ryym
+      - run: git remote add upstream https://${GITHUB_API_TOKEN}@github.com/ryym/wracket
+      - run: git add -f public/assets
+      - run: git commit -m "Add precompiled assets"
+      - run: git push -f upstream HEAD:precompiled
 
   deploy:
     docker:
@@ -102,6 +111,7 @@ workflows:
   version: 2
   test:
     jobs:
-      - deploy
+      - build
+      # - deploy
       # - test_js
       # - test_ruby
