@@ -69,9 +69,41 @@ jobs:
           root: public/assets
           paths: ["."]
 
+  deploy:
+    docker:
+      - image: ryym/circleci-python-ansible
+    environment:
+      ANSIBLE_HOST_KEY_CHECKING: false
+    steps:
+      - run: ansible --version
+      - run: ansible-playbook --version
+      - checkout
+
+      - attach_workspace:
+          at: public/assets
+
+      - run:
+          name: Prepare hosts file
+          command: |
+            cat <<-EOF > deploy/ansible/hosts
+            [web]
+            $PRODUCTION_HOST
+            EOF
+
+      - run:
+          name: Prepare vault id
+          command: |
+            cat <<-EOF > deploy/ansible/vault_id
+            $ANSIBLE_VAULT_ID
+            EOF
+
+      # Currently just pinging
+      - run: deploy/ansible/bin/ping web
+
 workflows:
   version: 2
   test:
     jobs:
-      - test_js
-      - test_ruby
+      - deploy
+      # - test_js
+      # - test_ruby
