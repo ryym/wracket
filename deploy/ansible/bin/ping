@@ -1,0 +1,7 @@
+#!/bin/sh
+
+ANSIBLE_ROOT=`dirname \`dirname $0\``
+
+ansible \
+    -i "$ANSIBLE_ROOT/hosts" \
+    -m ping "$1"

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+ANSIBLE_ROOT=`dirname \`dirname $0\``
+
+ansible-playbook \
+    -i "$ANSIBLE_ROOT/hosts" \
+    --vault-id "$ANSIBLE_ROOT/vault_id" \
+    "$@"
