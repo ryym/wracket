@@ -54,6 +54,21 @@ jobs:
 
       - run: bin/rails test
 
+  build:
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node_modules-{{checksum "yarn.lock"}}
+
+      - run: yarn build:prod
+
+      - persist_to_workspace:
+          root: public/assets
+          paths: ["."]
+
 workflows:
   version: 2
   test:
