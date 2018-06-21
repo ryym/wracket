@@ -1,7 +1,4 @@
 version: 2
-branches:
-  ignore:
-    - precompiled
 
 jobs:
   test_js:
@@ -114,8 +111,14 @@ workflows:
   version: 2
   build:
     jobs:
-      - test_js
-      - test_ruby
+      - test_js:
+          filters:
+            branches:
+              ignore: precompiled
+      - test_ruby:
+          filters:
+            branches:
+              ignore: precompiled
       - build:
           filters:
             branches:
