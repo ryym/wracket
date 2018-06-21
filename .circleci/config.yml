@@ -1,0 +1,135 @@
+version: 2
+
+jobs:
+  test_js:
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - run: node --version
+      - run: npm --version
+
+      - checkout
+
+      - restore_cache:
+          keys:
+            - node_modules-{{checksum "yarn.lock"}}
+
+      - run: yarn install
+
+      - save_cache:
+          key: node_modules-{{checksum "yarn.lock"}}
+          paths:
+            - node_modules
+
+      - run: yarn lint
+      - run: yarn test
+
+  test_ruby:
+    docker:
+      - image: circleci/ruby:2.4.1
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
+          WRACKET_DB_HOST: localhost
+          WRACKET_DB_USER: wracket
+          WRACKET_DB_PASSWORD: ""
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_USER: wracket
+          POSTGRES_DB: wracket_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - run: ruby --version
+      - run: bundle --version
+
+      - checkout
+
+      - restore_cache:
+          keys:
+            - bundle-{{checksum "Gemfile.lock"}}
+
+      - run: bundle check || bundle install
+
+      - save_cache:
+          key: bundle-{{checksum "Gemfile.lock"}}
+          paths:
+            - vendor/bundle
+
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: bin/rails db:schema:load
+
+      - run: bin/rails test
+
+  build:
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node_modules-{{checksum "yarn.lock"}}
+
+      - run: yarn build:prod
+
+      - run: git config --global user.email ryym.64@gmail.com
+      - run: git config --global user.name ryym
+      - run: git remote add upstream https://${GITHUB_API_TOKEN}@github.com/ryym/wracket
+      - run: git add -f public/assets
+      - run: git commit -m "Add precompiled assets"
+      - run: git push -f upstream HEAD:precompiled
+
+  deploy:
+    docker:
+      - image: ryym/circleci-python-ansible
+    environment:
+      ANSIBLE_HOST_KEY_CHECKING: false
+    steps:
+      - run: ansible --version
+      - run: ansible-playbook --version
+
+      - checkout
+
+      - run:
+          name: Prepare hosts file
+          command: |
+            cat <<-EOF > deploy/ansible/hosts
+            [web]
+            $PRODUCTION_HOST
+            EOF
+
+      - run:
+          name: Prepare vault id
+          command: |
+            cat <<-EOF > deploy/ansible/vault_id
+            $ANSIBLE_VAULT_ID
+            EOF
+
+      - run: deploy/ansible/bin/play deploy/ansible/deploy.yml
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test_js:
+          filters:
+            branches:
+              ignore: precompiled
+      - test_ruby:
+          filters:
+            branches:
+              ignore: precompiled
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/

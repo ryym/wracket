@@ -2,7 +2,7 @@
 # we should build and install Git from the source.
 # ref: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
-- name: install dependencies
+- name: 'Git: install dependencies'
   yum:
     name: '{{item}}'
   with_items:
@@ -12,12 +12,12 @@
     - openssl-devel
     - perl-ExtUtils-MakeMaker
 
-- name: download source
+- name: 'Git: download source'
   shell: 'curl -L {{git_source_url}} | tar zx -C /tmp'
   args:
     warn: False
 
-- name: build
+- name: 'Git: build'
   command: '{{item}}'
   args:
     chdir: '/tmp/git-{{git_version}}'
