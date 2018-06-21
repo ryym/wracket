@@ -110,8 +110,7 @@ jobs:
             $ANSIBLE_VAULT_ID
             EOF
 
-      # Currently just pinging
-      - run: deploy/ansible/bin/ping web
+      - run: deploy/ansible/bin/play deploy/ansible/deploy.yml
 
 workflows:
   version: 2
