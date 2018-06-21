@@ -1,4 +1,8 @@
 version: 2
+branches:
+  ignore:
+    - precompiled
+
 jobs:
   test_js:
     docker:
@@ -109,9 +113,21 @@ jobs:
 
 workflows:
   version: 2
-  test:
+  build:
     jobs:
-      - build
-      # - deploy
-      # - test_js
-      # - test_ruby
+      - test_js
+      - test_ruby
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
