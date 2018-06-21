@@ -13,6 +13,6 @@
 # So we need to restore context everytime after cloning the repository.
 # There may be better way to handle customized SELinux context for files.
 - name: restore SELinux context
-  command: restorecon -R
+  command: restorecon -R .
   args:
     chdir: '{{workdir}}/{{color}}/app'
