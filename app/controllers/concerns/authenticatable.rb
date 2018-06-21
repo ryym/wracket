@@ -4,7 +4,6 @@ module Authenticatable
   extend ActiveSupport::Concern
 
   def current_user
-    # XXX: Currently we store a user ID in the session directly. Is this secure?
     @__user ||= User.find_by(id: session[:user_id])
   end
 

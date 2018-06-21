@@ -13,13 +13,14 @@ class SessionsController < ViewBaseController
     ret = @pocket.obtain_request_token
     return redirect_back(fallback_location: root_path) if ret.err?
 
-    # XXX: Probably we should not store a request token in a session.
     session[:pocket_request_token] = ret.request_token
     redirect_to @pocket.authorization_url(ret.request_token)
   end
 
   def create
     request_token = session[:pocket_request_token]
+    session.delete(:pocket_request_token)
+
     return redirect_to root_path if request_token.empty?
 
     ret = @pocket.obtain_access_token(request_token)
