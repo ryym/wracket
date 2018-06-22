@@ -1,9 +1,24 @@
 - debug:
     msg: 'Deploy to {{color}}'
 
-- import_tasks: _deploy.yml
-  become: yes
-  become_user: '{{app_user}}'
+- import_tasks: _setup_repo.yml
+
+- name: set up app
+  shell: /bin/bash -lc 'source envs.sh && {{item}}'
+  args:
+    chdir: '{{workdir}}/{{color}}/app'
+  with_items:
+    - 'bin/rake db:migrate'
+    - 'bundle binstubs puma --path ./sbin'
+
+# It seems that the newly created files just inherits the SELinux context of
+# their parent directory even if we changed the context using 'fcontext' beforehand.
+# So we need to restore context everytime after cloning the repository.
+# There may be better way to handle customized SELinux context for files.
+- name: restore SELinux context
+  command: restorecon -R .
+  args:
+    chdir: '{{workdir}}/{{color}}/app'
 
 - name: 'start {{color}} app'
   systemd:
