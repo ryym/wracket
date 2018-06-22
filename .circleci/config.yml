@@ -75,6 +75,9 @@ jobs:
       - run: git config --global user.email ryym.64@gmail.com
       - run: git config --global user.name ryym
       - run: git remote add upstream https://${GITHUB_API_TOKEN}@github.com/ryym/wracket
+      - run: git tag `scripts/git-tag.js`
+      - run: git push upstream --tags
+
       - run: git add -f public/assets
       - run: git commit -m "Add precompiled assets"
       - run: git push -f upstream HEAD:precompiled
@@ -120,16 +123,15 @@ workflows:
             branches:
               ignore: precompiled
       - build:
+          requires:
+            - test_js
+            - test_ruby
           filters:
             branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
+              only: master
       - deploy:
           requires:
             - build
           filters:
             branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
+              only: master
