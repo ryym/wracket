@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# This scripts allows us to run rails commands efficiently using spring.
+# Example: dk/rails console, dk/rails test
+
 docker-sync start > /dev/null
 docker-compose up -d spring
 docker-compose exec spring rails "$@"

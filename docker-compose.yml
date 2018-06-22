@@ -1,22 +1,8 @@
 # docker-compose configuration for DEVELOPMENT.
 
-# First, we are using docker-sync to speed up file syncing of Docker for Mac.
-# https://github.com/EugenMayer/docker-sync
-# So do not forget to run `docker-sync start` before starting development.
-#
-# To run the application:
-#
-#   docker-compose run --rm --service-ports server
-#
-# Using `docker-compose run` instead of `docker-compose up` allows us to
-# use `binding.pry` easily as if we run the server on a host machine.
-#
-# To run rails commands such as `console` or `test`:
-#
-#   docker-compose exec spring bin/rails c
-#
-# Since the `spring` container runs the spring server,
-# it speeds up those rails commands launching.
+# Note that we are using docker-sync to speed up file syncing of Docker for Mac.
+# ref: https://github.com/EugenMayer/docker-sync
+# You can use executables in the `dk` directory to run this docker-compose containers easily.
 
 version: '3'
 

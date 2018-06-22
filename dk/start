@@ -1,4 +1,11 @@
 #!/bin/sh
 
+# This script starts the application:
+#
+#   docker-compose run --rm --service-ports server
+#
+# Using `docker-compose run` instead of `docker-compose up` allows us to
+# use `binding.pry` easily as if we run the server on a host machine.
+
 docker-sync start > /dev/null
 docker-compose run --rm --service-ports server
