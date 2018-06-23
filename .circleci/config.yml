@@ -112,20 +112,21 @@ jobs:
 
 workflows:
   version: 2
-  build:
+
+  test:
     jobs:
       - test_js:
           filters:
             branches:
-              ignore: precompiled
+              only: /^dev\/.*/
       - test_ruby:
           filters:
             branches:
-              ignore: precompiled
+              only: /^dev\/.*/
+
+  build-deploy:
+    jobs:
       - build:
-          requires:
-            - test_js
-            - test_ruby
           filters:
             branches:
               only: master
@@ -135,3 +136,10 @@ workflows:
           filters:
             branches:
               only: master
+
+  deploy-only:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: deploy
