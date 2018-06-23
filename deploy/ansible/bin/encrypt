@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Usage: bin/encrypt name value
+
+ANSIBLE_ROOT=`dirname \`dirname $0\``
+
+ansible-vault encrypt_string \
+    --vault-id "$ANSIBLE_ROOT/vault_id" \
+    --name "$1" \
+    "$2"

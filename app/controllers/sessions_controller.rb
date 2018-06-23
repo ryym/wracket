@@ -5,6 +5,8 @@
 class SessionsController < ViewBaseController
   require_login false
 
+  MY_ADDRESS = 'ryym.64@gmail.com'
+
   before_action do
     @pocket ||= PocketAuthenticator.create(oauth_callback_url)
   end
@@ -25,6 +27,9 @@ class SessionsController < ViewBaseController
 
     ret = @pocket.obtain_access_token(request_token)
     return redirect_to root_path if ret.err?
+
+    # XXX: Do not accept other users for now.
+    return redirect_to root_path if ret.username != MY_ADDRESS
 
     reset_session
 

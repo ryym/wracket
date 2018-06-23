@@ -22,7 +22,4 @@ module Wracket
     config.generators.javascripts = false
     config.generators.helper = false
   end
-
-  # For now
-  RELEASED = !Rails.env.production?
 end
