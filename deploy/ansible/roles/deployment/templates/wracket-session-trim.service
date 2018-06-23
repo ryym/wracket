@@ -1,0 +1,11 @@
+[Unit]
+Description = Clear expired session records
+
+[Service]
+Type = oneshot
+User = {{app_user}}
+Group = {{app_group}}
+WorkingDirectory = {{workdir}}/current/app
+Environment = "SESSION_DAYS_TRIM_THRESHOLD=14"
+Environment = "BASH_ENV=~/.bash_profile"
+ExecStart = /bin/bash -c "source envs.sh && bin/rake db:sessions:trim"
