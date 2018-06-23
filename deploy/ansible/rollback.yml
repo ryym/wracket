@@ -1,0 +1,24 @@
+- name: Restore previous app
+  hosts: web
+  become: yes
+
+  # Rollback the app to the previous one.
+  # This does not rollback the database.
+  tasks:
+    # In this case, the `next` is a `previous`.
+    - import_tasks: tasks/detect_next.yml
+
+    - import_role:
+        name: roles/deployment
+        tasks_from: rollback
+      vars:
+        color: '{{next}}'
+        port: '{{ports[next]}}'
+      tags: ['deployment']
+
+    - import_role:
+        name: roles/nginx
+        tasks_from: toggle
+      vars:
+        port: '{{ports[next]}}'
+      tags: ['nginx']
