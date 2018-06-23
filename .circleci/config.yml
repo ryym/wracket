@@ -1,5 +1,23 @@
 version: 2
 
+shared:
+  step_prepare_ansible_hosts: &step_prepare_ansible_hosts
+    run:
+      name: Prepare hosts file
+      command: |
+        cat <<-EOF > deploy/ansible/hosts
+        [web]
+        $PRODUCTION_HOST
+        EOF
+
+  step_prepare_ansible_vault: &step_prepare_ansible_vault
+    run:
+      name: Prepare vault id
+      command: |
+        cat <<-EOF > deploy/ansible/vault_id
+        $ANSIBLE_VAULT_ID
+        EOF
+
 jobs:
   test_js:
     docker:
@@ -88,27 +106,25 @@ jobs:
     environment:
       ANSIBLE_HOST_KEY_CHECKING: false
     steps:
+      - checkout
       - run: ansible --version
       - run: ansible-playbook --version
-
-      - checkout
-
-      - run:
-          name: Prepare hosts file
-          command: |
-            cat <<-EOF > deploy/ansible/hosts
-            [web]
-            $PRODUCTION_HOST
-            EOF
-
-      - run:
-          name: Prepare vault id
-          command: |
-            cat <<-EOF > deploy/ansible/vault_id
-            $ANSIBLE_VAULT_ID
-            EOF
-
+      - *step_prepare_ansible_hosts
+      - *step_prepare_ansible_vault
       - run: deploy/ansible/bin/play deploy/ansible/deploy.yml
+
+  rollback:
+    docker:
+      - image: ryym/circleci-python-ansible
+    environment:
+      ANSIBLE_HOST_KEY_CHECKING: false
+    steps:
+      - checkout
+      - run: ansible --version
+      - run: ansible-playbook --version
+      - *step_prepare_ansible_hosts
+      - *step_prepare_ansible_vault
+      - run: deploy/ansible/bin/play deploy/ansible/rollback.yml
 
 workflows:
   version: 2
@@ -143,3 +159,10 @@ workflows:
           filters:
             branches:
               only: deploy
+
+  rollback:
+    jobs:
+      - rollback:
+          filters:
+            branches:
+              only: rollback

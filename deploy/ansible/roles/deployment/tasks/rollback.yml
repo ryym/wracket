@@ -1,0 +1,15 @@
+- debug:
+    msg: 'Rollback app to {{color}}'
+
+- name: 'start {{color}} app'
+  systemd:
+    name: 'wracket-{{color}}'
+    state: restarted
+
+- name: 'set current directory to {{color}}'
+  file:
+    src: '{{workdir}}/{{color}}'
+    dest: '{{workdir}}/current'
+    state: link
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
