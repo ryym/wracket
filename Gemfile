@@ -14,6 +14,10 @@ gem 'jbuilder'
 gem 'activerecord-import'
 gem 'activerecord-session_store'
 
+# https://github.com/rails/sprockets/commit/2f7b7e5e67f47c32a2d637b7e90dfa5ecf922eb3
+# We don't use sprockets at all but `rails` gem depends on it.
+gem 'sprockets', '~> 3.7.2'
+
 # https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a35f2ba7f941c15e239a1cb379d56ae
 gem 'rails-html-sanitizer', '>= 1.0.4'
 
