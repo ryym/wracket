@@ -38,18 +38,18 @@
   template:
     src: templates/cert-renew.service
     dest: '{{systemd_unit_dir}}/cert-renew.service'
-  register: renew_service
+  register: renewal_service
 
 - name: define certificate renewal timer
   template:
     src: templates/cert-renew.timer
     dest: '{{systemd_unit_dir}}/cert-renew.timer'
-  register: renew_timer
+  register: renewal_timer
 
 - name: reload systemd daemon
   systemd:
     daemon_reload: yes
-  when: renew_service.changed or renew_timer.changed
+  when: renewal_service.changed or renewal_timer.changed
 
 - name: enable certificate renewal timer
   systemd:

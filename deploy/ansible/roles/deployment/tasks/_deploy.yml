@@ -16,3 +16,20 @@
   command: restorecon -R .
   args:
     chdir: '{{workdir}}/{{color}}/app'
+
+- name: define session trimming service
+  template:
+    src: templates/wracket-session-trim.service
+    dest: '{{systemd_unit_dir}}/wracket-session-trim.service'
+  register: session_trim_service
+
+- name: define session trimming timer
+  template:
+    src: templates/wracket-session-trim.timer
+    dest: '{{systemd_unit_dir}}/wracket-session-trim.timer'
+  register: session_trim_timer
+
+- name: reload systemd daemon
+  systemd:
+    daemon_reload: yes
+  when: session_trim_service.changed or session_trim_timer.changed
