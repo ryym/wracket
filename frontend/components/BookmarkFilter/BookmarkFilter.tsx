@@ -1,5 +1,8 @@
 import * as React from 'react';
+import {RadioField} from '../form/RadioField';
 import {SearchCondition, BookmarkStatus} from '../../lib/models';
+
+const cls = require('./BookmarkFilter_styles.scss');
 
 type ChangeHandler = (cdtn: Partial<SearchCondition>) => void;
 
@@ -14,18 +17,22 @@ const eqStatuses = (s1: BookmarkStatus[], s2: BookmarkStatus[]) =>
 const statusFilters = [
   {
     name: 'new',
+    label: 'New',
     statuses: [BookmarkStatus.Reading, BookmarkStatus.Unread],
   },
   {
     name: 'reading',
+    label: 'Reading',
     statuses: [BookmarkStatus.Reading],
   },
   {
     name: 'archived',
+    label: 'Archived',
     statuses: [BookmarkStatus.Archived],
   },
   {
     name: 'all',
+    label: 'All',
     statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading, BookmarkStatus.Archived],
   },
 ];
@@ -34,18 +41,18 @@ export function BookmarkFilter({condition: cdtn, onConditionChange}: Props) {
   const change = (cdtn: Partial<SearchCondition>) => () => onConditionChange(cdtn);
   return (
     <div>
-      {statusFilters.map(({name, statuses}) => {
+      {statusFilters.map(({name, label, statuses}) => {
         return (
-          <label key={name}>
-            <input
-              type="radio"
-              name="status"
-              value={name}
-              checked={eqStatuses(statuses, cdtn.statuses)}
-              onChange={change({statuses})}
-            />
-            {name}
-          </label>
+          <RadioField
+            key={name}
+            id={`status-${name}`}
+            name="status"
+            label={label}
+            value={name}
+            rootClass={cls.filterField}
+            checked={eqStatuses(statuses, cdtn.statuses)}
+            onChange={change({statuses})}
+          />
         );
       })}
     </div>
