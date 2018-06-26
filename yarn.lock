@@ -31,7 +31,17 @@
     "@material/animation" "^0.34.0"
     "@material/theme" "^0.4.0"
 
-"@material/list@0.34":
+"@material/form-field@^0.34.0":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@material/form-field/-/form-field-0.34.1.tgz#b85b2a58d0e9b771bffe3893e35730f2c54d9b36"
+  dependencies:
+    "@material/base" "^0.34.0"
+    "@material/rtl" "^0.34.0"
+    "@material/selection-control" "^0.34.1"
+    "@material/theme" "^0.34.0"
+    "@material/typography" "^0.34.0"
+
+"@material/list@^0.34.0":
   version "0.34.1"
   resolved "https://registry.yarnpkg.com/@material/list/-/list-0.34.1.tgz#0c900c69e777a837b7e9d9737345f0bf90aef46a"
   dependencies:
@@ -39,6 +49,16 @@
     "@material/rtl" "^0.34.0"
     "@material/theme" "^0.34.0"
     "@material/typography" "^0.34.0"
+
+"@material/radio@^0.34.0":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@material/radio/-/radio-0.34.1.tgz#595a2ea6b340db766c89a4d5672071ddb2860262"
+  dependencies:
+    "@material/animation" "^0.34.0"
+    "@material/base" "^0.34.0"
+    "@material/ripple" "^0.34.1"
+    "@material/selection-control" "^0.34.1"
+    "@material/theme" "^0.34.0"
 
 "@material/react-material-icon@^0.1.0":
   version "0.1.0"
@@ -77,6 +97,12 @@
 "@material/rtl@^0.34.0":
   version "0.34.0"
   resolved "https://registry.yarnpkg.com/@material/rtl/-/rtl-0.34.0.tgz#6116d9c99f0c0ff40a8ae97ea5bc1a5fd29bcff5"
+
+"@material/selection-control@^0.34.1":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@material/selection-control/-/selection-control-0.34.1.tgz#78ca5c0cc557d4f5c7dc1219c995de1d082a3940"
+  dependencies:
+    "@material/ripple" "^0.34.1"
 
 "@material/theme@^0.34.0":
   version "0.34.0"
