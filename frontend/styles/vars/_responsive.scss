@@ -1,0 +1,25 @@
+// Reference: https://material.io/design/layout/responsive-layout-grid.html#breakpoints
+
+@mixin screen-xs {
+  @media screen and (max-width: 400px) {
+    @content;
+  }
+}
+
+@mixin screen-sm {
+  @media screen and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin screen-md {
+  @media screen and (max-width: 960px) {
+    @content;
+  }
+}
+
+@mixin screen-lg-only {
+  @media screen and (min-width: 961px) {
+    @content;
+  }
+}
