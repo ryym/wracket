@@ -1,3 +1,4 @@
+@import '@material/animation/variables';
 @import '../../styles/vars/responsive';
 
 .mainContainer {
@@ -13,7 +14,7 @@
   bottom: 0;
   width: 200px;
   min-width: 200px;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s $mdc-animation-standard-curve-timing-function;
 }
 
 .bookmarkFilterCollapsible {
