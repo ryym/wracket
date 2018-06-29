@@ -51,6 +51,12 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
         })),
       };
 
+    case 'TOGGLE_SEARCH_PANEL_COLLAPSIBILITY':
+      return {
+        ...state,
+        panelCollapsible: action.enabled,
+      };
+
     default:
       return state;
   }
