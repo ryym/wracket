@@ -4,7 +4,6 @@ import {State} from '../../state';
 
 import {Dispatch} from '../../store';
 import {
-  syncBookmarks,
   search,
   initShownBookmarks,
   loadMoreBookmarks,
@@ -75,12 +74,11 @@ export class _HomePage extends React.PureComponent<AllProps> {
 
   render() {
     const {props} = this;
-    const {dispatch, searchPanelCollapsible} = props;
+    const {searchPanelCollapsible} = props;
     const filterClass = searchPanelCollapsible ? cls.bookmarkFilterCollapsible : cls.bookmarkFilter;
     return (
       <div>
         <TopAppBar />
-        <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
         <main className={cls.mainContainer}>
           <BookmarkList
             className={cls.bookmarkList}

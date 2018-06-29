@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {TopAppBar} from './';
 import {State} from '../../state';
 import {Dispatch} from '../../store';
-import {toggleSearchPanelCollapsibility} from '../../store/actions';
+import {syncBookmarks, toggleSearchPanelCollapsibility} from '../../store/actions';
 import {isSearchPanelCollapsible} from '../../store/selectors';
 
 // Instead of creating ConnectedTopAppBar,
@@ -18,6 +18,9 @@ export type AllProps = Props & {dispatch: Dispatch};
 export const _ConnectedTopAppBar = ({dispatch, ...props}: AllProps) => {
   return (
     <TopAppBar
+      onSyncClick={() => {
+        dispatch(syncBookmarks());
+      }}
       onToggleSearchPanelClick={() => {
         dispatch(toggleSearchPanelCollapsibility(!props.searchPanelCollapsible));
       }}

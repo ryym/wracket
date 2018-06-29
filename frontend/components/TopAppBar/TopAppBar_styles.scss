@@ -8,6 +8,6 @@
 
 .searchPanelToggler {
   @include screen-lg-only {
-    visibility: hidden;
+    opacity: 0.5;
   }
 }
