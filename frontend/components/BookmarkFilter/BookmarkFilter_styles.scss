@@ -1,5 +1,14 @@
+.root {
+  background-color: var(--cl-primary-50);
+  border-left: 1px solid var(--cl-primary-100);
+}
+
 .filterField {
   font-size: 1.2rem;
+
+  :global(.mdc-radio__outer-circle) {
+    background-color: var(--cl-white);
+  }
 
   label {
     cursor: pointer;

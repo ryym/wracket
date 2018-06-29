@@ -41,7 +41,7 @@ const statusFilters = [
 export function BookmarkFilter({condition: cdtn, ...props}: Props) {
   const change = (cdtn: Partial<SearchCondition>) => () => props.onConditionChange(cdtn);
   return (
-    <div className={props.className}>
+    <div className={`${cls.root} ${props.className || ''}`}>
       {statusFilters.map(({name, label, statuses}) => {
         return (
           <div key={name}>
