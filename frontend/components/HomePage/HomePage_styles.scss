@@ -1,4 +1,16 @@
+.mainContainer {
+  padding-top: var(--header-height);
+}
+
+.bookmarkFilter {
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  width: 200px;
+}
+
 .bookmarkList {
   max-width: 800px;
   margin: 0 auto;
+  padding-right: 180px;
 }

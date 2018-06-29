@@ -1,0 +1,5 @@
+.topAppBar {
+  :global(.mdc-top-app-bar__row) {
+    height: var(--header-height);
+  }
+}

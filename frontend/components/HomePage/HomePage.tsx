@@ -70,24 +70,30 @@ export class _HomePage extends React.PureComponent<AllProps> {
     const {props} = this;
     const {dispatch} = props;
     return (
-      <div className="home-page">
+      <div>
         <TopAppBar />
-        <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
-        <BookmarkFilter condition={props.condition} onConditionChange={this.search} />
-        <BookmarkList
-          className={cls.bookmarkList}
-          bookmarks={props.bookmarks}
-          onBookmarkOpen={this.markBookmarkAsOpen}
-          onBackToUnread={this.backBookmarkToUnread}
-          onFavoriteToggle={this.toggleFavorite}
-        />
-        {/* TODO: Load more automatically on scroll. */}
-        {props.canLoadMore && (
-          <button type="button" onClick={this.loadMoreBookmarks}>
-            Load more
-          </button>
-        )}
-        {props.nowLoading && 'Now loading...'}
+        <main className={cls.mainContainer}>
+          <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
+          <BookmarkFilter
+            className={cls.bookmarkFilter}
+            condition={props.condition}
+            onConditionChange={this.search}
+          />
+          <BookmarkList
+            className={cls.bookmarkList}
+            bookmarks={props.bookmarks}
+            onBookmarkOpen={this.markBookmarkAsOpen}
+            onBackToUnread={this.backBookmarkToUnread}
+            onFavoriteToggle={this.toggleFavorite}
+          />
+          {/* TODO: Load more automatically on scroll. */}
+          {props.canLoadMore && (
+            <button type="button" onClick={this.loadMoreBookmarks}>
+              Load more
+            </button>
+          )}
+          {props.nowLoading && 'Now loading...'}
+        </main>
       </div>
     );
   }
