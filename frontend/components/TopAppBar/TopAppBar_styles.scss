@@ -1,0 +1,19 @@
+@import '../../styles/vars/responsive';
+
+.topAppBar {
+  :global(.mdc-top-app-bar__row) {
+    height: var(--header-height);
+  }
+}
+
+.searchPanelToggler {
+  @include screen-lg-only {
+    opacity: 0.5;
+  }
+}
+
+.progressBar {
+  position: fixed;
+  top: calc(var(--header-height) - 4px);
+  z-index: 5;
+}

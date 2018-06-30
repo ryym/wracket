@@ -30,7 +30,8 @@ export type Action =
   | Err<{type: 'FAVORITE_BOOKMARK_ERR'; id: string}>
   | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
   | Err<{type: 'UNFAVORITE_BOOKMARK_ERR'; id: string}>
-  | {type: 'CLEAR_QUERY_COUNT_CACHES'};
+  | {type: 'CLEAR_QUERY_COUNT_CACHES'}
+  | {type: 'TOGGLE_SEARCH_PANEL_COLLAPSIBILITY'; enabled: boolean};
 
 export function isErrorAction(action: Action): action is ErrorAction {
   return 'err' in action;

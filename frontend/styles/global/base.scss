@@ -1,6 +1,6 @@
 /* Base styles */
 
-@import './styles';
+@import '../vars/_vals';
 
 :root {
   --pad: 4px;
@@ -9,6 +9,14 @@
   --pad6: 24px;
   --pad8: 32px;
   --pad10: 40px;
+
+  --cl-primary-50: #{$cl-primary-50};
+  --cl-primary-100: #{$cl-primary-100};
+  --cl-primary-900: #{$cl-primary-900};
+  --cl-secondary-400: #{$cl-secondary-400};
+  --cl-white: #fff;
+
+  --header-height: 52px;
 }
 
 *,

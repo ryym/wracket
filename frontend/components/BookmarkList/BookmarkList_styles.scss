@@ -9,7 +9,7 @@
 
 .listItem {
   composes: mdc-list-item from global;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--cl-primary-50);
   min-height: 72px;
 }
 

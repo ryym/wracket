@@ -1,4 +1,37 @@
+@import '@material/animation/variables';
+@import '../../styles/vars/responsive';
+
+.mainContainer {
+  padding-top: var(--header-height);
+  display: flex;
+  align-items: flex-start;
+}
+
+.bookmarkFilter {
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  min-width: 200px;
+  transition: transform 0.2s $mdc-animation-standard-curve-timing-function;
+}
+
+.bookmarkFilterCollapsible {
+  composes: bookmarkFilter;
+  transform: translateX(200px);
+
+  @include screen-lg-only {
+    transform: translateX(0);
+  }
+}
+
 .bookmarkList {
-  max-width: 800px;
   margin: 0 auto;
+  width: 95%;
+  max-width: 980px;
+
+  @include screen-lg-only {
+    padding-right: 180px;
+  }
 }

@@ -1,0 +1,9 @@
+.root {
+  :global(.mdc-linear-progress__buffer) {
+    display: none;
+  }
+
+  :global(.mdc-linear-progress__bar-inner) {
+    background-color: var(--cl-secondary-400);
+  }
+}

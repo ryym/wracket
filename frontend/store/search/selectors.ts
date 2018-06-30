@@ -13,3 +13,5 @@ export const canLoadMore = (state: State): boolean => {
   const qs = getCurrentQueryState(state);
   return qs == null || !qs.allFetched;
 };
+
+export const isSearchPanelCollapsible = ({search}: State): boolean => search.panelCollapsible;

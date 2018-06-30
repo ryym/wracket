@@ -9,6 +9,7 @@ type ChangeHandler = (cdtn: Partial<SearchCondition>) => void;
 export interface Props {
   condition: SearchCondition;
   onConditionChange: ChangeHandler;
+  className?: string;
 }
 
 const eqStatuses = (s1: BookmarkStatus[], s2: BookmarkStatus[]) =>
@@ -37,22 +38,23 @@ const statusFilters = [
   },
 ];
 
-export function BookmarkFilter({condition: cdtn, onConditionChange}: Props) {
-  const change = (cdtn: Partial<SearchCondition>) => () => onConditionChange(cdtn);
+export function BookmarkFilter({condition: cdtn, ...props}: Props) {
+  const change = (cdtn: Partial<SearchCondition>) => () => props.onConditionChange(cdtn);
   return (
-    <div>
+    <div className={`${cls.root} ${props.className || ''}`}>
       {statusFilters.map(({name, label, statuses}) => {
         return (
-          <RadioField
-            key={name}
-            id={`status-${name}`}
-            name="status"
-            label={label}
-            value={name}
-            rootClass={cls.filterField}
-            checked={eqStatuses(statuses, cdtn.statuses)}
-            onChange={change({statuses})}
-          />
+          <div key={name}>
+            <RadioField
+              id={`status-${name}`}
+              name="status"
+              label={label}
+              value={name}
+              rootClass={cls.filterField}
+              checked={eqStatuses(statuses, cdtn.statuses)}
+              onChange={change({statuses})}
+            />
+          </div>
         );
       })}
     </div>

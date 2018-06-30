@@ -33,6 +33,7 @@ export interface SearchState {
   readonly condition: SearchCondition;
   readonly currentQuery: string;
   readonly stateByQuery: SearchStateByQuery;
+  readonly panelCollapsible: boolean;
 }
 
 export interface SearchStateByQuery {
@@ -56,6 +57,7 @@ export const newSearchState = (): SearchState => {
     condition: cdtn,
     currentQuery: conditionToQuery(cdtn),
     stateByQuery: {},
+    panelCollapsible: true,
   };
 };
 

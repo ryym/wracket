@@ -1,9 +1,9 @@
-@import './styles';
+@import '../vars/_vals';
 
 // MDC automatically calculates other themes such as 'on-primary'
 // from these values.
-$mdc-theme-primary: $cl-primary;
-$mdc-theme-secondary: $cl-secondary;
+$mdc-theme-primary: $cl-primary-900;
+$mdc-theme-secondary: $cl-secondary-400;
 $mdc-theme-background: $cl-background;
 
 @import '@material/react-top-app-bar/index.scss';
@@ -11,3 +11,4 @@ $mdc-theme-background: $cl-background;
 @import '@material/list/mdc-list.scss';
 @import '@material/form-field/mdc-form-field.scss';
 @import '@material/radio/mdc-radio.scss';
+@import '@material/linear-progress/mdc-linear-progress.scss';

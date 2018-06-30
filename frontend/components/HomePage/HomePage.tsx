@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {State} from '../../state';
+
 import {Dispatch} from '../../store';
 import {
-  syncBookmarks,
   search,
   initShownBookmarks,
   loadMoreBookmarks,
@@ -12,11 +12,16 @@ import {
   favoriteBookmark,
   unfavoriteBookmark,
 } from '../../store/actions';
-import {listBookmarks, getSearchCondition, canLoadMore} from '../../store/selectors';
+import {
+  listBookmarks,
+  getSearchCondition,
+  canLoadMore,
+  isSearchPanelCollapsible,
+} from '../../store/selectors';
 import {Bookmark, BookmarkStatus, SearchCondition} from '../../lib/models';
 import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
-import {TopAppBar} from '../TopAppBar';
+import {ConnectedTopAppBar as TopAppBar} from '../TopAppBar/connected';
 
 const cls = require('./HomePage_styles.scss');
 
@@ -27,6 +32,7 @@ export interface Props {
   nowLoading: boolean;
   canLoadMore: boolean;
   condition: SearchCondition;
+  searchPanelCollapsible: boolean;
 }
 export type AllProps = Props & {dispatch: Dispatch};
 
@@ -68,26 +74,32 @@ export class _HomePage extends React.PureComponent<AllProps> {
 
   render() {
     const {props} = this;
-    const {dispatch} = props;
+    const {searchPanelCollapsible} = props;
+    const filterClass = searchPanelCollapsible ? cls.bookmarkFilterCollapsible : cls.bookmarkFilter;
     return (
-      <div className="home-page">
+      <div>
         <TopAppBar />
-        <button onClick={() => dispatch(syncBookmarks())}>Sync</button>
-        <BookmarkFilter condition={props.condition} onConditionChange={this.search} />
-        <BookmarkList
-          className={cls.bookmarkList}
-          bookmarks={props.bookmarks}
-          onBookmarkOpen={this.markBookmarkAsOpen}
-          onBackToUnread={this.backBookmarkToUnread}
-          onFavoriteToggle={this.toggleFavorite}
-        />
+        <main className={cls.mainContainer}>
+          <BookmarkList
+            className={cls.bookmarkList}
+            bookmarks={props.bookmarks}
+            onBookmarkOpen={this.markBookmarkAsOpen}
+            onBackToUnread={this.backBookmarkToUnread}
+            onFavoriteToggle={this.toggleFavorite}
+          />
+          <BookmarkFilter
+            className={filterClass}
+            condition={props.condition}
+            onConditionChange={this.search}
+          />
+        </main>
         {/* TODO: Load more automatically on scroll. */}
-        {props.canLoadMore && (
-          <button type="button" onClick={this.loadMoreBookmarks}>
-            Load more
-          </button>
-        )}
-        {props.nowLoading && 'Now loading...'}
+        {props.canLoadMore &&
+          !props.nowLoading && (
+            <button type="button" onClick={this.loadMoreBookmarks}>
+              Load more
+            </button>
+          )}
       </div>
     );
   }
@@ -99,5 +111,6 @@ export const HomePage = connect((state: State): Props => {
     nowLoading: state.bookmarks.nowLoading,
     canLoadMore: canLoadMore(state),
     condition: getSearchCondition(state),
+    searchPanelCollapsible: isSearchPanelCollapsible(state),
   };
 })(_HomePage);

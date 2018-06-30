@@ -16,7 +16,7 @@ dotenv.config();
 const ROOT = __dirname;
 const FRONTEND_ROOT = path.join(ROOT, 'frontend');
 const ENTRY_ROOT = path.join(FRONTEND_ROOT, 'entries');
-const GLOBAL_STYLES_ROOT = path.join(FRONTEND_ROOT, 'global-styles');
+const GLOBAL_STYLES_ROOT = path.join(FRONTEND_ROOT, 'styles', 'global');
 const DEST_DIR = path.join(ROOT, 'public', 'assets');
 
 const ENV = process.env.NODE_ENV || 'development';
