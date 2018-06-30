@@ -94,12 +94,12 @@ export class _HomePage extends React.PureComponent<AllProps> {
           />
         </main>
         {/* TODO: Load more automatically on scroll. */}
-        {props.canLoadMore && (
-          <button type="button" onClick={this.loadMoreBookmarks}>
-            Load more
-          </button>
-        )}
-        {props.nowLoading && 'Now loading...'}
+        {props.canLoadMore &&
+          !props.nowLoading && (
+            <button type="button" onClick={this.loadMoreBookmarks}>
+              Load more
+            </button>
+          )}
       </div>
     );
   }

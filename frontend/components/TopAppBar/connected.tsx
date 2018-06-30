@@ -12,12 +12,14 @@ import {isSearchPanelCollapsible} from '../../store/selectors';
 
 export interface Props {
   readonly searchPanelCollapsible: boolean;
+  readonly nowLoading: boolean;
 }
 export type AllProps = Props & {dispatch: Dispatch};
 
 export const _ConnectedTopAppBar = ({dispatch, ...props}: AllProps) => {
   return (
     <TopAppBar
+      nowLoading={props.nowLoading}
       onSyncClick={() => {
         dispatch(syncBookmarks());
       }}
@@ -30,4 +32,5 @@ export const _ConnectedTopAppBar = ({dispatch, ...props}: AllProps) => {
 
 export const ConnectedTopAppBar = connect((state: State): Props => ({
   searchPanelCollapsible: isSearchPanelCollapsible(state),
+  nowLoading: state.bookmarks.nowLoading,
 }))(_ConnectedTopAppBar);
