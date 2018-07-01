@@ -12,18 +12,6 @@
   top: var(--header-height);
   right: 0;
   bottom: 0;
-  width: 200px;
-  min-width: 200px;
-  transition: transform 0.2s $mdc-animation-standard-curve-timing-function;
-}
-
-.bookmarkFilterCollapsible {
-  composes: bookmarkFilter;
-  transform: translateX(200px);
-
-  @include screen-lg-only {
-    transform: translateX(0);
-  }
 }
 
 .bookmarkList {

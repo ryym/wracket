@@ -75,7 +75,6 @@ export class _HomePage extends React.PureComponent<AllProps> {
   render() {
     const {props} = this;
     const {searchPanelCollapsible} = props;
-    const filterClass = searchPanelCollapsible ? cls.bookmarkFilterCollapsible : cls.bookmarkFilter;
     return (
       <div>
         <TopAppBar />
@@ -88,7 +87,8 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onFavoriteToggle={this.toggleFavorite}
           />
           <BookmarkFilter
-            className={filterClass}
+            className={cls.bookmarkFilter}
+            collapsible={searchPanelCollapsible}
             condition={props.condition}
             onConditionChange={this.search}
           />

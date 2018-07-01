@@ -9,6 +9,7 @@ type ChangeHandler = (cdtn: Partial<SearchCondition>) => void;
 export interface Props {
   condition: SearchCondition;
   onConditionChange: ChangeHandler;
+  collapsible?: boolean;
   className?: string;
 }
 
@@ -40,8 +41,10 @@ const statusFilters = [
 
 export function BookmarkFilter({condition: cdtn, ...props}: Props) {
   const change = (cdtn: Partial<SearchCondition>) => () => props.onConditionChange(cdtn);
+  const collapsible = props.collapsible !== false; // true if true or undefined.
+  const rootClass = collapsible ? cls.rootCollapsible : cls.root;
   return (
-    <div className={`${cls.root} ${props.className || ''}`}>
+    <div className={`${rootClass} ${props.className || ''}`}>
       {statusFilters.map(({name, label, statuses}) => {
         return (
           <div key={name}>
