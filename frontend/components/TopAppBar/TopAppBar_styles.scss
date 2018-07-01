@@ -1,6 +1,8 @@
 @import '../../styles/vars/responsive';
 
 .topAppBar {
+  z-index: 4;
+
   :global(.mdc-top-app-bar__row) {
     height: var(--header-height);
   }

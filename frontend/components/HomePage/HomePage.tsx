@@ -11,6 +11,7 @@ import {
   resetOpenBookmark,
   favoriteBookmark,
   unfavoriteBookmark,
+  toggleSearchPanelCollapsibility,
 } from '../../store/actions';
 import {
   listBookmarks,
@@ -56,6 +57,10 @@ export class _HomePage extends React.PureComponent<AllProps> {
     this.props.dispatch(action);
   };
 
+  closeSearchPanel = () => {
+    this.props.dispatch(toggleSearchPanelCollapsibility(true));
+  };
+
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(initShownBookmarks());
@@ -75,7 +80,6 @@ export class _HomePage extends React.PureComponent<AllProps> {
   render() {
     const {props} = this;
     const {searchPanelCollapsible} = props;
-    const filterClass = searchPanelCollapsible ? cls.bookmarkFilterCollapsible : cls.bookmarkFilter;
     return (
       <div>
         <TopAppBar />
@@ -88,9 +92,11 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onFavoriteToggle={this.toggleFavorite}
           />
           <BookmarkFilter
-            className={filterClass}
+            className={cls.bookmarkFilter}
+            collapsible={searchPanelCollapsible}
             condition={props.condition}
             onConditionChange={this.search}
+            onOverlayClick={this.closeSearchPanel}
           />
         </main>
         {/* TODO: Load more automatically on scroll. */}

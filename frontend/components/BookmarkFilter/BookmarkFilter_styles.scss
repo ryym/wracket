@@ -1,6 +1,22 @@
+@import '@material/animation/variables';
+@import '../../styles/vars/responsive';
+
 .root {
   background-color: var(--cl-primary-50);
   border-left: 1px solid var(--cl-primary-100);
+  z-index: 3;
+  width: 200px;
+  min-width: 200px;
+  transition: transform 0.2s $mdc-animation-standard-curve-timing-function;
+}
+
+.rootCollapsible {
+  composes: root;
+  transform: translateX(200px);
+
+  @include screen-lg-only {
+    transform: translateX(0);
+  }
 }
 
 .filterField {
@@ -12,5 +28,24 @@
 
   label {
     cursor: pointer;
+  }
+}
+
+.overlay {
+  z-index: 2;
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+
+  :not(.rootCollapsible) + & {
+    @include screen-sm {
+      display: block;
+    }
+
+    @include screen-xs {
+      display: block;
+    }
   }
 }
