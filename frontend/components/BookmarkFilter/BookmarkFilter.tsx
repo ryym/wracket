@@ -10,6 +10,7 @@ export interface Props {
   condition: SearchCondition;
   onConditionChange: ChangeHandler;
   collapsible?: boolean;
+  onOverlayClick?: () => void;
   className?: string;
 }
 
@@ -44,22 +45,25 @@ export function BookmarkFilter({condition: cdtn, ...props}: Props) {
   const collapsible = props.collapsible !== false; // true if true or undefined.
   const rootClass = collapsible ? cls.rootCollapsible : cls.root;
   return (
-    <div className={`${rootClass} ${props.className || ''}`}>
-      {statusFilters.map(({name, label, statuses}) => {
-        return (
-          <div key={name}>
-            <RadioField
-              id={`status-${name}`}
-              name="status"
-              label={label}
-              value={name}
-              rootClass={cls.filterField}
-              checked={eqStatuses(statuses, cdtn.statuses)}
-              onChange={change({statuses})}
-            />
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <div className={`${rootClass} ${props.className || ''}`}>
+        {statusFilters.map(({name, label, statuses}) => {
+          return (
+            <div key={name}>
+              <RadioField
+                id={`status-${name}`}
+                name="status"
+                label={label}
+                value={name}
+                rootClass={cls.filterField}
+                checked={eqStatuses(statuses, cdtn.statuses)}
+                onChange={change({statuses})}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className={cls.overlay} onClick={props.onOverlayClick} />
+    </>
   );
 }
