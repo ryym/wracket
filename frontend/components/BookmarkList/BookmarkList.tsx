@@ -35,10 +35,10 @@ export function BookmarkList({
             {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
             {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
           </div>
-          <span className={cls.itemLinkText}>
+          <div className={cls.itemLinkText}>
             <span className={cls.itemTitle}>{b.title || b.url}</span>
             <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
-          </span>
+          </div>
         </a>
         <div className={cls.actions}>
           {b.status === BookmarkStatus.Reading && (

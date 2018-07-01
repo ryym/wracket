@@ -1,3 +1,5 @@
+@import '../../styles/vars/responsive';
+
 .list {
   composes: mdc-list mdc-list--two-line from global;
 
@@ -22,6 +24,12 @@
   height: 92px;
   width: 92px;
 
+  @include screen-sm {
+    flex: 0 0 68px;
+    height: 68px;
+    width: 68px;
+  }
+
   > img {
     border-radius: var(--pad);
     max-width: 100%;
@@ -32,8 +40,8 @@
 .itemBlankThumbnail {
   background-color: rgba(#d3e6ee, 0.3);
   border-radius: var(--pad);
-  width: 72%;
-  height: 72%;
+  width: 88%;
+  height: 88%;
 }
 
 .itemLink {
@@ -42,19 +50,20 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
   width: 100%;
 }
 
 .itemLinkText {
   composes: mdc-list-item__text from global;
   font-size: 1.6rem;
+  margin: var(--pad2) 0;
 }
 
 .itemTitle {
-  line-height: 2em;
+  line-height: 1.4em;
+  display: inline-block;
+  padding: var(--pad2) 0;
+  white-space: initial;
 }
 
 .itemDomain {
