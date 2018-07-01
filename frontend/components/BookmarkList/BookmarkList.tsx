@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {IS_DEVELOPMENT} from '../../consts';
 import {Bookmark, BookmarkStatus} from '../../lib/models';
+import {IconButton} from '../form/IconButton';
 
 const cls = require('./BookmarkList_styles.scss');
 
@@ -35,18 +36,40 @@ export function BookmarkList({
             {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
             {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
           </div>
-          <span className={cls.itemLinkText}>
+          <div className={cls.itemLinkText}>
             <span className={cls.itemTitle}>{b.title || b.url}</span>
             <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
-          </span>
+          </div>
         </a>
         <div className={cls.actions}>
           {b.status === BookmarkStatus.Reading && (
-            <button onClick={() => onBackToUnread(b)}>unread</button>
+            <IconButton
+              className={cls.action}
+              content="undo"
+              label="Back to unread"
+              onClick={() => onBackToUnread(b)}
+            />
           )}
-          <button onClick={() => onFavoriteToggle(b, !b.favorite)}>
-            {b.favorite ? 'unfavorite' : 'favorite'}
-          </button>
+          <IconButton
+            className={cls.action}
+            content="done"
+            label="Archive bookmark"
+            onClick={() => alert('not implemented yet')}
+          />
+          <IconButton
+            className={cls.action}
+            content="delete"
+            label="Delete bookmark"
+            onClick={() => alert('not implemented yet')}
+          />
+          <IconButton
+            className={`${cls.action} ${b.favorite ? cls.isFavorite : ''}`}
+            content="star"
+            label={b.favorite ? 'Remove bookmark from favrites' : 'Add bookmark to favorites'}
+            onClick={() => {
+              onFavoriteToggle(b, !b.favorite);
+            }}
+          />
         </div>
       </li>
     );
