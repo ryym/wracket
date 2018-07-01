@@ -3,27 +3,36 @@ import {withRipple, RippleProps} from './ripple';
 
 // https://material.io/develop/web/components/buttons/icon-buttons/
 
-export interface Props extends RippleProps {
+// XXX: Currently creating many rippled elements based on `withRipple`
+// significantly slows down the rendering speed. So provides both of
+// rippled and non-rippled components for now.
+
+export type Props = {
   readonly content: string;
   readonly label: string;
+  readonly className?: string;
   readonly onClick?: () => void;
-}
+};
 
-export class _IconButton extends React.Component<Props> {
+type BaseProps = Props & Partial<RippleProps>;
+
+class IconButtonBase extends React.Component<BaseProps> {
   private readonly button: React.RefObject<any>;
 
-  constructor(props: Props) {
+  constructor(props: BaseProps) {
     super(props);
     this.button = React.createRef();
   }
 
   componentDidMount() {
-    this.props.initRipple(this.createRippleAdapter());
+    if (this.props.initRipple) {
+      this.props.initRipple(this.createRippleAdapter());
+    }
   }
 
   private createRippleAdapter() {
     const {button} = this;
-    return this.props.createRippleAdapter(() => ({
+    return this.props.createRippleAdapter!(() => ({
       isUnbounded: () => true,
       isSurfaceActive: () => false,
       computeBoundingRect: () => button.current.getBoundingClientRect(),
@@ -38,10 +47,13 @@ export class _IconButton extends React.Component<Props> {
 
   render() {
     const {props} = this;
-    const rippleProps = {
-      ...props.rippleProps,
-      className: `mdc-icon-button material-icons ${props.rippleProps.className}`,
-    };
+    const baseClasses = 'mdc-icon-button material-icons';
+    const rippleProps = props.rippleProps
+      ? {
+          ...props.rippleProps,
+          className: `${baseClasses} material-icons ${props.rippleProps.className}`,
+        }
+      : {className: `${baseClasses} ${props.className || ''}`};
     return (
       <button
         {...rippleProps}
@@ -57,4 +69,12 @@ export class _IconButton extends React.Component<Props> {
   }
 }
 
-export const IconButton = withRipple(_IconButton);
+export function IconButton(props: Props) {
+  return <IconButtonBase {...props} />;
+}
+
+function _IconButtonRipple(props: Props & RippleProps) {
+  return <IconButtonBase {...props} />;
+}
+
+export const IconButtonRipple = withRipple(_IconButtonRipple);

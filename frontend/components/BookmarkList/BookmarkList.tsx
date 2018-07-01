@@ -15,9 +15,6 @@ export interface Props {
 
 const noop = () => {};
 
-// XXX: IconButton slows down the rendering speed significantly...
-// But I don't know why.
-
 export function BookmarkList({
   bookmarks,
   onBookmarkOpen = noop,
@@ -68,8 +65,10 @@ export function BookmarkList({
           <IconButton
             className={`${cls.action} ${b.favorite ? cls.isFavorite : ''}`}
             content="star"
-            label={b.favorite ? 'Add bookmark to favorites' : 'Remove bookmark from favrites'}
-            onClick={() => onFavoriteToggle(b, !b.favorite)}
+            label={b.favorite ? 'Remove bookmark from favrites' : 'Add bookmark to favorites'}
+            onClick={() => {
+              onFavoriteToggle(b, !b.favorite);
+            }}
           />
         </div>
       </li>

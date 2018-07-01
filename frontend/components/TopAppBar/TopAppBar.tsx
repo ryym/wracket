@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MaterialTopAppBar from '@material/react-top-app-bar';
-import {IconButton} from '../form/IconButton';
+import {IconButtonRipple as IconButton} from '../form/IconButton';
 import {LinearProgress} from '../LinearProgress';
 
 const cls = require('./TopAppBar_styles.scss');

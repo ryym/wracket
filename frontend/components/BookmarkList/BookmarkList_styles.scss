@@ -91,11 +91,18 @@
   @include mdc-icon-button-size(18px, 18px, 4px);
   color: #b0bec5;
 
-  &.isFavorite {
-    color: var(--cl-secondary-200);
+  &:hover {
+    color: var(--cl-primary-900);
   }
 
-  &:hover {
+  // Remove mdc-icon-button effects on ':active'.
+  &::before,
+  &::after {
+    opacity: 0;
+    background-color: transparent;
+  }
+
+  &.isFavorite {
     color: var(--cl-secondary-400);
   }
 }
