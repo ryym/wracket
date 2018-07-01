@@ -41,6 +41,14 @@
     "@material/theme" "^0.35.0"
     "@material/typography" "^0.35.0"
 
+"@material/icon-button@^0.36.0":
+  version "0.36.0"
+  resolved "https://registry.yarnpkg.com/@material/icon-button/-/icon-button-0.36.0.tgz#3b1846d2aa12793ce6af375f83cafa9c741f8f54"
+  dependencies:
+    "@material/base" "^0.35.0"
+    "@material/ripple" "^0.36.0"
+    "@material/theme" "^0.35.0"
+
 "@material/linear-progress@^0.35.0":
   version "0.35.0"
   resolved "https://registry.yarnpkg.com/@material/linear-progress/-/linear-progress-0.35.0.tgz#e176b5511a8c629436dc0664157dcce4c1850081"
