@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {IS_DEVELOPMENT} from '../../consts';
 import {Bookmark, BookmarkStatus} from '../../lib/models';
+import {IconButton} from '../form/IconButton';
 
 const cls = require('./BookmarkList_styles.scss');
 
@@ -13,6 +14,9 @@ export interface Props {
 }
 
 const noop = () => {};
+
+// XXX: IconButton slows down the rendering speed significantly...
+// But I don't know why.
 
 export function BookmarkList({
   bookmarks,
@@ -42,11 +46,31 @@ export function BookmarkList({
         </a>
         <div className={cls.actions}>
           {b.status === BookmarkStatus.Reading && (
-            <button onClick={() => onBackToUnread(b)}>unread</button>
+            <IconButton
+              className={cls.action}
+              content="undo"
+              label="Back to unread"
+              onClick={() => onBackToUnread(b)}
+            />
           )}
-          <button onClick={() => onFavoriteToggle(b, !b.favorite)}>
-            {b.favorite ? 'unfavorite' : 'favorite'}
-          </button>
+          <IconButton
+            className={cls.action}
+            content="done"
+            label="Archive bookmark"
+            onClick={() => alert('not implemented yet')}
+          />
+          <IconButton
+            className={cls.action}
+            content="delete"
+            label="Delete bookmark"
+            onClick={() => alert('not implemented yet')}
+          />
+          <IconButton
+            className={`${cls.action} ${b.favorite ? cls.isFavorite : ''}`}
+            content="star"
+            label={b.favorite ? 'Add bookmark to favorites' : 'Remove bookmark from favrites'}
+            onClick={() => onFavoriteToggle(b, !b.favorite)}
+          />
         </div>
       </li>
     );

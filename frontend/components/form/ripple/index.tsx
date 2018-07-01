@@ -103,6 +103,14 @@ export const withRipple = <InnerProps extends RippleProps>(
       }
     }
 
+    // XXX: When you click a rippled button and remove it, React warns like this:
+    // > Warning: Can't call setState (or forceUpdate) on an unmounted component.
+    //   This is a no-op, but it indicates a memory leak in your application.
+    //   To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
+    //   in RippledComponent
+    // It seems that the 'removeClass' (or something) is called after the foundation destroyed.
+    // But the warning occurs only once. I couldn't find a way to fix this.
+
     private createRippleAdapter = (override: RippleOverrider): RippleAdapter => {
       const adapter: RippleAdapter = {
         browserSupportsCssVars: () => util.supportsCssVariables(window),

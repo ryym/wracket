@@ -1,3 +1,4 @@
+@import '@material/icon-button/mixins';
 @import '../../styles/vars/responsive';
 
 .list {
@@ -13,6 +14,9 @@
   composes: mdc-list-item from global;
   border-bottom: 1px solid var(--cl-primary-50);
   min-height: 72px;
+  position: relative;
+  padding-top: var(--pad2);
+  flex-wrap: wrap;
 }
 
 .itemThumbnail {
@@ -72,6 +76,26 @@
 }
 
 .actions {
-  /* XXX: temporary */
-  display: none;
+  position: absolute;
+  top: 0;
+  right: 4px;
+
+  // TODO: Consider beter UI on small devices.
+  @include screen-sm {
+    position: initial;
+    width: 100%;
+  }
+}
+
+.action {
+  @include mdc-icon-button-size(18px, 18px, 4px);
+  color: #b0bec5;
+
+  &.isFavorite {
+    color: var(--cl-secondary-200);
+  }
+
+  &:hover {
+    color: var(--cl-secondary-400);
+  }
 }
