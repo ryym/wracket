@@ -4,6 +4,11 @@
 process.env['TS_NODE_CACHE'] = '0';
 process.env['TS_NODE_PROJECT'] = 'tsconfig.test.json';
 
+// MDC packages in '@material/*' use 'import/export'.
+require('babel-register')({
+  only: /@material/,
+});
+
 // Configure enzyme.
 const Enzyme = require('enzyme');
 const Adapter = require('enzyme-adapter-react-16');
