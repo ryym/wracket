@@ -16,7 +16,7 @@ export type Props = {
 
 type BaseProps = Props & Partial<RippleProps>;
 
-class IconButtonBase extends React.Component<BaseProps> {
+class IconButtonBase extends React.PureComponent<BaseProps> {
   private readonly button: React.RefObject<any>;
 
   constructor(props: BaseProps) {

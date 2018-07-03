@@ -11,7 +11,7 @@ export interface Props {
   readonly className?: string;
 }
 
-export class LinearProgress extends React.Component<Props> {
+export class LinearProgress extends React.PureComponent<Props> {
   private root: React.RefObject<any>;
   private mdcComponent: MDCLinearProgress | null;
 
