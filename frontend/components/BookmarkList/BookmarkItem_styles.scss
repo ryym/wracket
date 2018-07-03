@@ -1,0 +1,94 @@
+@import '@material/icon-button/mixins';
+@import '../../styles/vars/responsive';
+
+.itemThumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--pad4);
+  flex: 0 0 92px;
+  height: 92px;
+  width: 92px;
+
+  @include screen-sm {
+    flex: 0 0 68px;
+    height: 68px;
+    width: 68px;
+  }
+
+  > img {
+    border-radius: var(--pad);
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.itemBlankThumbnail {
+  background-color: rgba(#d3e6ee, 0.3);
+  border-radius: var(--pad);
+  width: 88%;
+  height: 88%;
+}
+
+.itemLink {
+  color: var(--mdc-theme-text-primary-on-background);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.itemLinkText {
+  composes: mdc-list-item__text from global;
+  font-size: 1.6rem;
+  margin: var(--pad2) 0;
+}
+
+.itemTitle {
+  line-height: 1.4em;
+  display: inline-block;
+  padding: var(--pad2) 0;
+  white-space: initial;
+}
+
+.itemDomain {
+  composes: mdc-list-item__secondary-text from global;
+  font-size: 1.4rem;
+}
+
+.actions {
+  position: absolute;
+  top: 0;
+  right: 4px;
+
+  // TODO: Consider beter UI on small devices.
+  @include screen-sm {
+    position: initial;
+    width: 100%;
+    text-align: right;
+    margin-right: 32px;
+
+    display: none;
+  }
+}
+
+.action {
+  @include mdc-icon-button-size(18px, 18px, 4px);
+  color: #b0bec5;
+
+  &:hover {
+    color: var(--cl-primary-900);
+  }
+
+  // Remove mdc-icon-button effects on ':active'.
+  &::before,
+  &::after {
+    opacity: 0;
+    background-color: transparent;
+  }
+
+  &.isFavorite {
+    color: var(--cl-secondary-400);
+  }
+}
