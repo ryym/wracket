@@ -56,11 +56,11 @@ class IconButtonBase extends React.Component<BaseProps> {
       : {className: `${baseClasses} ${props.className || ''}`};
     return (
       <button
+        type="button"
         {...rippleProps}
         ref={this.button}
         title={props.label}
         aria-label={props.label}
-        aria-hidden="true"
         onClick={props.onClick}
       >
         {props.content}
