@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as classNames from 'classnames';
 import {MDCFormFieldFoundation} from '@material/form-field';
 import {RippleActivator, OnInitRipple} from './ripple';
 
@@ -51,7 +52,7 @@ export class FormField extends React.Component<Props> {
   render() {
     const {controlId, label, children: renderControl} = this.props;
     return (
-      <div className={`mdc-form-field ${this.props.className || ''}`}>
+      <div className={classNames('mdc-form-field', this.props.className)}>
         {renderControl(this.onInitRipple)}
         <label htmlFor={controlId} ref={this.label}>
           {label}

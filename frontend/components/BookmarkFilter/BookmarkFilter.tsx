@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as classNames from 'classnames';
 import {RadioField} from '../form/RadioField';
 import {SearchCondition, BookmarkStatus} from '../../lib/models';
 
@@ -46,7 +47,7 @@ export function BookmarkFilter({condition: cdtn, ...props}: Props) {
   const rootClass = collapsible ? cls.rootCollapsible : cls.root;
   return (
     <>
-      <div className={`${rootClass} ${props.className || ''}`}>
+      <div className={classNames(rootClass, props.className)}>
         {statusFilters.map(({name, label, statuses}) => {
           return (
             <div key={name}>

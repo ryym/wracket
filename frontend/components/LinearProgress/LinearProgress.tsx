@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as classNames from 'classnames';
 import {MDCLinearProgress} from '@material/linear-progress';
 
 const cls = require('./LinearProgress_styles.scss');
@@ -40,7 +41,7 @@ export class LinearProgress extends React.PureComponent<Props> {
       <div
         ref={this.root}
         role="progressbar"
-        className={`mdc-linear-progress ${cls.root} ${props.className || ''}`}
+        className={classNames('mdc-linear-progress', cls.root, props.className)}
         style={{display: props.nowLoading ? 'block' : 'none'}}
       >
         <div className="mdc-linear-progress__buffer" />

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as classNames from 'classnames';
 import {withRipple, RippleProps} from './ripple';
 
 // https://material.io/develop/web/components/buttons/icon-buttons/
@@ -51,9 +52,9 @@ class IconButtonBase extends React.PureComponent<BaseProps> {
     const rippleProps = props.rippleProps
       ? {
           ...props.rippleProps,
-          className: `${baseClasses} material-icons ${props.rippleProps.className}`,
+          className: classNames(baseClasses, 'material-icons', props.rippleProps.className),
         }
-      : {className: `${baseClasses} ${props.className || ''}`};
+      : {className: classNames(baseClasses, props.className)};
     return (
       <button
         type="button"
