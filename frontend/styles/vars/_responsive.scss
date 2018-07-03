@@ -18,6 +18,12 @@
   }
 }
 
+@mixin screen-md-or-lg {
+  @media screen and (min-width: 601px) {
+    @content;
+  }
+}
+
 @mixin screen-lg-only {
   @media screen and (min-width: 961px) {
     @content;

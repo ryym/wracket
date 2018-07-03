@@ -14,9 +14,21 @@ export type Props = ItemProps & {
   readonly bookmark: Bookmark;
 };
 
+type State = {
+  actionsOpen: boolean;
+};
+
 const noop = () => {};
 
-export class BookmarkItem extends React.Component<Props> {
+export class BookmarkItem extends React.Component<Props, State> {
+  state = {
+    actionsOpen: false,
+  };
+
+  toggleActions = () => {
+    this.setState({actionsOpen: !this.state.actionsOpen});
+  };
+
   render() {
     const {
       bookmark: b,
@@ -24,6 +36,7 @@ export class BookmarkItem extends React.Component<Props> {
       onBackToUnread = noop,
       onFavoriteToggle = noop,
     } = this.props;
+    const {actionsOpen} = this.state;
     return (
       <>
         <a
@@ -42,7 +55,14 @@ export class BookmarkItem extends React.Component<Props> {
             <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
           </div>
         </a>
-        <div className={cls.actions}>
+        <div className={cls.actionsOpener}>
+          <IconButton
+            content={actionsOpen ? 'expand_less' : 'expand_more'}
+            label=""
+            onClick={this.toggleActions}
+          />
+        </div>
+        <div className={`${cls.actions} ${actionsOpen ? cls.isOpen : ''}`}>
           {b.status === BookmarkStatus.Reading && (
             <IconButton
               className={cls.action}
