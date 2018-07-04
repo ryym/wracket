@@ -21,11 +21,11 @@ class PocketSynchronizer
   end
 
   def synchronize(user)
-    return import_all(user, user.bookmarks.count) if user.first_sync_incomplete?
+    return import_all(user, user.bookmarks.count) if !user.first_sync_done?
 
-    bookmark = user.bookmarks.order(updated_on_pocket_at: :desc).first
-    last_updated_at = bookmark ? bookmark.updated_on_pocket_at : user.created_at
-    import_updates(user.id, last_updated_at)
+    ok, message = import_updates(user.id, user.last_synced_at)
+    user.update!(last_synced_at: Time.current) if ok
+    [ok, message]
   end
 
   # This is for a first synchronization. It synchronizes all of the user data.
@@ -41,13 +41,13 @@ class PocketSynchronizer
       sleep(0.5)
     end
 
-    user.update!(first_sync: :done)
+    user.update!(last_synced_at: Time.current)
     [true, nil]
   end
 
-  def import_updates(user_id, last_updated_at)
+  def import_updates(user_id, last_synced_at)
     @pocket.retrieve_each(PER_PAGE, {
-      since: last_updated_at.to_i + 1,
+      since: last_synced_at.to_i,
       state: 'all',
       detailType: 'complete',
     }) do |ret, json|

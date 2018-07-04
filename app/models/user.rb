@@ -11,11 +11,6 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :access_token, presence: true
 
-  enum first_sync: {
-    incomplete: 0,
-    done: 1,
-  }, _prefix: true
-
   def self.login(name, token)
     user = User.find_by(username: name)
     if user
@@ -24,6 +19,10 @@ class User < ApplicationRecord
     else
       User.create!(username: name, access_token: token)
     end
+  end
+
+  def first_sync_done?
+    last_synced_at.present?
   end
 
   def unarchived_bookmarks
