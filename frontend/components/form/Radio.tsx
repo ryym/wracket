@@ -45,7 +45,7 @@ export class Radio extends React.Component<Props> {
     const {props} = this;
     const rippleProps = {
       ...props.rippleProps,
-      className: `${'mdc-radio'} ${props.rippleProps.className}`,
+      className: `mdc-radio ${props.rippleProps.className}`,
     };
     return (
       <div className="mdc-form-field">

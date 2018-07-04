@@ -37,6 +37,7 @@
     "So use @types/node 8.10.10 explicitly for now."
   ],
   "devDependencies": {
+    "@types/classnames": "^2.2.4",
     "@types/enzyme": "^3.1.10",
     "@types/mocha": "^5.2.0",
     "@types/node": "8.10.10",
@@ -89,6 +90,7 @@
     "@material/react-material-icon": "^0.3.0",
     "@material/react-top-app-bar": "^0.3.0",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-redux": "^5.0.7",

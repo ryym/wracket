@@ -20,7 +20,7 @@ type State = {
 
 const noop = () => {};
 
-export class BookmarkItem extends React.Component<Props, State> {
+export class BookmarkItem extends React.PureComponent<Props, State> {
   state = {
     actionsOpen: false,
   };
