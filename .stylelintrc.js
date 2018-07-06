@@ -3,6 +3,8 @@ const OFF = null;
 module.exports = {
   extends: 'stylelint-config-standard',
 
+  plugins: ['stylelint-order'],
+
   rules: {
     'at-rule-no-unknown': [
       true,
@@ -43,5 +45,17 @@ module.exports = {
 
     // https://github.com/stylelint/stylelint/issues/2489
     'no-descending-specificity': OFF,
+
+    'order/order': [
+      'dollar-variables',
+      'custom-properties',
+      {type: 'at-rule', hasBlock: false},
+
+      // Allow to override `@include`d or `@extend`ed declarations.
+      'declarations',
+
+      {type: 'at-rule', hasBlock: true},
+      'rules',
+    ],
   },
 };
