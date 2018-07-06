@@ -7,9 +7,11 @@
     "start": "webpack-dev-server",
     "build:prod": "NODE_ENV=production webpack",
     "build:analyze": "NODE_ENV=production BUNDLE_ANALYZE=1 webpack",
-    "lint": "yarn lint:js && yarn lint:ts",
+    "lint": "yarn lint:js && yarn lint:ts && yarn lint:css",
     "lint:js": "eslint .",
     "lint:ts": "tslint -p . -t verbose 'frontend/**/*.ts?(x)'",
+    "lint:css": "stylelint 'frontend/**/*css'",
+    "lint:css:fix": "stylelint --fix 'frontend/**/*css'",
     "precommit": "lint-staged",
     "test": "mocha --opts mocha.opts 'frontend/**/*_test.{ts,tsx}'",
     "test:w": "npm run test -- --watch --watch-extensions ts,tsx"
@@ -24,6 +26,7 @@
       "npx tslint -p tsconfig.precommit.json"
     ],
     "*.{css,scss}": [
+      "npx stylelint",
       "npx prettier --write"
     ],
     "*.{rb,rake}": [
@@ -70,6 +73,9 @@
     "sass-loader": "^7.0.1",
     "sinon": "^5.0.3",
     "style-loader": "^0.20.2",
+    "stylelint": "^9.3.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-order": "^0.8.1",
     "ts-node": "^6.0.2",
     "tslint": "^5.9.1",
     "typescript": "^2.8.3",
