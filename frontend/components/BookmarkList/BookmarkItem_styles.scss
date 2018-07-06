@@ -69,7 +69,7 @@
     text-align: right;
     margin-right: 32px;
     transition: height 0.2s;
-    height: 0px;
+    height: 0;
     overflow: hidden;
 
     &.isOpen {
@@ -81,6 +81,7 @@
 
 .action {
   @include mdc-icon-button-size(18px, 18px, 4px);
+
   color: #b0bec5;
 
   @include screen-md-or-lg {
@@ -117,6 +118,7 @@
 
   > button {
     color: var(--cl-primary-400);
+
     @include mdc-icon-button-size(20px, 20px, 4px);
   }
 }
