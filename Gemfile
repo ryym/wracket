@@ -9,7 +9,7 @@ end
 
 gem 'rails', '~> 5.1.5'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.11'
 gem 'jbuilder'
 gem 'activerecord-import'
 gem 'activerecord-session_store'
