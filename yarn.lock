@@ -24,6 +24,16 @@
   version "0.35.0"
   resolved "https://registry.yarnpkg.com/@material/base/-/base-0.35.0.tgz#8640c2da385e8cc393ff56153c5a319f5a7704cb"
 
+"@material/button@^0.36.0":
+  version "0.36.1"
+  resolved "https://registry.yarnpkg.com/@material/button/-/button-0.36.1.tgz#751d0925689a84ce23c20825b273a58ab77dc2d4"
+  dependencies:
+    "@material/elevation" "^0.36.1"
+    "@material/ripple" "^0.36.0"
+    "@material/rtl" "^0.36.0"
+    "@material/theme" "^0.35.0"
+    "@material/typography" "^0.35.0"
+
 "@material/elevation@^0.36.1":
   version "0.36.1"
   resolved "https://registry.yarnpkg.com/@material/elevation/-/elevation-0.36.1.tgz#663a527ad2a0b2bcf0cd67835ec6fe8e8f6609da"
@@ -75,6 +85,16 @@
     "@material/ripple" "^0.36.0"
     "@material/selection-control" "^0.36.0"
     "@material/theme" "^0.35.0"
+
+"@material/react-button@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@material/react-button/-/react-button-0.3.0.tgz#a920c5ad7f7e34ebf468516b19cac74280f47777"
+  dependencies:
+    "@material/button" "^0.36.0"
+    "@material/react-ripple" "^0.3.0"
+    classnames "^2.2.5"
+    prop-types "^15.6.1"
+    react "^16.3.2"
 
 "@material/react-material-icon@^0.3.0":
   version "0.3.0"

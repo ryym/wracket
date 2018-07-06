@@ -80,6 +80,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
   render() {
     const {props} = this;
     const {searchPanelCollapsible} = props;
+    const canLoadMore = props.canLoadMore && !props.nowLoading;
     return (
       <div>
         <TopAppBar />
@@ -90,6 +91,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onBookmarkOpen={this.markBookmarkAsOpen}
             onBackToUnread={this.backBookmarkToUnread}
             onFavoriteToggle={this.toggleFavorite}
+            onLoadMoreClick={canLoadMore ? this.loadMoreBookmarks : undefined}
           />
           <BookmarkFilter
             className={cls.bookmarkFilter}
@@ -99,13 +101,6 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onOverlayClick={this.closeSearchPanel}
           />
         </main>
-        {/* TODO: Load more automatically on scroll. */}
-        {props.canLoadMore &&
-          !props.nowLoading && (
-            <button type="button" onClick={this.loadMoreBookmarks}>
-              Load more
-            </button>
-          )}
       </div>
     );
   }
