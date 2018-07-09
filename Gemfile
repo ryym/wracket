@@ -7,12 +7,13 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
 gem 'jbuilder'
 gem 'activerecord-import'
 gem 'activerecord-session_store'
+gem 'bootsnap', require: false
 
 # https://github.com/rails/sprockets/commit/2f7b7e5e67f47c32a2d637b7e90dfa5ecf922eb3
 # We don't use sprockets at all but `rails` gem depends on it.
