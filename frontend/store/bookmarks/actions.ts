@@ -1,6 +1,6 @@
 import {thunk, thunkAs} from 'redux-dutiful-thunk';
 import {Action, Thunk} from '../../action';
-import {SearchCondition} from '../../lib/models';
+import {SearchCondition, BookmarkStatus} from '../../lib/models';
 import {selectShownIds} from '../../lib/bookmark-lister';
 import * as api from '../../lib/api';
 import {
@@ -164,6 +164,54 @@ export function unfavoriteBookmark(
 
     await d.unfavoriteBookmark(id).catch(err => {
       dispatch({type: 'UNFAVORITE_BOOKMARK_ERR', id, err});
+    });
+  });
+}
+
+export function archiveBookmark(
+  id: string,
+  d = {
+    getBookmark,
+    archiveBookmark: api.archiveBookmark,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
+    const bk = d.getBookmark(getState(), id);
+    if (bk == null || bk.status === BookmarkStatus.Archived) {
+      return;
+    }
+
+    const prevStatus = bk.status;
+    dispatch({type: 'ARCHIVE_BOOKMARK_START', id});
+
+    await d.archiveBookmark(id).catch(err => {
+      dispatch({
+        type: 'ARCHIVE_BOOKMARK_ERR',
+        prevStatus,
+        id,
+        err,
+      });
+    });
+  });
+}
+
+export function readdBookmark(
+  id: string,
+  d = {
+    getBookmark,
+    readdBookmark: api.readdBookmark,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
+    const bk = d.getBookmark(getState(), id);
+    if (bk == null || bk.status !== BookmarkStatus.Archived) {
+      return;
+    }
+
+    dispatch({type: 'READD_BOOKMARK_START', id});
+
+    await d.readdBookmark(id).catch(err => {
+      dispatch({type: 'READD_BOOKMARK_ERR', id, err});
     });
   });
 }

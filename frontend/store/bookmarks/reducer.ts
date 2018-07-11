@@ -77,6 +77,25 @@ export function reduceBookmarks(
         byId: updateObj(bks.byId, action.id, b => ({...b, favorite: true})),
       };
 
+    case 'ARCHIVE_BOOKMARK_START':
+    case 'READD_BOOKMARK_ERR':
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, action.id, b => ({...b, status: BookmarkStatus.Archived})),
+      };
+
+    case 'ARCHIVE_BOOKMARK_ERR':
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, action.id, b => ({...b, status: action.prevStatus})),
+      };
+
+    case 'READD_BOOKMARK_START':
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, action.id, b => ({...b, status: BookmarkStatus.Unread})),
+      };
+
     default:
       return bks;
   }

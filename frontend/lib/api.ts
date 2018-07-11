@@ -25,6 +25,10 @@ export interface FavoriteResult {
   favoritedAt: UnixTime;
 }
 
+export interface ArchiveResult {
+  archivedAt: UnixTime;
+}
+
 export async function synchronize(
   cdtn: SearchCondition,
   ajax = getAjax(),
@@ -90,6 +94,29 @@ export async function unfavoriteBookmark(bookmarkId: string, ajax = getAjax()): 
   });
   if (!res.isSuccess) {
     throw new Error(`failed to unfavorite bookmark ${bookmarkId}: ${res}`);
+  }
+  return {};
+}
+
+export async function archiveBookmark(
+  bookmarkId: string,
+  ajax = getAjax(),
+): Promise<ArchiveResult | null> {
+  const res = await ajax<ArchiveResult | null>(`/bookmarks/${bookmarkId}/archive`, {
+    method: 'put',
+  });
+  if (!res.isSuccess) {
+    throw new Error(`failed to archive bookmark ${bookmarkId}: ${res}`);
+  }
+  return res.data;
+}
+
+export async function readdBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
+  const res = await ajax<{} | null>(`/bookmarks/${bookmarkId}/readd`, {
+    method: 'put',
+  });
+  if (!res.isSuccess) {
+    throw new Error(`failed to readd bookmark ${bookmarkId}: ${res}`);
   }
   return {};
 }

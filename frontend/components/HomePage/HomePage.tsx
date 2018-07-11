@@ -11,6 +11,8 @@ import {
   resetOpenBookmark,
   favoriteBookmark,
   unfavoriteBookmark,
+  archiveBookmark,
+  readdBookmark,
   toggleSearchPanelCollapsibility,
 } from '../../store/actions';
 import {
@@ -57,6 +59,14 @@ export class _HomePage extends React.PureComponent<AllProps> {
     this.props.dispatch(action);
   };
 
+  archiveBookmark = (b: Bookmark) => {
+    this.props.dispatch(archiveBookmark(b.id));
+  };
+
+  readdBookmark = (b: Bookmark) => {
+    this.props.dispatch(readdBookmark(b.id));
+  };
+
   closeSearchPanel = () => {
     this.props.dispatch(toggleSearchPanelCollapsibility(true));
   };
@@ -91,6 +101,8 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onBookmarkOpen={this.markBookmarkAsOpen}
             onBackToUnread={this.backBookmarkToUnread}
             onFavoriteToggle={this.toggleFavorite}
+            onArchiveClick={this.archiveBookmark}
+            onReaddClick={this.readdBookmark}
             onLoadMoreClick={canLoadMore ? this.loadMoreBookmarks : undefined}
           />
           <BookmarkFilter
