@@ -61,6 +61,22 @@ class PocketClient
     })
   end
 
+  def archive(entry_id, time = Time.current)
+    modify({
+      action: 'archive',
+      item_id: entry_id,
+      time: time.to_i,
+    })
+  end
+
+  def readd(entry_id, time = Time.current)
+    modify({
+      action: 'readd',
+      item_id: entry_id,
+      time: time.to_i,
+    })
+  end
+
   def modify(*actions)
     res = @http.post_json('/v3/send', with_creds({ actions: actions }))
     res.success? ? ResModify.new(res) : Pocket::ResErr.new(res)

@@ -35,5 +35,18 @@ module Api
       bookmark = @updater.unfavorite(@bookmark_id)
       render json: { bookmarkId: bookmark.id }
     end
+
+    def archive
+      bookmark = @updater.archive(@bookmark_id)
+      render json: {
+        bookmarkId: bookmark.id,
+        archivedAt: bookmark.archived_at.to_i,
+      }
+    end
+
+    def readd
+      bookmark = @updater.readd(@bookmark_id)
+      render json: { bookmarkId: bookmark.id }
+    end
   end
 end

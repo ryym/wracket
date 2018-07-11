@@ -41,6 +41,22 @@ class BookmarkUpdater
     end
   end
 
+  def archive(bookmark_id, time = Time.current)
+    find_bookmark(bookmark_id).tap do |bk|
+      ret = @pocket.archive(bk.entry_id, time)
+      raise "failed to archive bookmark #{bk.id}: #{ret}" if ret.err?
+      bk.update_with_pocket!(time, archived_at: time, status: :archived)
+    end
+  end
+
+  def readd(bookmark_id, time = Time.current)
+    find_bookmark(bookmark_id).tap do |bk|
+      ret = @pocket.readd(bk.entry_id, time)
+      raise "failed to readd bookmark #{bk.id}: #{ret}" if ret.err?
+      bk.update_with_pocket!(time, archived_at: nil, status: :unread)
+    end
+  end
+
   # TODO: implement modifications.
   # def archive(bookmark_id); end
   # def unarchive(bookmark_id); end
