@@ -1,6 +1,6 @@
 import {Action as ReduxAction} from 'redux';
 import {AnyThunkAction, ThunkAction, ThunkType} from 'redux-dutiful-thunk';
-import {BookmarkById, SearchCondition} from './lib/models';
+import {BookmarkById, BookmarkStatus, SearchCondition} from './lib/models';
 import {State} from './state';
 
 export type ErrorAction = {
@@ -30,6 +30,10 @@ export type Action =
   | Err<{type: 'FAVORITE_BOOKMARK_ERR'; id: string}>
   | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
   | Err<{type: 'UNFAVORITE_BOOKMARK_ERR'; id: string}>
+  | {type: 'ARCHIVE_BOOKMARK_START'; id: string}
+  | Err<{type: 'ARCHIVE_BOOKMARK_ERR'; id: string; prevStatus: BookmarkStatus}>
+  | {type: 'READD_BOOKMARK_START'; id: string}
+  | Err<{type: 'READD_BOOKMARK_ERR'; id: string}>
   | {type: 'CLEAR_QUERY_COUNT_CACHES'}
   | {type: 'TOGGLE_SEARCH_PANEL_COLLAPSIBILITY'; enabled: boolean};
 

@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       put '/reset_open', to: 'bookmarks#reset_open'
       put '/favorite', to: 'bookmarks#favorite'
       put '/unfavorite', to: 'bookmarks#unfavorite'
+      put '/archive', to: 'bookmarks#archive'
+      put '/readd', to: 'bookmarks#readd'
     end
 
     match '(*path)', via: :all, to: proc { [404, {}, ['api not found']] }

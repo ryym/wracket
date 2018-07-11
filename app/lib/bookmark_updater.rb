@@ -25,26 +25,36 @@ class BookmarkUpdater
     end
   end
 
-  def favorite(bookmark_id)
-    bk = find_bookmark(bookmark_id)
-
-    now = Time.current
-    ret = @pocket.favorite(bk.entry_id, now)
-    raise "failed to favorite bookmark #{bk.id}: #{ret}" if ret.err?
-
-    bk.update_with_pocket!(now, favorite: true, favorited_at: now)
-    bk
+  def favorite(bookmark_id, time = Time.current)
+    find_bookmark(bookmark_id).tap do |bk|
+      ret = @pocket.favorite(bk.entry_id, time)
+      raise "failed to favorite bookmark #{bk.id}: #{ret}" if ret.err?
+      bk.update_with_pocket!(time, favorite: true, favorited_at: time)
+    end
   end
 
-  def unfavorite(bookmark_id)
-    bk = find_bookmark(bookmark_id)
+  def unfavorite(bookmark_id, time = Time.current)
+    find_bookmark(bookmark_id).tap do |bk|
+      ret = @pocket.unfavorite(bk.entry_id, time)
+      raise "failed to unfavorite bookmark #{bk.id}: #{ret}" if ret.err?
+      bk.update_with_pocket!(time, favorite: false, favorited_at: nil)
+    end
+  end
 
-    now = Time.current
-    ret = @pocket.unfavorite(bk.entry_id, now)
-    raise "failed to unfavorite bookmark #{bk.id}: #{ret}" if ret.err?
+  def archive(bookmark_id, time = Time.current)
+    find_bookmark(bookmark_id).tap do |bk|
+      ret = @pocket.archive(bk.entry_id, time)
+      raise "failed to archive bookmark #{bk.id}: #{ret}" if ret.err?
+      bk.update_with_pocket!(time, archived_at: time, status: :archived)
+    end
+  end
 
-    bk.update_with_pocket!(now, favorite: false, favorited_at: nil)
-    bk
+  def readd(bookmark_id, time = Time.current)
+    find_bookmark(bookmark_id).tap do |bk|
+      ret = @pocket.readd(bk.entry_id, time)
+      raise "failed to readd bookmark #{bk.id}: #{ret}" if ret.err?
+      bk.update_with_pocket!(time, archived_at: nil, status: :unread)
+    end
   end
 
   # TODO: implement modifications.

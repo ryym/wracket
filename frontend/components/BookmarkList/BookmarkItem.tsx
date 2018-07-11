@@ -8,6 +8,8 @@ export type ItemProps = {
   readonly onBookmarkOpen?: (b: Bookmark) => void;
   readonly onBackToUnread?: (b: Bookmark) => void;
   readonly onFavoriteToggle?: (b: Bookmark, favorite: boolean) => void;
+  readonly onArchiveClick?: (b: Bookmark) => void;
+  readonly onReaddClick?: (b: Bookmark) => void;
 };
 
 export type Props = ItemProps & {
@@ -35,8 +37,11 @@ export class BookmarkItem extends React.PureComponent<Props, State> {
       onBookmarkOpen = noop,
       onBackToUnread = noop,
       onFavoriteToggle = noop,
+      onArchiveClick = noop,
+      onReaddClick = noop,
     } = this.props;
     const {actionsOpen} = this.state;
+    const isArchived = b.status === BookmarkStatus.Archived;
     return (
       <>
         <a
@@ -71,12 +76,22 @@ export class BookmarkItem extends React.PureComponent<Props, State> {
               onClick={() => onBackToUnread(b)}
             />
           )}
-          <IconButton
-            className={cls.action}
-            content="done"
-            label="Archive bookmark"
-            onClick={() => alert('not implemented yet')}
-          />
+          {isArchived && (
+            <IconButton
+              className={cls.action}
+              content="add"
+              label="Readd bookmark"
+              onClick={() => onReaddClick(b)}
+            />
+          )}
+          {!isArchived && (
+            <IconButton
+              className={cls.action}
+              content="done"
+              label="Archive bookmark"
+              onClick={() => onArchiveClick(b)}
+            />
+          )}
           <IconButton
             className={cls.action}
             content="delete"
