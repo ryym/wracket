@@ -27,7 +27,7 @@ module Api
       bookmark = @updater.favorite(@bookmark_id)
       render json: {
         bookmarkId: bookmark.id,
-        favorited_at: bookmark.favorited_at.to_i,
+        favoritedAt: bookmark.favorited_at.to_i,
       }
     end
 
