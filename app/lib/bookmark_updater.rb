@@ -57,10 +57,13 @@ class BookmarkUpdater
     end
   end
 
-  # TODO: implement modifications.
-  # def archive(bookmark_id); end
-  # def unarchive(bookmark_id); end
-  # def delete(bookmark_id); end
+  def delete(bookmark_id, time = Time.current)
+    find_bookmark(bookmark_id).tap do |bk|
+      ret = @pocket.delete(bk.entry_id, time)
+      raise "failed to delete bookmark #{bk.id}: #{ret}" if ret.err?
+      bk.update_with_pocket!(time, status: :deleted)
+    end
+  end
 
   private
 

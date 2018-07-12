@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       put '/unfavorite', to: 'bookmarks#unfavorite'
       put '/archive', to: 'bookmarks#archive'
       put '/readd', to: 'bookmarks#readd'
+      put '/delete', to: 'bookmarks#delete'
     end
 
     match '(*path)', via: :all, to: proc { [404, {}, ['api not found']] }

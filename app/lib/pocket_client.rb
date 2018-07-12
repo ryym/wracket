@@ -77,6 +77,14 @@ class PocketClient
     })
   end
 
+  def delete(entry_id, time = Time.current)
+    modify({
+      action: 'delete',
+      item_id: entry_id,
+      time: time.to_i,
+    })
+  end
+
   def modify(*actions)
     res = @http.post_json('/v3/send', with_creds({ actions: actions }))
     res.success? ? ResModify.new(res) : Pocket::ResErr.new(res)
