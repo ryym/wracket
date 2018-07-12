@@ -30,6 +30,11 @@
   height: 88%;
 }
 
+.itemLinkContainer {
+  position: relative;
+  width: 100%;
+}
+
 .itemLink {
   color: var(--mdc-theme-text-primary-on-background);
   text-decoration: none;
@@ -67,7 +72,7 @@
     position: initial;
     width: 100%;
     text-align: right;
-    margin-right: 32px;
+    margin-right: 16px;
     transition: height 0.2s;
     height: 0;
     overflow: hidden;
@@ -107,18 +112,18 @@
 }
 
 .actionsOpener {
-  @include mdc-icon-button-size(20px, 20px, 4px);
-
   display: none;
 
   @include screen-sm {
     position: absolute;
-    bottom: var(--pad2);
-    right: var(--pad2);
+    bottom: 0;
+    right: 0;
     display: block;
   }
+}
 
-  > button {
-    color: var(--cl-primary-400);
-  }
+.actionOpenerButton {
+  @include mdc-icon-button-size(20px, 20px, 4px);
+
+  color: var(--cl-primary-400);
 }

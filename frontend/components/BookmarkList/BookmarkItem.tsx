@@ -44,28 +44,31 @@ export class BookmarkItem extends React.PureComponent<Props, State> {
     const isArchived = b.status === BookmarkStatus.Archived;
     return (
       <>
-        <a
-          href={b.url}
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-          className={cls.itemLink}
-          onClick={() => onBookmarkOpen(b)}
-        >
-          <div className={cls.itemThumbnail}>
-            {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
-            {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
+        <div className={cls.itemLinkContainer}>
+          <a
+            href={b.url}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            className={cls.itemLink}
+            onClick={() => onBookmarkOpen(b)}
+          >
+            <div className={cls.itemThumbnail}>
+              {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
+              {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
+            </div>
+            <div className={cls.itemLinkText}>
+              <span className={cls.itemTitle}>{b.title || b.url}</span>
+              <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
+            </div>
+          </a>
+          <div className={cls.actionsOpener}>
+            <IconButton
+              className={cls.actionOpenerButton}
+              content={actionsOpen ? 'expand_less' : 'expand_more'}
+              label=""
+              onClick={this.toggleActions}
+            />
           </div>
-          <div className={cls.itemLinkText}>
-            <span className={cls.itemTitle}>{b.title || b.url}</span>
-            <span className={cls.itemDomain}>{new URL(b.url).hostname}</span>
-          </div>
-        </a>
-        <div className={cls.actionsOpener}>
-          <IconButton
-            content={actionsOpen ? 'expand_less' : 'expand_more'}
-            label=""
-            onClick={this.toggleActions}
-          />
         </div>
         <div className={`${cls.actions} ${actionsOpen ? cls.isOpen : ''}`}>
           {b.status === BookmarkStatus.Reading && (
