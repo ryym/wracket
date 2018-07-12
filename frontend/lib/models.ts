@@ -2,6 +2,7 @@ export enum BookmarkStatus {
   Unread = 'unread',
   Reading = 'reading',
   Archived = 'archived',
+  Deleted = 'deleted',
 }
 
 // We represents a timestamp by just a number for now.

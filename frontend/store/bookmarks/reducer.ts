@@ -85,6 +85,7 @@ export function reduceBookmarks(
       };
 
     case 'ARCHIVE_BOOKMARK_ERR':
+    case 'DELETE_BOOKMARK_ERR':
       return {
         ...bks,
         byId: updateObj(bks.byId, action.id, b => ({...b, status: action.prevStatus})),
@@ -94,6 +95,12 @@ export function reduceBookmarks(
       return {
         ...bks,
         byId: updateObj(bks.byId, action.id, b => ({...b, status: BookmarkStatus.Unread})),
+      };
+
+    case 'DELETE_BOOKMARK_START':
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, action.id, b => ({...b, status: BookmarkStatus.Deleted})),
       };
 
     default:

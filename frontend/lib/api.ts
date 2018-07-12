@@ -112,11 +112,17 @@ export async function archiveBookmark(
 }
 
 export async function readdBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
-  const res = await ajax<{} | null>(`/bookmarks/${bookmarkId}/readd`, {
-    method: 'put',
-  });
+  const res = await ajax<{} | null>(`/bookmarks/${bookmarkId}/readd`, {method: 'put'});
   if (!res.isSuccess) {
     throw new Error(`failed to readd bookmark ${bookmarkId}: ${res}`);
+  }
+  return {};
+}
+
+export async function deleteBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
+  const res = await ajax<{} | null>(`/bookmarks/${bookmarkId}/delete`, {method: 'put'});
+  if (!res.isSuccess) {
+    throw new Error(`failed to delete bookmark ${bookmarkId}: ${res}`);
   }
   return {};
 }
