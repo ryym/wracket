@@ -134,31 +134,35 @@ workflows:
       - test_js:
           filters:
             branches:
-              only: /^dev\/.*/
+              only:
+                - master
+                - /^dev\/.*/
       - test_ruby:
           filters:
             branches:
-              only: /^dev\/.*/
+              only:
+                - master
+                - /^dev\/.*/
 
   build-deploy:
     jobs:
       - build:
           filters:
             branches:
-              only: master
+              only: deploy
       - deploy:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only: deploy
 
   deploy-only:
     jobs:
       - deploy:
           filters:
             branches:
-              only: deploy
+              only: deploy-only
 
   rollback:
     jobs:
