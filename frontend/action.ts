@@ -34,6 +34,8 @@ export type Action =
   | Err<{type: 'ARCHIVE_BOOKMARK_ERR'; id: string; prevStatus: BookmarkStatus}>
   | {type: 'READD_BOOKMARK_START'; id: string}
   | Err<{type: 'READD_BOOKMARK_ERR'; id: string}>
+  | {type: 'DELETE_BOOKMARK_START'; id: string}
+  | Err<{type: 'DELETE_BOOKMARK_ERR'; id: string; prevStatus: BookmarkStatus}>
   | {type: 'CLEAR_QUERY_COUNT_CACHES'}
   | {type: 'TOGGLE_SEARCH_PANEL_COLLAPSIBILITY'; enabled: boolean};
 

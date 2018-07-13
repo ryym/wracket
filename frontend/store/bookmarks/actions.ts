@@ -185,12 +185,7 @@ export function archiveBookmark(
     dispatch({type: 'ARCHIVE_BOOKMARK_START', id});
 
     await d.archiveBookmark(id).catch(err => {
-      dispatch({
-        type: 'ARCHIVE_BOOKMARK_ERR',
-        prevStatus,
-        id,
-        err,
-      });
+      dispatch({type: 'ARCHIVE_BOOKMARK_ERR', id, err, prevStatus});
     });
   });
 }
@@ -212,6 +207,28 @@ export function readdBookmark(
 
     await d.readdBookmark(id).catch(err => {
       dispatch({type: 'READD_BOOKMARK_ERR', id, err});
+    });
+  });
+}
+
+export function deleteBookmark(
+  id: string,
+  d = {
+    getBookmark,
+    deleteBookmark: api.deleteBookmark,
+  },
+): Thunk {
+  return thunk(async (dispatch, getState) => {
+    const bk = d.getBookmark(getState(), id);
+    if (bk == null || bk.status === BookmarkStatus.Deleted) {
+      return;
+    }
+
+    const prevStatus = bk.status;
+    dispatch({type: 'DELETE_BOOKMARK_START', id});
+
+    await d.deleteBookmark(id).catch(err => {
+      dispatch({type: 'DELETE_BOOKMARK_ERR', id, err, prevStatus});
     });
   });
 }

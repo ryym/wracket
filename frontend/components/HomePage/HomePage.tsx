@@ -13,6 +13,7 @@ import {
   unfavoriteBookmark,
   archiveBookmark,
   readdBookmark,
+  deleteBookmark,
   toggleSearchPanelCollapsibility,
 } from '../../store/actions';
 import {
@@ -67,6 +68,10 @@ export class _HomePage extends React.PureComponent<AllProps> {
     this.props.dispatch(readdBookmark(b.id));
   };
 
+  deleteBookmark = (b: Bookmark) => {
+    this.props.dispatch(deleteBookmark(b.id));
+  };
+
   closeSearchPanel = () => {
     this.props.dispatch(toggleSearchPanelCollapsibility(true));
   };
@@ -103,6 +108,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onFavoriteToggle={this.toggleFavorite}
             onArchiveClick={this.archiveBookmark}
             onReaddClick={this.readdBookmark}
+            onDeleteClick={this.deleteBookmark}
             onLoadMoreClick={canLoadMore ? this.loadMoreBookmarks : undefined}
           />
           <BookmarkFilter

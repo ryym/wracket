@@ -88,6 +88,7 @@
   @include mdc-icon-button-size(18px, 18px, 4px);
 
   color: #b0bec5;
+  font-weight: bold;
 
   @include screen-md-or-lg {
     &:hover {

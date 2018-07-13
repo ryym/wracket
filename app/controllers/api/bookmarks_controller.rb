@@ -48,5 +48,10 @@ module Api
       bookmark = @updater.readd(@bookmark_id)
       render json: { bookmarkId: bookmark.id }
     end
+
+    def delete
+      bookmark = @updater.delete(@bookmark_id)
+      render json: { bookmarkId: bookmark.id }
+    end
   end
 end
