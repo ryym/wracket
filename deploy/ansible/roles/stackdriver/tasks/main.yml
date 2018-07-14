@@ -1,0 +1,19 @@
+# https://cloud.google.com/logging/docs/agent/installation
+
+- name: get stat of root directory
+  stat:
+    path: '{{stackdriver_root}}'
+  register: root_dir
+
+- block:
+  - name: download installer script
+    get_url:
+      url: '{{stackdriver_installer_url}}'
+      dest: /tmp/install-logging-agent.sh
+      mode: '0644'
+
+  - name: install agent
+    command: bash /tmp/install-logging-agent.sh
+    become: yes
+
+  when: not root_dir.stat.exists
