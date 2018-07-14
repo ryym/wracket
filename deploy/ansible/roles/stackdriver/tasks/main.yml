@@ -18,3 +18,15 @@
     become: yes
 
   when: not root_dir.stat.exists
+
+- name: put config files for Rails log
+  template:
+    src: 'templates/wracket.conf'
+    dest: '{{stackdriver_root}}/config.d/wracket.conf'
+
+# Currently we need to use init.d instead of systemd...
+- name: restart agent
+  service:
+    name: google-fluentd
+    enabled: yes
+    state: restarted
