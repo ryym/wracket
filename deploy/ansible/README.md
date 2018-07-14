@@ -30,7 +30,7 @@ Currently there are no redundancy / backup system.
 
 - manage and renew TLS certificate automatically
 
-### [Stackdriver Loggin](https://cloud.google.com/logging/)
+### [Stackdriver Logging](https://cloud.google.com/logging/)
 
  - collect server logs
 
