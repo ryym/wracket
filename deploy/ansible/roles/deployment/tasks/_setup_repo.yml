@@ -25,5 +25,4 @@
       WRACKET_DB_PASSWORD: '{{db_password}}'
       POCKET_CONSUMER_KEY: '{{pocket_consumer_key}}'
       RAILS_MASTER_KEY: '{{rails_master_key}}'
-      RAILS_LOG_TO_STDOUT: 1
       ASSET_URL: 'https://{{app_domain}}/assets'

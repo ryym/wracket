@@ -5,7 +5,8 @@
     path: '{{stackdriver_root}}'
   register: root_dir
 
-- block:
+- name: install agent if necessary
+  block:
   - name: download installer script
     get_url:
       url: '{{stackdriver_installer_url}}'
