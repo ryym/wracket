@@ -30,6 +30,10 @@ Currently there are no redundancy / backup system.
 
 - manage and renew TLS certificate automatically
 
+### [Stackdriver Loggin](https://cloud.google.com/logging/)
+
+ - collect server logs
+
 ## Blue-Green like deployment
 
 We runs two apps on a single server to achieve zero downtime deployment.

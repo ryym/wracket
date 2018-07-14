@@ -53,3 +53,7 @@
       vars:
         admin_email: 'ryym.64@gmail.com'
       tags: ['letsencrypt']
+
+    - import_role:
+        name: stackdriver
+      tags: ['stackdriver']

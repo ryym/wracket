@@ -1,0 +1,2 @@
+stackdriver_root: /etc/google-fluentd
+stackdriver_installer_url: https://dl.google.com/cloudagents/install-logging-agent.sh
