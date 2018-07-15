@@ -22,7 +22,10 @@
 - name: put config files for Rails log
   template:
     src: 'templates/wracket.conf'
-    dest: '{{stackdriver_root}}/config.d/wracket.conf'
+    dest: '{{stackdriver_root}}/config.d/wracket-{{item}}.conf'
+  vars:
+    color: '{{item}}'
+  with_items: '{{app_colors}}'
 
 # Currently we need to use init.d instead of systemd...
 - name: restart agent

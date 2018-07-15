@@ -15,6 +15,8 @@ letsencrypt_app_cert_root: '{{letsencrypt_root}}/live/{{app_domain}}'
 
 deployment_branch: precompiled
 
+app_colors: ['blue', 'green']
+
 ports:
   blue: 8000
   green: 8001
