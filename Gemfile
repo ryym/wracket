@@ -14,6 +14,7 @@ gem 'jbuilder'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.2'
+gem 'sentry-raven'
 
 # https://github.com/rails/sprockets/commit/2f7b7e5e67f47c32a2d637b7e90dfa5ecf922eb3
 # We don't use sprockets at all but `rails` gem depends on it.
