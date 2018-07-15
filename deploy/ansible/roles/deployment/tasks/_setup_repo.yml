@@ -26,3 +26,4 @@
       POCKET_CONSUMER_KEY: '{{pocket_consumer_key}}'
       RAILS_MASTER_KEY: '{{rails_master_key}}'
       ASSET_URL: 'https://{{app_domain}}/assets'
+      SENTRY_DSN: '{{sentry_dsn}}'
