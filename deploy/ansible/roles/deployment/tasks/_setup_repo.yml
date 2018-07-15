@@ -27,3 +27,4 @@
       RAILS_MASTER_KEY: '{{rails_master_key}}'
       ASSET_URL: 'https://{{app_domain}}/assets'
       SENTRY_DSN: '{{sentry_dsn}}'
+      TEST_EXCEPTION_PASSWORD: '{{test_exception_password}}'
