@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'home', to: 'home#index'
 
+  put '/_raise', to: 'ping#test_raise'
+
   namespace :api, { format: :json } do
     get 'ping', to: 'ping#ping'
     get 'bookmarks/search', to: 'search#index'
