@@ -60,6 +60,13 @@ Metrics/MethodLength:
 Naming/MemoizedInstanceVariableName:
   Enabled: false
 
+# RuboCop's default rule disallows 'has_', but it feels to me
+# that 'a.has_value?' is obviously different from 'a.value?' in that
+# 'a' itself is a 'value' or not.
+Naming/PredicateName:
+  Enabled: true
+  NamePrefixBlacklist: ['is_', 'are_', 'does_']
+
 Naming/UncommunicativeMethodParamName:
   Enabled: true
   MinNameLength: 1
