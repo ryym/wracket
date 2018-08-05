@@ -2,12 +2,15 @@
 
 class HomeController < ViewBaseController
   before_action do
+    @searcher ||= BookmarkSearcher.create
     @json ||= JsonMaker.new
   end
 
   def index
-    # TODO: Use BookmarkSearcher instead to avoid logic duplication.
-    bookmarks = @json.bookmarks(current_user.unarchived_bookmarks.limit(30))
+    cdtn = @searcher.condition(statuses: %i[unread reading])
+    result = @searcher.search(current_user, cdtn)
+    bookmarks = @json.bookmarks(result.bookmarks)
+
     render locals: {
       user: current_user,
       bookmarks: bookmarks,
