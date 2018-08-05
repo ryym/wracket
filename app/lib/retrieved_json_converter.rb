@@ -32,7 +32,7 @@ class RetrievedJsonConverter
     result.tags_with_entry_id.push(*tags_with_entry_id)
 
     images = build_images(id, item.fetch('images', {}))
-    result.images.push(*images)
+    result.entry_images.push(*images)
   end
 
   def build_entries(id, item, retrieved_ids)
@@ -119,7 +119,7 @@ class RetrievedJsonConverter
 
   def build_images(entry_id, image_by_id)
     image_by_id.values.map do |image|
-      Image.new(
+      EntryImage.new(
         entry_id: entry_id,
         image_id: image['image_id'],
         src: image['src'],
@@ -139,14 +139,14 @@ class RetrievedJsonConverter
     attr_accessor :bookmarks
     attr_accessor :deleted_bookmarks
     attr_accessor :tags_with_entry_id
-    attr_accessor :images
+    attr_accessor :entry_images
 
     def initialize
       self.entries = []
       self.bookmarks = []
       self.deleted_bookmarks = []
       self.tags_with_entry_id = []
-      self.images = []
+      self.entry_images = []
     end
   end
 

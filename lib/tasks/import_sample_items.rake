@@ -26,7 +26,7 @@ namespace :tmp do
       entry_ids = user.entries.pluck(:id)
       BookmarkTag.joins(:bookmark).merge(Bookmark.where(user: user)).delete_all
       Bookmark.where(user: user).delete_all
-      Image.where(entry_id: entry_ids).delete_all
+      EntryImage.where(entry_id: entry_ids).delete_all
       Entry.where(id: entry_ids).delete_all
     end
   end

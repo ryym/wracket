@@ -20,7 +20,8 @@ class Entry < ApplicationRecord
 
   has_many :bookmarks, dependent: :destroy, inverse_of: :entry
   has_many :users, through: :bookmarks
-  has_many :images, dependent: :destroy
+  has_many :entry_images, dependent: :destroy, inverse_of: :entry
+  has_many :images, through: :entry_images
 
   # TODO: validation
 

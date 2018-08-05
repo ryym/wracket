@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180704123601) do
+ActiveRecord::Schema.define(version: 2018_08_04_132940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,9 +58,9 @@ ActiveRecord::Schema.define(version: 20180704123601) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "images", force: :cascade do |t|
+  create_table "entry_images", force: :cascade do |t|
     t.bigint "entry_id", null: false
-    t.integer "image_id", null: false
+    t.integer "pocket_image_id", null: false
     t.string "src", null: false
     t.integer "width", default: 0, null: false
     t.integer "height", default: 0, null: false
@@ -68,8 +68,19 @@ ActiveRecord::Schema.define(version: 20180704123601) do
     t.string "caption", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entry_id", "src"], name: "index_images_on_entry_id_and_src", unique: true
-    t.index ["entry_id"], name: "index_images_on_entry_id"
+    t.bigint "image_id"
+    t.index ["entry_id", "src"], name: "index_entry_images_on_entry_id_and_src", unique: true
+    t.index ["entry_id"], name: "index_entry_images_on_entry_id"
+    t.index ["image_id"], name: "index_entry_images_on_image_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "digest", null: false
+    t.string "content_type"
+    t.json "variants", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["digest"], name: "index_images_on_digest"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -102,5 +113,6 @@ ActiveRecord::Schema.define(version: 20180704123601) do
   add_foreign_key "bookmarks", "entries"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "entries", "entries", column: "resolved_id"
-  add_foreign_key "images", "entries"
+  add_foreign_key "entry_images", "entries"
+  add_foreign_key "entry_images", "images"
 end
