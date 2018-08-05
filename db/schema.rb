@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_04_132940) do
+ActiveRecord::Schema.define(version: 2018_08_05_054217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2018_08_04_132940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "image_id"
+    t.integer "attach_tries", default: 0, null: false
     t.index ["entry_id", "src"], name: "index_entry_images_on_entry_id_and_src", unique: true
     t.index ["entry_id"], name: "index_entry_images_on_entry_id"
     t.index ["image_id"], name: "index_entry_images_on_image_id"
