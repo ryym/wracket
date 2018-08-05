@@ -9,15 +9,15 @@ class Image < ApplicationRecord
     self.class.path(digest)
   end
 
-  def has_variant?(variant)
-    variants[variant.name] == variant.version
+  def has_variant?(name, version)
+    variants[name] == version
   end
 
-  def add_variant!(variant)
-    update!(variants: variants.merge(variant.name => variant.version))
+  def add_variant!(name, version)
+    update!(variants: variants.merge(name => version))
   end
 
-  def remove_variant!(variant_name)
-    update!(variants: variants.except(variant_name.to_s))
+  def remove_variant!(name)
+    update!(variants: variants.except(name.to_s))
   end
 end
