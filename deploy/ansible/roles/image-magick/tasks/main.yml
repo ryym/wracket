@@ -1,0 +1,11 @@
+# https://www.imagemagick.org
+
+- name: install ImageMagick libraries
+  yum:
+    name: '{{lib_download_url}}'
+    state: present
+
+- name: install ImageMagick
+  yum:
+    name: '{{download_url}}'
+    state: present

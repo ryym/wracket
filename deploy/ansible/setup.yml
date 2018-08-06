@@ -57,3 +57,7 @@
     - import_role:
         name: stackdriver
       tags: ['stackdriver']
+
+    - import_role:
+        name: image-magick
+      tags: ['image-magick']
