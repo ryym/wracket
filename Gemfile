@@ -23,6 +23,11 @@ gem 'sprockets', '~> 3.7.2'
 # https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a35f2ba7f941c15e239a1cb379d56ae
 gem 'rails-html-sanitizer', '>= 1.0.4'
 
+# For image storing/processing
+gem 'google-cloud-storage', require: false
+gem 'marcel', require: false
+gem 'mini_magick', require: false
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'

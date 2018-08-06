@@ -1,8 +1,23 @@
 # frozen_string_literal: true
 
 class Image < ApplicationRecord
-  # See Bookmark comments for the reason of `required: false`.
-  belongs_to :entry, required: false
+  def self.path(name)
+    "images/#{name}"
+  end
 
-  # TODO: validation
+  def path
+    self.class.path(digest)
+  end
+
+  def has_variant?(name, version)
+    variants[name] == version
+  end
+
+  def add_variant!(name, version)
+    update!(variants: variants.merge(name => version))
+  end
+
+  def remove_variant!(name)
+    update!(variants: variants.except(name.to_s))
+  end
 end

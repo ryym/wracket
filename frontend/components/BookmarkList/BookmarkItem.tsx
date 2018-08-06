@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Bookmark, BookmarkStatus} from '../../lib/models';
 import {IconButton} from '../form/IconButton';
+import {Thumbnail} from './Thumbnail';
 
 const cls = require('./BookmarkItem_styles.scss');
 
@@ -55,8 +56,7 @@ export class BookmarkItem extends React.PureComponent<Props, State> {
             onClick={() => onBookmarkOpen(b)}
           >
             <div className={cls.itemThumbnail}>
-              {b.thumbnailUrl && <img alt="" src={b.thumbnailUrl} />}
-              {!b.thumbnailUrl && <div className={cls.itemBlankThumbnail} />}
+              <Thumbnail src={b.thumbnailUrl} />
             </div>
             <div className={cls.itemLinkText}>
               <span className={cls.itemTitle}>{b.title || b.url}</span>

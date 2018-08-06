@@ -9,6 +9,20 @@ Rails.application.routes.draw do
 
   get 'home', to: 'home#index'
 
+  resources :images, only: [] do
+    member do
+      # XXX: Has a side effect.
+      get 'transform', to: 'transform'
+    end
+  end
+
+  resources :entry_images, only: [] do
+    member do
+      # XXX: Has a side effect.
+      get 'attach', to: 'attach'
+    end
+  end
+
   put '/_raise', to: 'ping#test_raise'
 
   namespace :api, { format: :json } do

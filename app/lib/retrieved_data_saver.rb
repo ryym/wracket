@@ -27,7 +27,7 @@ class RetrievedDataSaver
 
     result.of_bookmark_tags = import_bookmark_tags(bookmark_tags)
 
-    result.of_images = import_images(converted.images, failed_entries)
+    result.of_images = import_entry_images(converted.entry_images, failed_entries)
 
     result
   end
@@ -98,9 +98,9 @@ class RetrievedDataSaver
     BookmarkTag.import(bookmark_tags, on_duplicate_key_ignore: true)
   end
 
-  def import_images(images, failed_entries)
+  def import_entry_images(images, failed_entries)
     images = select_by_valid_entry_ids(images, failed_entries)
-    Image.import(images, on_duplicate_key_ignore: true)
+    EntryImage.import(images, on_duplicate_key_ignore: true)
   end
 
   def select_by_valid_entry_ids(records, failed_entries)

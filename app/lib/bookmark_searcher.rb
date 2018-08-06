@@ -13,7 +13,7 @@ class BookmarkSearcher
     condition(statuses: params[:statuses], offset_value: params[:offset])
   end
 
-  def condition(statuses:, offset_value:)
+  def condition(statuses:, offset_value: nil)
     statuses = [] if !statuses.is_a?(Array)
     Condition.new(statuses: statuses, offset_value: offset_value)
   end
