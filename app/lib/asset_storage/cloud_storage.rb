@@ -4,16 +4,17 @@ require 'google/cloud/storage'
 
 module AssetStorage
   class CloudStorage
-    def self.create
-      # TODO: Remove hard coding.
+    CLOUD_STORAGE_URL = 'https://storage.googleapis.com'
+
+    def self.create(settings: Settings.singleton)
       storage = Google::Cloud::Storage.new(
-        project_id: 'hello-gcp2',
-        credentials: 'gcp-cred.json',
+        project_id: settings.gcp_project_id,
+        credentials: settings.gcp_credentials_path,
       )
       new(
         storage,
-        bucket_name: 'wracket',
-        base_url: 'https://storage.googleapis.com',
+        bucket_name: settings.gcp_bucket_name,
+        base_url: CLOUD_STORAGE_URL,
         util: AssetStorage::Util.create,
       )
     end
