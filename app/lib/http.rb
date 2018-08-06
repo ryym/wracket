@@ -21,10 +21,9 @@ class Http
     @default_headers = headers
   end
 
-  def get(path)
-    res = Net::HTTP.start(@host) do |http|
-      http.get(path)
-    end
+  def get(path, headers: {})
+    req = Net::HTTP::Get.new(path, @default_headers.merge(headers))
+    res = new_http.request(req)
     Response.new(res)
   end
 
