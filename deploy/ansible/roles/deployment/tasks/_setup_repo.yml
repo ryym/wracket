@@ -28,6 +28,6 @@
       ASSET_URL: 'https://{{app_domain}}/assets'
       SENTRY_DSN: '{{sentry_dsn}}'
       TEST_EXCEPTION_PASSWORD: '{{test_exception_password}}'
-      STORAGE_TYPE: cloud-storage
+      STORAGE_TYPE: cloud_storage
       GCP_PROJECT_ID: hello-gcp2
       GCP_BUCKET_NAME: wracket
