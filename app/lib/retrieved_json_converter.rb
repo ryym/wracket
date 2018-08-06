@@ -121,7 +121,7 @@ class RetrievedJsonConverter
     image_by_id.values.map do |image|
       EntryImage.new(
         entry_id: entry_id,
-        image_id: image['image_id'],
+        pocket_image_id: image['image_id'],
         src: image['src'],
         width: image['width'].to_i,
         height: image['height'].to_i,
