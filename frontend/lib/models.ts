@@ -12,7 +12,7 @@ export interface Bookmark {
   readonly id: string;
   readonly title: string;
   readonly url: string;
-  readonly thumbnailUrl: string | null;
+  readonly thumbnailUrl: string;
   readonly status: BookmarkStatus;
   readonly addedAt: UnixTime;
   readonly favorite: boolean;
