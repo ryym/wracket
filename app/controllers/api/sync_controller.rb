@@ -5,7 +5,7 @@ module Api
     before_action do
       @syncer ||= PocketSynchronizer.create(current_user.access_token)
       @searcher ||= BookmarkSearcher.create
-      @json ||= JsonMaker.new
+      @json ||= JsonMaker.create
     end
 
     def import_updates

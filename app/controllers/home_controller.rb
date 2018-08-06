@@ -3,7 +3,7 @@
 class HomeController < ViewBaseController
   before_action do
     @searcher ||= BookmarkSearcher.create
-    @json ||= JsonMaker.new
+    @json ||= JsonMaker.create
   end
 
   def index
