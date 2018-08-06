@@ -24,4 +24,8 @@ class ImageMaker
   def_delegators :@maker, :make
   def_delegators :@variator, :has_variant?, :make_variant
   def_delegators :@url_maker, :url_for
+
+  def default_thumbnail_url
+    '/thumbnail-default.png'
+  end
 end
