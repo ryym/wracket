@@ -18,10 +18,11 @@ module AssetStorage
       )
     end
 
-    def initialize(storage, bucket_name:, base_url:)
+    def initialize(storage, bucket_name:, base_url:, util:)
       @storage = storage
       @bucket_name = bucket_name
       @base_url = "#{base_url}/#{@bucket_name}"
+      @util = util
     end
 
     def url(path, variant: nil)
