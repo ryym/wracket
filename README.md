@@ -14,4 +14,4 @@ My [Pocket](https://getpocket.com) client on Web.
 - CI/CD: CircleCI
 - Server provisioning: Ansible
 - Server: GCE (for now)
-- TSL: Let's Encrypt
+- TLS: Let's Encrypt
