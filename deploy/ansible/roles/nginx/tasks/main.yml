@@ -4,6 +4,14 @@
     name: nginx
   tags: ['yum']
 
+# Remove unused default static files.
+# Note that we use the web root directory to renewal Let's Encrypt certificates.
+# See roles/letsencrypt for details.
+- name: clean up web root
+  shell: "/bin/rm -rf {{nginx_web_root}}/*"
+  args:
+    warn: false
+
 - name: prepare sites-available directory
   file:
     path: /etc/nginx/sites-available

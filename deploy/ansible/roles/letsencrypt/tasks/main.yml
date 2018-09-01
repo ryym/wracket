@@ -1,24 +1,14 @@
-# Configure Let's Encrypt for Nginx.
-# https://letsencrypt.org/
-# https://certbot.eff.org/lets-encrypt/centosrhel7-nginx
+# Configure Let's Encrypt.
 #
-# Note that this role does not modify Nginx configuration at all.
-
-# XXX:
-# If you run this role as a step of 'setup.yml' playbook for the first time,
-# currently the certificate installation will fail.
-# This is because the Nginx configuration file already contains
-# settings for HTTPS that loads certificates from the 'letsencrypt' directory.
-# But since these files does not exist yet, `nginx -t` fails and 'certbot' command
-# fails too.
-# In addition, a Nginx process still remains after certificates installation.
-# I fixed these problems manually at that time. Next time, I think
-# we should try to use certbot as a standalone mode.
-# In that case certbot does not use Nginx.
+# https://letsencrypt.org/
+#
+# Though we use Nginx as a web server,
+# we choose to use Certbot without Nginx integration for simplicity.
+# https://certbot.eff.org/lets-encrypt/centosrhel7-other
 
 - name: install certbot for Nginx
   yum:
-    name: python2-certbot-nginx
+    name: certbot
 
 - name: get stat of domain archive directory
   stat:
@@ -26,9 +16,12 @@
   register: cert_archive_dir
 
 - name: install certificate for app
+  # https://certbot.eff.org/docs/using.html#webroot
   command: >
-    certbot --nginx certonly
+    certbot certonly
       -n
+      --webroot
+      -w '{{nginx_web_root}}'
       -d '{{app_domain}}'
       -m '{{admin_email}}'
       --agree-tos
