@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 # TODO: Should encrypt access tokens.
@@ -10,6 +9,12 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true
   validates :access_token, presence: true
+
+  enum sync_status: {
+    not_yet: 0,
+    syncing: 1,
+    done: 2,
+  }, _prefix: true
 
   def self.login(name, token)
     user = User.find_by(username: name)
