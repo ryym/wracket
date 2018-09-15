@@ -22,13 +22,10 @@ export function syncBookmarks(
 
     const cdtn = d.getSearchCondition(getState());
     const bookmarks = await d.synchronize(cdtn);
-
-    if (bookmarks) {
-      dispatch({
-        type: 'SYNC_BOOKMARKS_OK',
-        bookmarks,
-      });
-    }
+    dispatch({
+      type: 'SYNC_BOOKMARKS_OK',
+      bookmarks,
+    });
   });
 }
 
@@ -92,13 +89,11 @@ export function loadMoreBookmarks(
     const lastBookmark = d.getLastBookmark(state);
 
     const result = await d.search(d.getSearchCondition(state), lastBookmark);
-    if (result) {
-      dispatch({
-        type: 'LOAD_MORE_BOOKMARKS_OK',
-        bookmarks: result.bookmarks,
-        isLast: result.isLast,
-      });
-    }
+    dispatch({
+      type: 'LOAD_MORE_BOOKMARKS_OK',
+      bookmarks: result.bookmarks,
+      isLast: result.isLast,
+    });
   });
 }
 

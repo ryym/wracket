@@ -29,10 +29,7 @@ export interface ArchiveResult {
   archivedAt: UnixTime;
 }
 
-export async function synchronize(
-  cdtn: SearchCondition,
-  ajax = getAjax(),
-): Promise<BookmarkById | null> {
+export async function synchronize(cdtn: SearchCondition, ajax = getAjax()): Promise<BookmarkById> {
   const res = await ajax<BookmarkById>('/bookmarks/sync', {
     method: 'put',
     params: cdtn,
@@ -47,7 +44,7 @@ export async function search(
   cdtn: SearchCondition,
   last: Bookmark | null = null,
   ajax = getAjax(),
-): Promise<SearchResult | null> {
+): Promise<SearchResult> {
   let params: {} = cdtn;
   if (last != null) {
     params = {...params, offset: last.addedAt};
@@ -59,7 +56,7 @@ export async function search(
   return res.data;
 }
 
-export async function openBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
+export async function openBookmark(bookmarkId: string, ajax = getAjax()): Promise<{}> {
   const res = await ajax<{}>(`/bookmarks/${bookmarkId}/open`, {method: 'put'});
   if (!res.isSuccess) {
     throw new Error(`failed to mark bookmark ${bookmarkId} as opened: ${res}`);
@@ -67,7 +64,7 @@ export async function openBookmark(bookmarkId: string, ajax = getAjax()): Promis
   return {};
 }
 
-export async function resetOpenBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
+export async function resetOpenBookmark(bookmarkId: string, ajax = getAjax()): Promise<{}> {
   const res = await ajax<{}>(`/bookmarks/${bookmarkId}/reset_open`, {method: 'put'});
   if (!res.isSuccess) {
     throw new Error(`failed to reset bookmark ${bookmarkId} open: ${res}`);
@@ -78,8 +75,8 @@ export async function resetOpenBookmark(bookmarkId: string, ajax = getAjax()): P
 export async function favoriteBookmark(
   bookmarkId: string,
   ajax = getAjax(),
-): Promise<FavoriteResult | null> {
-  const res = await ajax<FavoriteResult | null>(`/bookmarks/${bookmarkId}/favorite`, {
+): Promise<FavoriteResult> {
+  const res = await ajax<FavoriteResult>(`/bookmarks/${bookmarkId}/favorite`, {
     method: 'put',
   });
   if (!res.isSuccess) {
@@ -88,8 +85,8 @@ export async function favoriteBookmark(
   return res.data;
 }
 
-export async function unfavoriteBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
-  const res = await ajax<{} | null>(`/bookmarks/${bookmarkId}/unfavorite`, {
+export async function unfavoriteBookmark(bookmarkId: string, ajax = getAjax()): Promise<{}> {
+  const res = await ajax<{}>(`/bookmarks/${bookmarkId}/unfavorite`, {
     method: 'put',
   });
   if (!res.isSuccess) {
@@ -101,8 +98,8 @@ export async function unfavoriteBookmark(bookmarkId: string, ajax = getAjax()): 
 export async function archiveBookmark(
   bookmarkId: string,
   ajax = getAjax(),
-): Promise<ArchiveResult | null> {
-  const res = await ajax<ArchiveResult | null>(`/bookmarks/${bookmarkId}/archive`, {
+): Promise<ArchiveResult> {
+  const res = await ajax<ArchiveResult>(`/bookmarks/${bookmarkId}/archive`, {
     method: 'put',
   });
   if (!res.isSuccess) {
@@ -111,16 +108,16 @@ export async function archiveBookmark(
   return res.data;
 }
 
-export async function readdBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
-  const res = await ajax<{} | null>(`/bookmarks/${bookmarkId}/readd`, {method: 'put'});
+export async function readdBookmark(bookmarkId: string, ajax = getAjax()): Promise<{}> {
+  const res = await ajax<{}>(`/bookmarks/${bookmarkId}/readd`, {method: 'put'});
   if (!res.isSuccess) {
     throw new Error(`failed to readd bookmark ${bookmarkId}: ${res}`);
   }
   return {};
 }
 
-export async function deleteBookmark(bookmarkId: string, ajax = getAjax()): Promise<{} | null> {
-  const res = await ajax<{} | null>(`/bookmarks/${bookmarkId}/delete`, {method: 'put'});
+export async function deleteBookmark(bookmarkId: string, ajax = getAjax()): Promise<{}> {
+  const res = await ajax<{}>(`/bookmarks/${bookmarkId}/delete`, {method: 'put'});
   if (!res.isSuccess) {
     throw new Error(`failed to delete bookmark ${bookmarkId}: ${res}`);
   }
