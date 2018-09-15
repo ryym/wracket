@@ -13,6 +13,12 @@ class JsonMaker
     @url_helpers = url_helpers
   end
 
+  def user(user)
+    {
+      syncStatus: user.sync_status,
+    }
+  end
+
   # Convert to an object by ID.
   def bookmarks(bookmarks)
     bookmarks.each_with_object({}) do |b, bs|

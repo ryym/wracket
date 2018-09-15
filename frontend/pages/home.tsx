@@ -6,17 +6,23 @@ import {configureStore} from '../store';
 import {newBookmarkState} from '../state';
 import {ErrorBoundary} from '../components/ErrorBoundary';
 import {HomePage} from '../components/HomePage';
-import {BookmarkById} from '../lib/models';
+import {BookmarkById, User} from '../lib/models';
 
-const $json = document.getElementById('bookmarks-data');
+type InitialData = {
+  user: User;
+  bookmarks: BookmarkById;
+};
+
+const $json = document.getElementById('initial-data');
 if ($json == null) {
   throw new Error('initial data script not found');
 }
 
-const bookmarks = JSON.parse($json.innerText) as BookmarkById;
+const {user, bookmarks} = JSON.parse($json.innerText) as InitialData;
 
 const store = configureStore({
   initialState: {
+    user,
     bookmarks: newBookmarkState(bookmarks),
   },
 });

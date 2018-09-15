@@ -9,11 +9,14 @@ class HomeController < ViewBaseController
   def index
     cdtn = @searcher.condition(statuses: %i[unread reading])
     result = @searcher.search(current_user, cdtn)
-    bookmarks = @json.bookmarks(result.bookmarks)
+
+    initial_data = {
+      user: @json.user(current_user),
+      bookmarks: @json.bookmarks(result.bookmarks),
+    }
 
     render locals: {
-      user: current_user,
-      bookmarks: bookmarks,
+      initial_data: initial_data,
     }
   end
 end
