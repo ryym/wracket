@@ -1,7 +1,7 @@
 import {memoize} from './memoize';
 import {findCSRFToken} from './csrf-token';
 import {Ajax, createAjax} from './ajax';
-import {Bookmark, BookmarkById, SearchCondition, UnixTime} from '../lib/models';
+import {Bookmark, BookmarkById, SearchCondition, UnixTime, SyncStatus} from '../lib/models';
 
 const getCSRFToken = memoize(() => {
   const token = findCSRFToken();
@@ -19,6 +19,7 @@ const getAjax = memoize(createDefaultAjax);
 export interface SearchResult {
   bookmarks: BookmarkById;
   isLast: boolean;
+  syncStatus: SyncStatus;
 }
 
 export interface FavoriteResult {
