@@ -29,13 +29,17 @@ class PocketSynchronizer
   end
 
   # This is for a first synchronization. It synchronizes all of the user data.
-  def import_all(user, offset = 0)
-    @pocket.retrieve_each(PER_PAGE, {
-      offset: offset,
-      state: 'all',
-      detailType: 'complete',
-      sort: 'oldest',
-    }) do |ret, json|
+  def import(user, offset: 0, max_call: 1000)
+    @pocket.retrieve_each(
+      PER_PAGE,
+      {
+        offset: offset,
+        state: 'all',
+        detailType: 'complete',
+        sort: 'newest',
+      },
+      max_call: max_call,
+    ) do |ret, json|
       ok, message = import_retrieved_data(user.id, ret, json)
       return [ok, message] if !ok
       sleep(0.5)
