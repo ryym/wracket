@@ -13,6 +13,6 @@ class ImagesController < ViewBaseController
     return render status: :not_found, plain: '' if image.nil?
 
     variant_url = @image_maker.make_variant(image, variant)
-    redirect_to variant_url
+    redirect_to(variant_url || @image_maker.url_for(image))
   end
 end

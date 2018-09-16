@@ -23,9 +23,11 @@ class ImageMaker
 
       if image.has_variant?(variator.name, variator.version)
         @storage.url(image.path, variant: variant)
-      else
+      elsif image.transform_tryable?
         @url_helpers.transform_image_path(image, variant: variant)
       end
+
+      @storage.url(image.path)
     end
   end
 end

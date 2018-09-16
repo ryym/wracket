@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_15_113858) do
+ActiveRecord::Schema.define(version: 2018_09_16_025924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2018_09_15_113858) do
     t.json "variants", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "transform_tries", default: 0, null: false
     t.index ["digest"], name: "index_images_on_digest"
   end
 

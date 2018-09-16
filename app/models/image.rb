@@ -1,12 +1,20 @@
 # frozen_string_literal: true
 
 class Image < ApplicationRecord
+  MAX_TRANSFORM_TRIES = 3
+
+  has_many :entry_images, dependent: :destroy
+
   def self.path(name)
     "images/#{name}"
   end
 
   def path
     self.class.path(digest)
+  end
+
+  def transform_tryable?
+    transform_tries < MAX_TRANSFORM_TRIES
   end
 
   def has_variant?(name, version)

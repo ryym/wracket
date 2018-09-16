@@ -24,8 +24,9 @@ class ImageMaker
     def make_variant(image, variant_name, force: false)
       variator = @variators.get!(variant_name)
 
-      if force || !image.has_variant?(variator.name, variator.version)
-        do_make(image, variant_name, variator)
+      if force || can_make_variant?(image, variator)
+        ok = do_make(image, variant_name, variator)
+        return nil if !ok
       end
 
       @storage.url(image.path, variant: variant_name)
@@ -33,11 +34,19 @@ class ImageMaker
 
     private
 
+    def can_make_variant?(image, variator)
+      image.transform_tryable? && !image.has_variant?(variator.name, variator.version)
+    end
+
     def do_make(image, variant_name, variator)
+      image.update!(transform_tries: image.transform_tries + 1)
+
       content = @storage.download(image.path)
 
       tempfile_with(content) do |f|
-        processed_path = variator.process(f.path)
+        processed_path = variator.process(f.path, image)
+        return false if processed_path.nil?
+
         File.open(processed_path) do |pf|
           @storage.upload(
             pf,
@@ -49,6 +58,7 @@ class ImageMaker
       end
 
       image.add_variant!(variator.name, variator.version)
+      true
     end
 
     def tempfile_with(content)

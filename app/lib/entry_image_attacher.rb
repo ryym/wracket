@@ -14,15 +14,16 @@ class EntryImageAttacher
   end
 
   def attach(record, variant: nil)
-    if record.image.nil?
-      do_attach(record) if record.attach_tryable?
-      return @image_maker.default_thumbnail_url if !record.image
-    end
+    do_attach(record) if record.attach_tryable?
+    return @image_maker.default_thumbnail_url if !record.image
 
     if variant && !@image_maker.has_variant?(record.image, variant)
-      @image_maker.make_variant(record.image, variant)
+      variant_url = @image_maker.make_variant(record.image, variant)
     end
 
+    # Prevent from redirecting to the image transform URL since
+    # it is likely to fail to make variant again.
+    variant = nil if variant_url
     @image_maker.url_for(record.image, variant: variant)
   end
 
