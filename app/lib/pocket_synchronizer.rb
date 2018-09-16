@@ -21,7 +21,7 @@ class PocketSynchronizer
   end
 
   def synchronize(user)
-    return import_all(user, user.bookmarks.count) if !user.first_sync_done?
+    raise 'first synchronization must be started' if user.last_synced_at.nil?
 
     ok, message = import_updates(user.id, user.last_synced_at)
     user.update!(last_synced_at: Time.current) if ok

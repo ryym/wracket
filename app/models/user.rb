@@ -26,10 +26,6 @@ class User < ApplicationRecord
     end
   end
 
-  def first_sync_done?
-    last_synced_at.present?
-  end
-
   def unarchived_bookmarks
     bookmarks.includes(entry: %i[resolved images]).unarchived.order_by_newest
   end
