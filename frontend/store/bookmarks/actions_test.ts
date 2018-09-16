@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import {fake} from 'sinon';
 import {isThunkAction} from 'redux-dutiful-thunk';
 import {State, newState} from '../../state';
-import {SearchCondition, Bookmark, BookmarkStatus} from '../../lib/models';
+import {SearchCondition, Bookmark, BookmarkStatus, SyncStatus} from '../../lib/models';
 import {pick} from '../../lib/obj';
 import * as sels from '../selectors';
 import * as actions from './actions';
@@ -99,10 +99,11 @@ describe('loadMoreBookmarks', () => {
     const searchCdtn = {statuses: []};
 
     const search = async (cdtn: SearchCondition, last: Bookmark | null) => {
-      if (cdtn === searchCdtn && last === bookmark) {
-        return {bookmarks: {}, isLast: true};
-      }
-      return null;
+      return {
+        bookmarks: {},
+        isLast: last === bookmark,
+        syncStatus: SyncStatus.Done,
+      };
     };
 
     const deps = {
@@ -117,7 +118,7 @@ describe('loadMoreBookmarks', () => {
 
     assert.deepStrictEqual(dispatch.args, [
       [{type: 'LOAD_MORE_BOOKMARKS_START'}],
-      [{type: 'LOAD_MORE_BOOKMARKS_OK', bookmarks: {}, isLast: true}],
+      [{type: 'LOAD_MORE_BOOKMARKS_OK', bookmarks: {}, isLast: true, syncStatus: SyncStatus.Done}],
     ]);
   });
 
@@ -126,7 +127,11 @@ describe('loadMoreBookmarks', () => {
       const deps = {
         ...pick(sels, 'getLastBookmark', 'getSearchCondition'),
         getCurrentQueryState: () => ({count: 10, allFetched: true}),
-        search: async () => null,
+        search: async () => ({
+          bookmarks: {},
+          isLast: true,
+          syncStatus: SyncStatus.Done,
+        }),
       };
 
       const dispatch = fake();
