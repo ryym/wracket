@@ -26,7 +26,8 @@ module Api
     end
 
     if Rails.env.production?
-      def handle_server_error(_err)
+      def handle_server_error(err)
+        Raven.capture_exception(err)
         render status: :internal_server_error, json: {
           message: 'Internal server error',
         }
