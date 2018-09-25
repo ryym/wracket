@@ -27,7 +27,7 @@ module Api
 
     if Rails.env.production?
       def handle_server_error(_err)
-        render status: internal_server_error, json: {
+        render status: :internal_server_error, json: {
           message: 'Internal server error',
         }
       end
