@@ -32,7 +32,7 @@ class PocketSynchronizer
   def import(user, offset: 0, max_call: 1000)
     @pocket.retrieve_each(
       PER_PAGE,
-      {
+      params: {
         offset: offset,
         state: 'all',
         detailType: 'complete',
@@ -50,11 +50,14 @@ class PocketSynchronizer
   end
 
   def import_updates(user_id, last_synced_at)
-    @pocket.retrieve_each(PER_PAGE, {
-      since: last_synced_at.to_i,
-      state: 'all',
-      detailType: 'complete',
-    }) do |ret, json|
+    @pocket.retrieve_each(
+      PER_PAGE,
+      params: {
+        since: last_synced_at.to_i,
+        state: 'all',
+        detailType: 'complete',
+      },
+    ) do |ret, json|
       ok, message = import_retrieved_data(user_id, ret, json)
       return [ok, message] if !ok
       sleep(0.5)

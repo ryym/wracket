@@ -29,7 +29,7 @@ class PocketClient
   # Retrieve items for each given count and pass them to the given block.
   # It stops the loop when a response is not a success, or the items are empty.
   # But the given block is called on both cases.
-  def retrieve_each(count, params = {}, max_call: 1000)
+  def retrieve_each(count, params:, max_call: 1000)
     offset = params.fetch(:offset, 0)
     calls = 0
 
