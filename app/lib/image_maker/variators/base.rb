@@ -11,7 +11,7 @@ class ImageMaker
         @version = version
       end
 
-      def process(_path)
+      def process(_path, _image)
         raise NotImplementedError
       end
     end

@@ -36,6 +36,8 @@ class SessionsController < ViewBaseController
     user = User.login(ret.username, ret.access_token)
     session[:user_id] = user.id
 
+    PocketFirstSyncJob.perform_later(user)
+
     redirect_to home_path
   end
 end

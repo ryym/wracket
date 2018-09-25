@@ -29,8 +29,10 @@ class PocketClient
   # Retrieve items for each given count and pass them to the given block.
   # It stops the loop when a response is not a success, or the items are empty.
   # But the given block is called on both cases.
-  def retrieve_each(count, params = {})
+  def retrieve_each(count, params = {}, max_call: 1000)
     offset = params.fetch(:offset, 0)
+    calls = 0
+
     loop do
       ret = retrieve(params.merge(count: count, offset: offset))
       if ret.err?
@@ -39,8 +41,11 @@ class PocketClient
       end
 
       json = ret.response.body_json
+      calls += 1
+
       yield(ret, json)
-      break if json['list'].empty?
+      break if json['list'].empty? || max_call <= calls
+
       offset += count
     end
   end

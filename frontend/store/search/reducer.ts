@@ -1,4 +1,5 @@
 import {updateObj} from '../../lib/obj';
+import {SyncStatus} from '../../lib/models';
 import {conditionToQuery} from '../../lib/search-query';
 import {Action} from '../../action';
 import {SearchState, newSearchState, SearchStateByQuery} from '../../state';
@@ -47,7 +48,7 @@ export function reduceSearch(state: SearchState = newSearchState(), action: Acti
         ...state,
         stateByQuery: updateObj(state.stateByQuery, state.currentQuery, s => ({
           count: Object.keys(action.bookmarks).length > 0 ? null : s.count,
-          allFetched: action.isLast,
+          allFetched: action.isLast && action.syncStatus === SyncStatus.Done,
         })),
       };
 

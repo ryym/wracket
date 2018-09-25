@@ -7,8 +7,8 @@
 <div id="root"></div>
 
 <%= content_for(:scripts) do %>
-  <script type="application/json" id="bookmarks-data">
-    <%= raw(bookmarks.to_json) %>
+  <script type="application/json" id="initial-data">
+    <%= raw(initial_data.to_json) %>
   </script>
   <script crossorigin src="<%= asset_url('home.js') %>"></script>
 <% end %>

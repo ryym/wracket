@@ -1,16 +1,31 @@
-import {Bookmark, BookmarkById, BookmarkStatus, SearchCondition} from './lib/models';
+import {
+  Bookmark,
+  BookmarkById,
+  BookmarkStatus,
+  SearchCondition,
+  User,
+  SyncStatus,
+} from './lib/models';
 import {conditionToQuery} from './lib/search-query';
 
 export interface State {
+  readonly user: UserState;
   readonly bookmarks: BookmarkState;
   readonly search: SearchState;
   readonly errors: ErrorsState;
 }
 
 export const newState = (): State => ({
+  user: newUser(),
   bookmarks: newBookmarkState(),
   search: newSearchState(),
   errors: newErrorsState(),
+});
+
+export type UserState = Readonly<User>;
+
+export const newUser = (): UserState => ({
+  syncStatus: SyncStatus.Done,
 });
 
 export interface BookmarkState {

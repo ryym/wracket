@@ -1,3 +1,13 @@
+export enum SyncStatus {
+  NotYet = 'not_yet',
+  Syncing = 'syncing',
+  Done = 'done',
+}
+
+export interface User {
+  syncStatus: SyncStatus;
+}
+
 export enum BookmarkStatus {
   Unread = 'unread',
   Reading = 'reading',

@@ -6,6 +6,7 @@ import {Dispatch} from '../../store';
 import {
   search,
   initShownBookmarks,
+  pollInitialBookmarks,
   loadMoreBookmarks,
   openBookmark,
   resetOpenBookmark,
@@ -22,7 +23,7 @@ import {
   canLoadMore,
   isSearchPanelCollapsible,
 } from '../../store/selectors';
-import {Bookmark, BookmarkStatus, SearchCondition} from '../../lib/models';
+import {Bookmark, BookmarkStatus, SearchCondition, SyncStatus} from '../../lib/models';
 import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
 import {ConnectedTopAppBar as TopAppBar} from '../TopAppBar/connected';
@@ -34,6 +35,7 @@ const MIN_DISPLAY_COUNT = 30;
 export interface Props {
   bookmarks: Bookmark[];
   nowLoading: boolean;
+  syncStatus: SyncStatus;
   canLoadMore: boolean;
   condition: SearchCondition;
   searchPanelCollapsible: boolean;
@@ -77,8 +79,12 @@ export class _HomePage extends React.PureComponent<AllProps> {
   };
 
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(initShownBookmarks());
+    const {dispatch, syncStatus} = this.props;
+    if (syncStatus === SyncStatus.NotYet) {
+      dispatch(pollInitialBookmarks());
+    } else {
+      dispatch(initShownBookmarks());
+    }
   }
 
   componentDidUpdate(prev: AllProps) {
@@ -95,7 +101,10 @@ export class _HomePage extends React.PureComponent<AllProps> {
   render() {
     const {props} = this;
     const {searchPanelCollapsible} = props;
-    const canLoadMore = props.canLoadMore && !props.nowLoading;
+
+    // If the first synchronization is on going, allow to try to load more data.
+    const canLoadMore =
+      props.syncStatus !== SyncStatus.Done || (props.canLoadMore && !props.nowLoading);
     return (
       <div>
         <TopAppBar />
@@ -128,6 +137,7 @@ export const HomePage = connect((state: State): Props => {
   return {
     bookmarks: listBookmarks(state),
     nowLoading: state.bookmarks.nowLoading,
+    syncStatus: state.user.syncStatus,
     canLoadMore: canLoadMore(state),
     condition: getSearchCondition(state),
     searchPanelCollapsible: isSearchPanelCollapsible(state),
