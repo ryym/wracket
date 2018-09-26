@@ -676,17 +676,18 @@ autoprefixer@^8.0.0:
     postcss "^6.0.23"
     postcss-value-parser "^3.2.3"
 
-awesome-typescript-loader@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-5.0.0.tgz#130c304ae52a60933f15d93f7629003b483fa8b1"
+awesome-typescript-loader@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-5.2.1.tgz#a41daf7847515f4925cdbaa3075d61f289e913fc"
   dependencies:
-    chalk "^2.3.1"
+    chalk "^2.4.1"
     enhanced-resolve "^4.0.0"
     loader-utils "^1.1.0"
     lodash "^4.17.5"
     micromatch "^3.1.9"
     mkdirp "^0.5.1"
     source-map-support "^0.5.3"
+    webpack-log "^1.2.0"
 
 aws-sign2@~0.6.0:
   version "0.6.0"
@@ -7870,9 +7871,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.8.3:
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.8.3.tgz#5d817f9b6f31bb871835f4edf0089f21abe6c170"
+typescript@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.3.tgz#4853b3e275ecdaa27f78fda46dc273a7eb7fc1c8"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"
@@ -8216,7 +8217,7 @@ webpack-dev-server@^3.1.4:
     webpack-log "^1.1.2"
     yargs "11.0.0"
 
-webpack-log@^1.0.1, webpack-log@^1.1.2:
+webpack-log@^1.0.1, webpack-log@^1.1.2, webpack-log@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/webpack-log/-/webpack-log-1.2.0.tgz#a4b34cda6b22b518dbb0ab32e567962d5c72a43d"
   dependencies:
