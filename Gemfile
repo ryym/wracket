@@ -46,6 +46,10 @@ end
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
+
+  # 1.2.1 or lower has a vulnerability.
+  # https://github.com/rubyzip/rubyzip/issues/369
+  gem 'rubyzip', '~> 1.2.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
