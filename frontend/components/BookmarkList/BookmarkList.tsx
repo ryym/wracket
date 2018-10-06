@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {IS_DEVELOPMENT} from '../../consts';
 import {Bookmark} from '../../lib/models';
 import {BookmarkItem, ItemProps} from './BookmarkItem';
@@ -13,17 +14,18 @@ export type Props = {
 } & ItemProps;
 
 export function BookmarkList({bookmarks, onLoadMoreClick, className = '', ...itemProps}: Props) {
-  const items = bookmarks.map(b => {
-    return (
-      <li key={b.id} className={cls.listItem} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
-        <BookmarkItem bookmark={b} {...itemProps} />
-      </li>
-    );
-  });
-
   return (
     <div className={className}>
-      <ul className={cls.list}>{items}</ul>
+      <TransitionGroup component={'ul'} className={cls.list}>
+        {bookmarks.map(b => (
+          <CSSTransition key={b.id} timeout={160} classNames="g-BookmarkList-item">
+            <li className={cls.listItem} {...(IS_DEVELOPMENT ? {'data-id': b.id} : {})}>
+              <BookmarkItem bookmark={b} {...itemProps} />
+            </li>
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
+
       {/* Should load more automatically on scroll. */}
       {onLoadMoreClick && (
         <div className={cls.loadMore}>

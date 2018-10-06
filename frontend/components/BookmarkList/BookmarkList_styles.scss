@@ -21,3 +21,27 @@
   text-align: center;
   padding: var(--pad4) 0;
 }
+
+:global {
+  // We need global classes for react-transition-group.
+  // https://reactcommunity.org/react-transition-group/transition-group
+  .g-BookmarkList-item {
+    &-enter {
+      opacity: 0.01;
+    }
+
+    &-enter-active {
+      opacity: 1;
+      transition: opacity 160ms ease-in;
+    }
+
+    &-exit {
+      opacity: 0.8;
+    }
+
+    &-exit-active {
+      opacity: 0.01;
+      transition: opacity 160ms linear;
+    }
+  }
+}
