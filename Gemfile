@@ -16,6 +16,10 @@ gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.2'
 gem 'sentry-raven'
 
+# GitHub warns that the versions >= 2.0.0 and < 2.0.6 are vulnerable.
+# CVE-2018-16470 , CVE-2018-16471
+gem 'rack', '>= 2.0.6'
+
 # https://github.com/rails/sprockets/commit/2f7b7e5e67f47c32a2d637b7e90dfa5ecf922eb3
 # We don't use sprockets at all but `rails` gem depends on it.
 gem 'sprockets', '~> 3.7.2'
