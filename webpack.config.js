@@ -124,6 +124,10 @@ module.exports = {
           }),
           {loader: 'css-loader'},
           {
+            loader: 'postcss-loader',
+            options: {sourceMap: byEnv({dev: 'inline', prod: false})},
+          },
+          {
             loader: 'sass-loader',
             options: {includePaths: ['./node_modules']},
           },
@@ -149,6 +153,10 @@ module.exports = {
               // https://github.com/webpack-contrib/css-loader#importloaders
               importLoaders: 1,
             },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {sourceMap: byEnv({dev: 'inline', prod: false})},
           },
           {
             loader: 'sass-loader',
