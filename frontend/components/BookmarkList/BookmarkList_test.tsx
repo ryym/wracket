@@ -3,7 +3,8 @@ import {shallow} from 'enzyme';
 import {BookmarkList} from './BookmarkList';
 
 describe('<BookmarkList>', () => {
-  it('accepts bookmarks', () => {
-    shallow(<BookmarkList bookmarks={[]} />);
+  it('accepts empty bookmarks', () => {
+    const wrapper = shallow(<BookmarkList bookmarks={[]} />);
+    expect(wrapper).toMatchSnapshot();
   });
 });
