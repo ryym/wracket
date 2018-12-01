@@ -34,10 +34,7 @@
     ]
   },
   "//": [
-    "TODO: Remove @types/node from devDependencies",
-    "@types/react-dom depends on @types/node, and its lates version is 10.0.0.",
-    "But it has a bug https://github.com/DefinitelyTyped/DefinitelyTyped/issues/25342.",
-    "So use @types/node 8.10.10 explicitly for now."
+    "NOTE: @types/react-dom depends on @types/node"
   ],
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -47,9 +44,9 @@
     "@types/classnames": "^2.2.4",
     "@types/enzyme": "^3.1.10",
     "@types/jest": "^23.3.10",
-    "@types/node": "8.10.10",
+    "@types/node": "^8.10.10",
     "@types/react": "^16.3.0",
-    "@types/react-dom": "^16.0.4",
+    "@types/react-dom": "^16.0.11",
     "@types/react-redux": "^6.0.0",
     "@types/react-transition-group": "^2.0.14",
     "@types/redux-logger": "^3.0.5",
