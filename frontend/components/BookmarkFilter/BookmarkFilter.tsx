@@ -3,7 +3,7 @@ import * as classNames from 'classnames';
 import {RadioField} from '../form/RadioField';
 import {SearchCondition, BookmarkStatus} from '../../lib/models';
 
-const cls = require('./BookmarkFilter_styles.scss');
+const cls = require('./BookmarkFilter.scss');
 
 type ChangeHandler = (cdtn: Partial<SearchCondition>) => void;
 

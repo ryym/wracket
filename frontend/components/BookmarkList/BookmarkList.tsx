@@ -5,7 +5,7 @@ import {Bookmark} from '../../lib/models';
 import {BookmarkItem, ItemProps} from './BookmarkItem';
 import {Button} from '../form/Button';
 
-const cls = require('./BookmarkList_styles.scss');
+const cls = require('./BookmarkList.scss');
 
 export type Props = {
   readonly bookmarks: Bookmark[];

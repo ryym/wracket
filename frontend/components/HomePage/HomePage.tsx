@@ -28,7 +28,7 @@ import {BookmarkList} from '../BookmarkList';
 import {BookmarkFilter} from '../BookmarkFilter';
 import {ConnectedTopAppBar as TopAppBar} from '../TopAppBar/connected';
 
-const cls = require('./HomePage_styles.scss');
+const cls = require('./HomePage.scss');
 
 const MIN_DISPLAY_COUNT = 30;
 

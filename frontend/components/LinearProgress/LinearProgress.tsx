@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import {MDCLinearProgress} from '@material/linear-progress';
 
-const cls = require('./LinearProgress_styles.scss');
+const cls = require('./LinearProgress.scss');
 
 // https://material.io/develop/web/components/linear-progress
 // Note that currently we don't use a custom adapter.

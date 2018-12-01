@@ -3,7 +3,7 @@ import {Bookmark, BookmarkStatus} from '../../lib/models';
 import {IconButton} from '../form/IconButton';
 import {Thumbnail} from './Thumbnail';
 
-const cls = require('./BookmarkItem_styles.scss');
+const cls = require('./BookmarkItem.scss');
 
 export type ItemProps = {
   readonly onBookmarkOpen?: (b: Bookmark) => void;
