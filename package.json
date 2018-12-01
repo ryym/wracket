@@ -16,23 +16,6 @@
     "test": "jest",
     "test:w": "yarn test --watch"
   },
-  "lint-staged": {
-    "*.js": [
-      "npx prettier --write",
-      "npx eslint"
-    ],
-    "*.{ts,tsx}": [
-      "npx prettier --write",
-      "npx tslint -p tsconfig.precommit.json"
-    ],
-    "*.{css,scss}": [
-      "npx stylelint",
-      "npx prettier --write"
-    ],
-    "*.{rb,rake}": [
-      "bundle exec rubocop -a --force-exclusion"
-    ]
-  },
   "//": [
     "NOTE: @types/react-dom depends on @types/node"
   ],
@@ -61,7 +44,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
-    "eslint": "^4.19.1",
+    "eslint": "^5.9.0",
     "eslint-config-prettier": "^2.9.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
