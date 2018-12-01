@@ -12,9 +12,13 @@
     "lint:ts": "tslint -p . -t verbose 'frontend/**/*.ts?(x)'",
     "lint:css": "stylelint 'frontend/**/*css'",
     "lint:css:fix": "stylelint --fix 'frontend/**/*css'",
-    "precommit": "lint-staged",
     "test": "jest",
     "test:w": "yarn test --watch"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": [
@@ -63,7 +67,7 @@
     "enzyme-to-json": "^3.3.4",
     "eslint": "^5.9.0",
     "eslint-config-prettier": "^2.9.0",
-    "husky": "^0.14.3",
+    "husky": "^1.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
     "lint-staged": "^8.1.0",
