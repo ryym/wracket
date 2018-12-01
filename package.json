@@ -16,6 +16,23 @@
     "test": "jest",
     "test:w": "yarn test --watch"
   },
+  "lint-staged": {
+    "*.js": [
+      "npx prettier --write",
+      "npx eslint"
+    ],
+    "*.{ts,tsx}": [
+      "npx prettier --write",
+      "npx tslint -p tsconfig.precommit.json"
+    ],
+    "*.{css,scss}": [
+      "npx stylelint",
+      "npx prettier --write"
+    ],
+    "*.{rb,rake}": [
+      "bundle exec rubocop -a --force-exclusion"
+    ]
+  },
   "//": [
     "NOTE: @types/react-dom depends on @types/node"
   ],
@@ -49,7 +66,7 @@
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
-    "lint-staged": "^7.0.0",
+    "lint-staged": "^8.1.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "optimize-css-assets-webpack-plugin": "^4.0.2",
