@@ -1,4 +1,3 @@
-import * as assert from 'assert';
 import {fake} from 'sinon';
 import {memoize} from './memoize';
 
@@ -7,11 +6,7 @@ describe('memoize', () => {
     const getOne = fake.returns(1);
     const memoized = memoize(getOne);
 
-    assert.deepStrictEqual(
-      [memoized(), memoized(), memoized()],
-      [1, 1, 1],
-      'return values of memoized function',
-    );
-    assert.equal(getOne.callCount, 1, 'wrapped function call count');
+    expect([memoized(), memoized(), memoized()]).toEqual([1, 1, 1]);
+    expect(getOne.callCount).toBe(1);
   });
 });

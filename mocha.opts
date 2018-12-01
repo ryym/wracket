@@ -1,2 +1,0 @@
---require frontend/setup_test.js
---require ts-node/register

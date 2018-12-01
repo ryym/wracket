@@ -1,4 +1,3 @@
-import * as assert from 'assert';
 import {fake} from 'sinon';
 import {isThunkAction} from 'redux-dutiful-thunk';
 import {State, newState} from '../../state';
@@ -17,7 +16,7 @@ describe('syncBookmarks', () => {
     const dispatch = fake();
     await actions.syncBookmarks(deps).thunk(dispatch, newState);
 
-    assert.deepStrictEqual(dispatch.args, [
+    expect(dispatch.args).toEqual([
       [{type: 'SYNC_BOOKMARKS_START'}],
       [{type: 'SYNC_BOOKMARKS_OK', bookmarks: {}}],
     ]);
@@ -29,14 +28,11 @@ describe('initShownBookmarks', () => {
     const dispatch = fake();
     await actions.initShownBookmarks().thunk(dispatch, newState);
 
-    assert.equal(dispatch.callCount, 1, 'dispatch call count');
+    expect(dispatch.callCount).toBe(1);
 
     const action = dispatch.lastArg;
-    if (isThunkAction(action)) {
-      assert.equal(action.thunkType, actions.updateShownBookmarks.name);
-    } else {
-      assert.fail('non-thunk action is dispatched');
-    }
+    expect(isThunkAction(action)).toBe(true);
+    expect(action.thunkType).toEqual(actions.updateShownBookmarks.name);
   });
 });
 
@@ -52,7 +48,7 @@ describe('updateShownBookmarks', () => {
 
     await actions.updateShownBookmarks(payload, deps).thunk(dispatch, newState);
 
-    assert.deepStrictEqual(dispatch.args, [[{type: 'UPDATE_SHOWN_BOOKMARKS', ids: expectedIds}]]);
+    expect(dispatch.args).toEqual([[{type: 'UPDATE_SHOWN_BOOKMARKS', ids: expectedIds}]]);
   });
 
   it('selects bookmarks based on current state', async () => {
@@ -69,15 +65,15 @@ describe('updateShownBookmarks', () => {
     const payload = {conditionChangeOnly: true};
     await actions.updateShownBookmarks(payload, deps).thunk(dispatch, newState);
 
-    assert.deepStrictEqual(deps.selectShownIds.lastCall.args, [bookmarksById, cdtn, 10]);
+    expect(deps.selectShownIds.lastCall.args).toEqual([bookmarksById, cdtn, 10]);
   });
 
-  context('when some bookmarks are changed', () => {
+  describe('when some bookmarks are changed', () => {
     it('clears query count caches', async () => {
       const dispatch = fake();
       await actions.updateShownBookmarks({conditionChangeOnly: false}).thunk(dispatch, newState);
 
-      assert.deepStrictEqual(dispatch.args, [
+      expect(dispatch.args).toEqual([
         [{type: 'CLEAR_QUERY_COUNT_CACHES'}],
         [{type: 'UPDATE_SHOWN_BOOKMARKS', ids: []}],
       ]);
@@ -116,13 +112,13 @@ describe('loadMoreBookmarks', () => {
     const dispatch = fake();
     await actions.loadMoreBookmarks(deps).thunk(dispatch, newState);
 
-    assert.deepStrictEqual(dispatch.args, [
+    expect(dispatch.args).toEqual([
       [{type: 'LOAD_MORE_BOOKMARKS_START'}],
       [{type: 'LOAD_MORE_BOOKMARKS_OK', bookmarks: {}, isLast: true, syncStatus: SyncStatus.Done}],
     ]);
   });
 
-  context('when all data is already fetched', () => {
+  describe('when all data is already fetched', () => {
     it('does nothing', async () => {
       const deps = {
         ...pick(sels, 'getLastBookmark', 'getSearchCondition'),
@@ -137,7 +133,7 @@ describe('loadMoreBookmarks', () => {
       const dispatch = fake();
       await actions.loadMoreBookmarks(deps).thunk(dispatch, newState);
 
-      assert.deepStrictEqual(dispatch.args, []);
+      expect(dispatch.args).toEqual([]);
     });
   });
 });
