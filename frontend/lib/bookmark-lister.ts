@@ -1,5 +1,5 @@
 import {iter, Iter} from './iter';
-import {Bookmark, BookmarkById, SearchCondition} from './models';
+import {Bookmark, BookmarkById, SearchCondition, BookmarkStatus} from './models';
 
 // TODO: Use iterator more efficiently.
 export const selectShownIds = (
@@ -24,5 +24,8 @@ export const filterBookmarks = (cdtn: SearchCondition) => {
 
 // in-place sort
 export const sortBookmarks = (bks: Bookmark[], cdtn: SearchCondition): Bookmark[] => {
+  if (cdtn.statuses.length === 1 && cdtn.statuses[0] === BookmarkStatus.Archived) {
+    return bks.sort((b1, b2) => (b2.archivedAt || 0) - (b1.archivedAt || 0));
+  }
   return bks.sort((b1, b2) => b2.addedAt - b1.addedAt);
 };

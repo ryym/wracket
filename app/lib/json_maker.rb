@@ -29,6 +29,7 @@ class JsonMaker
         url: b.entry.url,
         status: b.status,
         addedAt: b.added_to_pocket_at.to_i,
+        archivedAt: b.archived_at&.to_i,
         favorite: b.favorite,
         thumbnailUrl: determine_image_url(first_image),
       }

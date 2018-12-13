@@ -25,6 +25,7 @@ export interface Bookmark {
   readonly thumbnailUrl: string;
   readonly status: BookmarkStatus;
   readonly addedAt: UnixTime;
+  readonly archivedAt: UnixTime | null;
   readonly favorite: boolean;
 }
 

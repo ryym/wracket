@@ -89,6 +89,7 @@ describe('loadMoreBookmarks', () => {
       url: 'https://example.com',
       status: BookmarkStatus.Unread,
       addedAt: Date.now(),
+      archivedAt: null,
       favorite: false,
       thumbnailUrl: 'example.png',
     };

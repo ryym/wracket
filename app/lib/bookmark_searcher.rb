@@ -20,18 +20,19 @@ class BookmarkSearcher
 
   def search(user, cdtn)
     q = user.bookmarks.includes(entry: %i[resolved images]).where(status: cdtn.statuses)
-    bookmarks = set_offset(q, cdtn).to_a
+    bookmarks = sort_with_offset(q, cdtn).to_a
     self.class::Result.new(bookmarks, bookmarks.size < @limit)
   end
 
   private
 
-  def set_offset(query, cdtn)
+  def sort_with_offset(query, cdtn)
     query = query.limit(@limit)
-    return query.order(added_to_pocket_at: :desc) if cdtn.offset_value.blank?
+    order = cdtn.statuses == [:archived] ? :archived_at : :added_to_pocket_at
+    return query.order(order => :desc) if cdtn.offset_value.blank?
     query.
-      order(added_to_pocket_at: :desc).
-      where('added_to_pocket_at < ?', Time.zone.at(cdtn.offset_value.to_i))
+      order(order => :desc).
+      where("#{order} < ?", Time.zone.at(cdtn.offset_value.to_i))
   end
 end
 
