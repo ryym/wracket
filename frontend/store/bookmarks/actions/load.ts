@@ -1,6 +1,5 @@
 import {thunkAs} from 'redux-dutiful-thunk';
-import {Action, Thunk} from '../../../action';
-import {SearchCondition} from '../../../lib/models';
+import {Thunk} from '../../../action';
 import {selectShownIds} from '../../../lib/bookmark-lister';
 import * as api from '../../../lib/api';
 import {
@@ -9,10 +8,6 @@ import {
   getSearchCondition,
   getCurrentQueryState,
 } from '../../selectors';
-
-export function search(condition: Partial<SearchCondition>): Action {
-  return {type: 'SEARCH', condition};
-}
 
 export function initShownBookmarks(): Thunk {
   return thunkAs(initShownBookmarks.name, async (dispatch, getState) => {
