@@ -65,14 +65,14 @@
     position: initial;
     width: 100%;
     text-align: right;
-    margin-right: 16px;
+    margin-right: 4px;
     transition: height 0.2s;
     height: 0;
     overflow: hidden;
 
     &.isOpen {
       display: block;
-      height: 32px;
+      height: 48px;
     }
   }
 }
@@ -80,8 +80,9 @@
 .action {
   @include mdc-icon-button-size(18px, 18px, 4px);
 
-  color: #b0bec5;
+  color: var(--cl-primary-100);
   font-weight: bold;
+  transition: color 0.1s;
 
   @include screen-md-or-lg {
     &:hover {
@@ -90,7 +91,9 @@
   }
 
   @include screen-sm {
-    @include mdc-icon-button-size(24px, 24px, 8px);
+    @include mdc-icon-button-size(28px, 28px, 12px);
+
+    color: var(--cl-primary-400);
   }
 
   // Remove mdc-icon-button effects on ':active'.
@@ -117,7 +120,7 @@
 }
 
 .actionOpenerButton {
-  @include mdc-icon-button-size(20px, 20px, 4px);
+  @include mdc-icon-button-size(24px, 20px, 4px);
 
   color: var(--cl-primary-400);
 }
