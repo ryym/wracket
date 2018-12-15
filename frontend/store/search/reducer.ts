@@ -1,6 +1,5 @@
 import {updateObj} from '../../lib/obj';
 import {SyncStatus} from '../../lib/models';
-import {conditionToQuery} from '../../lib/search-query';
 import {Action} from '../../action';
 import {SearchState, newSearchState, SearchStateByQuery} from '../../state';
 
@@ -9,14 +8,10 @@ const initQueryState = {count: null, allFetched: false};
 export function reduceSearch(state: SearchState = newSearchState(), action: Action): SearchState {
   switch (action.type) {
     case 'SEARCH': {
-      const nextCdtn = {
-        ...state.condition,
-        ...action.condition,
-      };
       return {
         ...state,
-        condition: nextCdtn,
-        currentQuery: conditionToQuery(nextCdtn),
+        condition: action.condition,
+        currentQuery: action.query,
       };
     }
 

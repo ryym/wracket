@@ -19,7 +19,7 @@ export type Action =
   | {type: 'CATCH_ERR'; caught: Error}
   | {type: 'SYNC_BOOKMARKS_START'}
   | {type: 'SYNC_BOOKMARKS_OK'; bookmarks: BookmarkById}
-  | {type: 'SEARCH'; condition: Partial<SearchCondition>}
+  | {type: 'SEARCH'; condition: SearchCondition; query: string}
   | {type: 'UPDATE_SHOWN_BOOKMARKS'; ids: string[]}
   | {type: 'LOAD_MORE_BOOKMARKS_START'}
   | {
