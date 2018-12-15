@@ -38,7 +38,9 @@
     ]
   },
   "//": [
-    "NOTE: @types/react-dom depends on @types/node"
+    "NOTE: @types/react-dom depends on @types/node",
+    "NOTE: Using @types/react v16.4 and @types/react-dom v16.0 causes an error",
+    "      https://github.com/DefinitelyTyped/DefinitelyTyped/issues/24711"
   ],
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -105,9 +107,9 @@
     "@material/react-top-app-bar": "^0.7.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "react-redux": "^5.0.7",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-redux": "^6.0.0",
     "redux": "^4.0.0",
     "redux-dutiful-thunk": "^1.1.0",
     "redux-logger": "^3.0.6"
