@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
+import {ConnectedRouter} from 'connected-react-router';
+import {createBrowserHistory} from 'history';
+import {Route, Switch} from 'react-router';
 import {IS_DEVELOPMENT} from '../consts';
 import {configureStore} from '../store';
 import {newBookmarkState, newSearchState} from '../state';
@@ -21,8 +24,11 @@ if ($json == null) {
 
 const {user, bookmarks} = JSON.parse($json.innerText) as InitialData;
 
+const browserHistory = createBrowserHistory();
+
 const initialCondition = queryToCondition(window.location.search);
 const store = configureStore({
+  history: browserHistory,
   initialState: {
     user,
     bookmarks: newBookmarkState(bookmarks),
@@ -40,9 +46,13 @@ if (IS_DEVELOPMENT) {
 
 render(
   <Provider store={store}>
-    <ErrorBoundary>
-      <HomePage />
-    </ErrorBoundary>
+    <ConnectedRouter history={browserHistory}>
+      <Switch>
+        <ErrorBoundary>
+          <Route exact path="/home" component={HomePage} />
+        </ErrorBoundary>
+      </Switch>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),
 );

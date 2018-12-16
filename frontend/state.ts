@@ -1,3 +1,4 @@
+import {RouterState} from 'connected-react-router';
 import {
   Bookmark,
   BookmarkById,
@@ -14,6 +15,9 @@ export interface State {
   readonly bookmarks: BookmarkState;
   readonly search: SearchState;
   readonly errors: ErrorsState;
+
+  // Only connected-react-router uses this state.
+  readonly router?: RouterState;
 }
 
 export const newState = (): State => ({
