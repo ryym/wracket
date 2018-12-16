@@ -7,7 +7,7 @@ class HomeController < ViewBaseController
   end
 
   def index
-    cdtn = @searcher.condition(statuses: %i[unread reading])
+    cdtn = @searcher.condition(filter: :new)
     result = @searcher.search(current_user, cdtn)
 
     initial_data = {

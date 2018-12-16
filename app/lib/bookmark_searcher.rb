@@ -10,12 +10,11 @@ class BookmarkSearcher
   end
 
   def condition_from_params(params)
-    condition(statuses: params[:statuses], offset_value: params[:offset])
+    condition(filter: params[:statusFilter], offset_value: params[:offset])
   end
 
-  def condition(statuses:, offset_value: nil)
-    statuses = [] if !statuses.is_a?(Array)
-    Condition.new(statuses: statuses, offset_value: offset_value)
+  def condition(filter:, offset_value: nil)
+    Condition.new(filter: filter, offset_value: offset_value)
   end
 
   def search(user, cdtn)
@@ -41,12 +40,17 @@ class BookmarkSearcher
     attr_reader :statuses
     attr_reader :offset_value
 
-    def initialize(statuses:, offset_value:)
-      statuses = statuses.map(&:to_sym)
-      statuses.each do |s|
-        raise ArgumentError, "invalid status #{s}" if !Bookmark.statuses.key?(s)
-      end
-      @statuses = statuses
+    # XXX: We need to define this mapping in both of
+    # frontend and backend.
+    STATUS_FILTERS = {
+      new: %i[unread reading],
+      reading: %i[reading],
+      archived: %i[archived],
+      all: %i[unread reading archived],
+    }.freeze
+
+    def initialize(filter:, offset_value:)
+      @statuses = STATUS_FILTERS[filter&.to_sym] || STATUS_FILTERS[:new]
       @offset_value = offset_value
     end
   end

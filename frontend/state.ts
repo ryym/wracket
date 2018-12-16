@@ -1,7 +1,7 @@
 import {
   Bookmark,
   BookmarkById,
-  BookmarkStatus,
+  StatusFilter,
   SearchCondition,
   User,
   SyncStatus,
@@ -61,13 +61,11 @@ export interface QueryState {
 }
 
 export const newSearchConditionState = (): SearchCondition => ({
-  statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading],
+  statusFilter: StatusFilter.New,
 });
 
 export const newSearchState = (): SearchState => {
-  const cdtn = {
-    statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading],
-  };
+  const cdtn = newSearchConditionState();
   return {
     condition: cdtn,
     currentQuery: conditionToQuery(cdtn),
