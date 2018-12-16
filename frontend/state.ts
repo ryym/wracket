@@ -15,9 +15,7 @@ export interface State {
   readonly bookmarks: BookmarkState;
   readonly search: SearchState;
   readonly errors: ErrorsState;
-
-  // Only connected-react-router uses this state.
-  readonly router?: RouterState;
+  readonly router: RouterState;
 }
 
 export const newState = (): State => ({
@@ -25,6 +23,9 @@ export const newState = (): State => ({
   bookmarks: newBookmarkState(),
   search: newSearchState(),
   errors: newErrorsState(),
+
+  // This state is initialized by connected-react-router.
+  router: undefined as any,
 });
 
 export type UserState = Readonly<User>;

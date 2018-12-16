@@ -19,7 +19,7 @@ export function errorCatchMiddleware(): Middleware<{}, State, Dispatch<Action>> 
     return next => action => {
       try {
         const result = next(action);
-        if (isThunkAction(result)) {
+        if (result != null && isThunkAction(result)) {
           result.promise.catch(storeCaughtErr(action));
         } else if (isErrorAction(action)) {
           storeCaughtErr(action)(action.err);

@@ -1,4 +1,5 @@
 import {AnyThunkAction, ThunkAction, ThunkType} from 'redux-dutiful-thunk';
+import {RouterAction} from 'connected-react-router';
 import {BookmarkById, BookmarkStatus, SearchCondition, SyncStatus} from './lib/models';
 import {State} from './state';
 
@@ -15,6 +16,7 @@ type Err = {err: Error};
 
 export type Action =
   | AnyThunkAction
+  | RouterAction
   | {type: 'PING'; name: string}
   | {type: 'CATCH_ERR'; caught: Error}
   | {type: 'SYNC_BOOKMARKS_START'}

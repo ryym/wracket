@@ -22,9 +22,9 @@ export type StoreConfig = {
 const getMiddlewares = (history: History, isDev = IS_DEVELOPMENT) => {
   const common = [
     errorCatchMiddleware(),
-    routerMiddleware(history),
     enableBookmarkSearch(),
     createThunkMiddleware(),
+    routerMiddleware(history),
   ];
   return isDev ? [logger, ...common] : common;
 };
