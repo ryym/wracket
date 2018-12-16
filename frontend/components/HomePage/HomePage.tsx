@@ -94,14 +94,16 @@ export class _HomePage extends React.PureComponent<AllProps> {
     if (prev.urlQuery !== urlQuery) {
       this.props.dispatch(searchFromQuery(urlQuery));
     }
-    if (prev.bookmarks !== bookmarks && bookmarks.length < MIN_DISPLAY_COUNT) {
-      this.loadMoreBookmarks();
+    if (prev.bookmarks !== bookmarks) {
+      this.loadMoreBookmarks(bookmarks.length >= MIN_DISPLAY_COUNT);
     }
   }
 
-  loadMoreBookmarks = () => {
-    this.props.dispatch(loadMoreBookmarks());
+  loadMoreBookmarks = (hasDesiredCount: boolean) => {
+    this.props.dispatch(loadMoreBookmarks({hasDesiredCount}));
   };
+
+  handleLoadMoreClick = () => this.loadMoreBookmarks(false);
 
   render() {
     const {props} = this;
@@ -123,7 +125,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onArchiveClick={this.archiveBookmark}
             onReaddClick={this.readdBookmark}
             onDeleteClick={this.deleteBookmark}
-            onLoadMoreClick={canLoadMore ? this.loadMoreBookmarks : undefined}
+            onLoadMoreClick={canLoadMore ? this.handleLoadMoreClick : undefined}
           />
           <BookmarkFilter
             className={cls.bookmarkFilter}

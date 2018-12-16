@@ -36,6 +36,7 @@ export function updateShownBookmarks(
 //   5. Do not load again if our server does not return new bookmarks.
 // Be careful not to cause an infinite loop!
 export function loadMoreBookmarks(
+  opts: {hasDesiredCount: boolean} = {hasDesiredCount: false},
   d = {
     getCurrentQueryState,
     getSearchCondition,
@@ -46,6 +47,14 @@ export function loadMoreBookmarks(
     const state = getState();
     const qs = d.getCurrentQueryState(state);
     if (qs != null && qs.allFetched) {
+      return;
+    }
+
+    // Skip searching if we have enough bookmarks in store,
+    // only if a query state exists. If not, it indicates
+    // we have never searched with the current search condition,
+    // so there may be additional data in server.
+    if (opts.hasDesiredCount && qs != null) {
       return;
     }
 

@@ -89,7 +89,7 @@ describe('loadMoreBookmarks', () => {
     };
 
     const dispatch = fake();
-    await actions.loadMoreBookmarks(deps).thunk(dispatch, newState);
+    await actions.loadMoreBookmarks({hasDesiredCount: false}, deps).thunk(dispatch, newState);
 
     expect(dispatch.args).toEqual([
       [{type: 'LOAD_MORE_BOOKMARKS_START'}],
@@ -100,7 +100,7 @@ describe('loadMoreBookmarks', () => {
   describe('when all data is already fetched', () => {
     it('does nothing', async () => {
       const deps = {
-        ...pick(sels, 'getLastBookmark', 'getSearchCondition'),
+        ...pick(sels, 'getSearchCondition'),
         getCurrentQueryState: () => ({count: 10, allFetched: true}),
         search: async () => ({
           bookmarks: {},
@@ -110,7 +110,7 @@ describe('loadMoreBookmarks', () => {
       };
 
       const dispatch = fake();
-      await actions.loadMoreBookmarks(deps).thunk(dispatch, newState);
+      await actions.loadMoreBookmarks({hasDesiredCount: false}, deps).thunk(dispatch, newState);
 
       expect(dispatch.args).toEqual([]);
     });
