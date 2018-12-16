@@ -57,7 +57,7 @@ export interface SearchStateByQuery {
 }
 
 export interface QueryState {
-  readonly count: number | null;
+  readonly count: number;
   readonly allFetched: boolean;
 }
 
@@ -66,12 +66,19 @@ export const newSearchConditionState = (): SearchCondition => ({
   sortKey: SortKey.AddedAt,
 });
 
-export const newSearchState = (): SearchState => {
-  const cdtn = newSearchConditionState();
+export const newSearchState = (
+  {cdtn, queryState}: {cdtn: SearchCondition; queryState: QueryState} = {
+    cdtn: newSearchConditionState(),
+    queryState: {count: 0, allFetched: false},
+  },
+): SearchState => {
+  const query = conditionToQuery(cdtn);
   return {
     condition: cdtn,
-    currentQuery: conditionToQuery(cdtn),
-    stateByQuery: {},
+    currentQuery: query,
+    stateByQuery: {
+      [query]: queryState,
+    },
     panelCollapsible: true,
   };
 };

@@ -10,15 +10,11 @@ class BookmarkSearcher
   end
 
   def condition_from_params(params)
-    condition(
+    Condition.new(
       filter: params[:statusFilter],
       sort_key: params[:sortKey],
-      offset_value: params[:offset],
+      offset: params[:offset],
     )
-  end
-
-  def condition(filter:, sort_key: nil, offset_value: nil)
-    Condition.new(filter: filter, sort_key: sort_key, offset_value: offset_value)
   end
 
   def search(user, cdtn)
@@ -30,7 +26,6 @@ class BookmarkSearcher
   private
 
   def sort_with_offset(query, cdtn)
-    query = query.limit(@limit)
     order =
       case cdtn.sort_key&.underscore&.to_sym
       when :archived_at
@@ -38,10 +33,7 @@ class BookmarkSearcher
       else
         :added_to_pocket_at
       end
-    return query.order(order => :desc) if cdtn.offset_value.blank?
-    query.
-      order(order => :desc).
-      where("#{order} < ?", Time.zone.at(cdtn.offset_value.to_i))
+    query.order(order => :desc).offset(cdtn.offset).limit(@limit)
   end
 end
 
@@ -49,7 +41,7 @@ class BookmarkSearcher
   class Condition
     attr_reader :statuses
     attr_reader :sort_key
-    attr_reader :offset_value
+    attr_reader :offset
 
     # XXX: We need to define this mapping in both of
     # frontend and backend.
@@ -60,9 +52,9 @@ class BookmarkSearcher
       all: %i[unread reading archived],
     }.freeze
 
-    def initialize(filter:, sort_key:, offset_value:)
+    def initialize(filter:, sort_key:, offset:)
       @statuses = STATUS_FILTERS[filter&.to_sym] || STATUS_FILTERS[:new]
-      @offset_value = offset_value
+      @offset = offset.to_i
       @sort_key = sort_key
     end
   end

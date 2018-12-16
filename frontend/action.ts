@@ -40,7 +40,6 @@ export type Action =
   | {type: 'READD_BOOKMARK_ERR'; id: string} & Err
   | {type: 'DELETE_BOOKMARK_START'; id: string}
   | {type: 'DELETE_BOOKMARK_ERR'; id: string; prevStatus: BookmarkStatus} & Err
-  | {type: 'CLEAR_QUERY_COUNT_CACHES'}
   | {type: 'TOGGLE_SEARCH_PANEL_COLLAPSIBILITY'; enabled: boolean};
 
 export function isErrorAction(action: Action): action is ErrorAction {

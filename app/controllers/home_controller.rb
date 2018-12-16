@@ -7,7 +7,7 @@ class HomeController < ViewBaseController
   end
 
   def index
-    cdtn = @searcher.condition(filter: :new)
+    cdtn = @searcher.condition_from_params(params)
     result = @searcher.search(current_user, cdtn)
 
     initial_data = {

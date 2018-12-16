@@ -19,7 +19,7 @@ export function enableBookmarkSearch(): Middleware<{}, State, Dispatch<Action>> 
     const dataChanged = getBookmarksById(prev) !== getBookmarksById(state);
 
     if (conditionChanged || dataChanged) {
-      dispatch(updateShownBookmarks({conditionChangeOnly: !dataChanged}));
+      dispatch(updateShownBookmarks());
     }
     return result;
   };
