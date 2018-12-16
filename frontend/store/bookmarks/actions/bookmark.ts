@@ -86,9 +86,13 @@ export function archiveBookmark(
     const prevStatus = bk.status;
     dispatch({type: 'ARCHIVE_BOOKMARK_START', id});
 
-    await d.archiveBookmark(id).catch(err => {
+    const res = await d.archiveBookmark(id).catch(err => {
       dispatch({type: 'ARCHIVE_BOOKMARK_ERR', id, err, prevStatus});
     });
+
+    if (res != null) {
+      dispatch({type: 'ARCHIVE_BOOKMARK_OK', id, archivedAt: res.archivedAt});
+    }
   });
 }
 

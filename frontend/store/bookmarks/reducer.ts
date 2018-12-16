@@ -84,6 +84,12 @@ export function reduceBookmarks(
         byId: updateObj(bks.byId, action.id, b => ({...b, status: BookmarkStatus.Archived})),
       };
 
+    case 'ARCHIVE_BOOKMARK_OK':
+      return {
+        ...bks,
+        byId: updateObj(bks.byId, action.id, b => ({...b, archivedAt: action.archivedAt})),
+      };
+
     case 'ARCHIVE_BOOKMARK_ERR':
     case 'DELETE_BOOKMARK_ERR':
       return {

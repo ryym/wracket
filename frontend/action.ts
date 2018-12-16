@@ -1,6 +1,6 @@
 import {AnyThunkAction, ThunkAction, ThunkType} from 'redux-dutiful-thunk';
 import {RouterAction} from 'connected-react-router';
-import {BookmarkById, BookmarkStatus, SearchCondition, SyncStatus} from './lib/models';
+import {BookmarkById, BookmarkStatus, SearchCondition, SyncStatus, UnixTime} from './lib/models';
 import {State} from './state';
 
 export type ErrorAction = {
@@ -37,6 +37,7 @@ export type Action =
   | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
   | {type: 'UNFAVORITE_BOOKMARK_ERR'; id: string} & Err
   | {type: 'ARCHIVE_BOOKMARK_START'; id: string}
+  | {type: 'ARCHIVE_BOOKMARK_OK'; id: string; archivedAt: UnixTime}
   | {type: 'ARCHIVE_BOOKMARK_ERR'; id: string; prevStatus: BookmarkStatus} & Err
   | {type: 'READD_BOOKMARK_START'; id: string}
   | {type: 'READD_BOOKMARK_ERR'; id: string} & Err
