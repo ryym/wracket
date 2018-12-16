@@ -16,6 +16,7 @@ import {
   readdBookmark,
   deleteBookmark,
   toggleSearchPanelCollapsibility,
+  searchFromQuery,
 } from '../../store/actions';
 import {
   listBookmarks,
@@ -33,6 +34,7 @@ const cls = require('./HomePage.scss');
 const MIN_DISPLAY_COUNT = 30;
 
 export interface Props {
+  urlQuery: string;
   bookmarks: Bookmark[];
   nowLoading: boolean;
   syncStatus: SyncStatus;
@@ -88,15 +90,20 @@ export class _HomePage extends React.PureComponent<AllProps> {
   }
 
   componentDidUpdate(prev: AllProps) {
-    const {bookmarks} = this.props;
-    if (prev.bookmarks !== bookmarks && bookmarks.length < MIN_DISPLAY_COUNT) {
-      this.loadMoreBookmarks();
+    const {urlQuery, bookmarks} = this.props;
+    if (prev.urlQuery !== urlQuery) {
+      this.props.dispatch(searchFromQuery(urlQuery));
+    }
+    if (prev.bookmarks !== bookmarks) {
+      this.loadMoreBookmarks(bookmarks.length >= MIN_DISPLAY_COUNT);
     }
   }
 
-  loadMoreBookmarks = () => {
-    this.props.dispatch(loadMoreBookmarks());
+  loadMoreBookmarks = (hasDesiredCount: boolean) => {
+    this.props.dispatch(loadMoreBookmarks({hasDesiredCount}));
   };
+
+  handleLoadMoreClick = () => this.loadMoreBookmarks(false);
 
   render() {
     const {props} = this;
@@ -118,7 +125,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
             onArchiveClick={this.archiveBookmark}
             onReaddClick={this.readdBookmark}
             onDeleteClick={this.deleteBookmark}
-            onLoadMoreClick={canLoadMore ? this.loadMoreBookmarks : undefined}
+            onLoadMoreClick={canLoadMore ? this.handleLoadMoreClick : undefined}
           />
           <BookmarkFilter
             className={cls.bookmarkFilter}
@@ -135,6 +142,7 @@ export class _HomePage extends React.PureComponent<AllProps> {
 
 export const HomePage = connect((state: State): Props => {
   return {
+    urlQuery: state.router.location.search,
     bookmarks: listBookmarks(state),
     nowLoading: state.bookmarks.nowLoading,
     syncStatus: state.user.syncStatus,

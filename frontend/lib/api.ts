@@ -1,7 +1,7 @@
 import {memoize} from './memoize';
 import {findCSRFToken} from './csrf-token';
 import {Ajax, createAjax} from './ajax';
-import {Bookmark, BookmarkById, SearchCondition, UnixTime, SyncStatus} from '../lib/models';
+import {BookmarkById, SearchCondition, UnixTime, SyncStatus} from '../lib/models';
 
 const getCSRFToken = memoize(() => {
   const token = findCSRFToken();
@@ -43,12 +43,12 @@ export async function synchronize(cdtn: SearchCondition, ajax = getAjax()): Prom
 
 export async function search(
   cdtn: SearchCondition,
-  last: Bookmark | null = null,
+  offset: number | null = null,
   ajax = getAjax(),
 ): Promise<SearchResult> {
   let params: {} = cdtn;
-  if (last != null) {
-    params = {...params, offset: last.addedAt};
+  if (offset != null) {
+    params = {...params, offset};
   }
   const res = await ajax<SearchResult>('/bookmarks/search', {params});
   if (!res.isSuccess) {

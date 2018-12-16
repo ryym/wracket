@@ -38,7 +38,9 @@
     ]
   },
   "//": [
-    "NOTE: @types/react-dom depends on @types/node"
+    "NOTE: @types/react-dom depends on @types/node",
+    "NOTE: Using @types/react v16.4 and @types/react-dom v16.0 causes an error",
+    "      https://github.com/DefinitelyTyped/DefinitelyTyped/issues/24711"
   ],
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -47,11 +49,13 @@
     "@babel/preset-react": "^7.0.0",
     "@types/classnames": "^2.2.4",
     "@types/enzyme": "^3.1.10",
+    "@types/history": "^4.7.2",
     "@types/jest": "^23.3.10",
     "@types/node": "^8.10.10",
     "@types/react": "^16.3.0",
     "@types/react-dom": "^16.0.11",
     "@types/react-redux": "^6.0.0",
+    "@types/react-router": "^4.4.3",
     "@types/react-transition-group": "^2.0.14",
     "@types/redux-logger": "^3.0.5",
     "autoprefixer": "^9.3.1",
@@ -105,9 +109,12 @@
     "@material/react-top-app-bar": "^0.7.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "react-redux": "^5.0.7",
+    "connected-react-router": "^6.0.0",
+    "history": "^4.7.2",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
     "redux": "^4.0.0",
     "redux-dutiful-thunk": "^1.1.0",
     "redux-logger": "^3.0.6"

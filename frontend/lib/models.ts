@@ -15,6 +15,26 @@ export enum BookmarkStatus {
   Deleted = 'deleted',
 }
 
+export enum StatusFilter {
+  New = 'new',
+  Reading = 'reading',
+  Archived = 'archived',
+  All = 'all',
+}
+
+export const getStatusesFromFilter = (filter: StatusFilter): Array<BookmarkStatus> => {
+  switch (filter) {
+    case StatusFilter.New:
+      return [BookmarkStatus.Unread, BookmarkStatus.Reading];
+    case StatusFilter.Reading:
+      return [BookmarkStatus.Reading];
+    case StatusFilter.Archived:
+      return [BookmarkStatus.Archived];
+    case StatusFilter.All:
+      return [BookmarkStatus.Unread, BookmarkStatus.Reading, BookmarkStatus.Archived];
+  }
+};
+
 // We represents a timestamp by just a number for now.
 export type UnixTime = number;
 
@@ -34,5 +54,11 @@ export interface BookmarkById {
 }
 
 export interface SearchCondition {
-  readonly statuses: BookmarkStatus[];
+  readonly statusFilter: StatusFilter;
+  readonly sortKey: SortKey;
+}
+
+export enum SortKey {
+  AddedAt = 'addedAt',
+  ArchivedAt = 'archivedAt',
 }

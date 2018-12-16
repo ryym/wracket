@@ -10,12 +10,11 @@ class BookmarkSearcher
   end
 
   def condition_from_params(params)
-    condition(statuses: params[:statuses], offset_value: params[:offset])
-  end
-
-  def condition(statuses:, offset_value: nil)
-    statuses = [] if !statuses.is_a?(Array)
-    Condition.new(statuses: statuses, offset_value: offset_value)
+    Condition.new(
+      filter: params[:statusFilter],
+      sort_key: params[:sortKey],
+      offset: params[:offset],
+    )
   end
 
   def search(user, cdtn)
@@ -27,27 +26,36 @@ class BookmarkSearcher
   private
 
   def sort_with_offset(query, cdtn)
-    query = query.limit(@limit)
-    order = cdtn.statuses == [:archived] ? :archived_at : :added_to_pocket_at
-    return query.order(order => :desc) if cdtn.offset_value.blank?
-    query.
-      order(order => :desc).
-      where("#{order} < ?", Time.zone.at(cdtn.offset_value.to_i))
+    order =
+      case cdtn.sort_key&.underscore&.to_sym
+      when :archived_at
+        :archived_at
+      else
+        :added_to_pocket_at
+      end
+    query.order(order => :desc).offset(cdtn.offset).limit(@limit)
   end
 end
 
 class BookmarkSearcher
   class Condition
     attr_reader :statuses
-    attr_reader :offset_value
+    attr_reader :sort_key
+    attr_reader :offset
 
-    def initialize(statuses:, offset_value:)
-      statuses = statuses.map(&:to_sym)
-      statuses.each do |s|
-        raise ArgumentError, "invalid status #{s}" if !Bookmark.statuses.key?(s)
-      end
-      @statuses = statuses
-      @offset_value = offset_value
+    # XXX: We need to define this mapping in both of
+    # frontend and backend.
+    STATUS_FILTERS = {
+      new: %i[unread reading],
+      reading: %i[reading],
+      archived: %i[archived],
+      all: %i[unread reading archived],
+    }.freeze
+
+    def initialize(filter:, sort_key:, offset:)
+      @statuses = STATUS_FILTERS[filter&.to_sym] || STATUS_FILTERS[:new]
+      @offset = offset.to_i
+      @sort_key = sort_key
     end
   end
 

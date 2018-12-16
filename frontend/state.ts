@@ -1,10 +1,12 @@
+import {RouterState} from 'connected-react-router';
 import {
   Bookmark,
   BookmarkById,
-  BookmarkStatus,
+  StatusFilter,
   SearchCondition,
   User,
   SyncStatus,
+  SortKey,
 } from './lib/models';
 import {conditionToQuery} from './lib/search-query';
 
@@ -13,6 +15,7 @@ export interface State {
   readonly bookmarks: BookmarkState;
   readonly search: SearchState;
   readonly errors: ErrorsState;
+  readonly router: RouterState;
 }
 
 export const newState = (): State => ({
@@ -20,6 +23,9 @@ export const newState = (): State => ({
   bookmarks: newBookmarkState(),
   search: newSearchState(),
   errors: newErrorsState(),
+
+  // This state is initialized by connected-react-router.
+  router: undefined as any,
 });
 
 export type UserState = Readonly<User>;
@@ -56,22 +62,28 @@ export interface SearchStateByQuery {
 }
 
 export interface QueryState {
-  readonly count: number | null;
+  readonly count: number;
   readonly allFetched: boolean;
 }
 
 export const newSearchConditionState = (): SearchCondition => ({
-  statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading],
+  statusFilter: StatusFilter.New,
+  sortKey: SortKey.AddedAt,
 });
 
-export const newSearchState = (): SearchState => {
-  const cdtn = {
-    statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading],
-  };
+export const newSearchState = (
+  {cdtn, queryState}: {cdtn: SearchCondition; queryState: QueryState} = {
+    cdtn: newSearchConditionState(),
+    queryState: {count: 0, allFetched: false},
+  },
+): SearchState => {
+  const query = conditionToQuery(cdtn);
   return {
     condition: cdtn,
-    currentQuery: conditionToQuery(cdtn),
-    stateByQuery: {},
+    currentQuery: query,
+    stateByQuery: {
+      [query]: queryState,
+    },
     panelCollapsible: true,
   };
 };

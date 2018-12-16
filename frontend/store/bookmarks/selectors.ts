@@ -4,7 +4,7 @@ import {Bookmark, BookmarkById} from '../../lib/models';
 
 export const listBookmarks = memoize(
   ({bookmarks}: State) => ({ids: bookmarks.shownIds}),
-  ({bookmarks}, {ids}) => bookmarks.shownIds.map(id => bookmarks.byId[id]!),
+  ({bookmarks}, {ids}) => ids.map(id => bookmarks.byId[id]!),
 );
 
 export const getLastBookmark = ({bookmarks: {shownIds, byId}}: State): Bookmark | null => {

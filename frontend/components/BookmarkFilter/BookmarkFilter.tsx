@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import {RadioField} from '../form/RadioField';
-import {SearchCondition, BookmarkStatus} from '../../lib/models';
+import {SearchCondition, StatusFilter, SortKey} from '../../lib/models';
 
 const cls = require('./BookmarkFilter.scss');
 
@@ -15,29 +15,23 @@ export interface Props {
   className?: string;
 }
 
-const eqStatuses = (s1: BookmarkStatus[], s2: BookmarkStatus[]) =>
-  s1.length === s2.length && s1.every((s, i) => s === s2[i]);
-
 const statusFilters = [
   {
-    name: 'new',
     label: 'New',
-    statuses: [BookmarkStatus.Reading, BookmarkStatus.Unread],
+    filter: StatusFilter.New,
   },
   {
-    name: 'reading',
     label: 'Reading',
-    statuses: [BookmarkStatus.Reading],
+    filter: StatusFilter.Reading,
   },
   {
-    name: 'archived',
     label: 'Archived',
-    statuses: [BookmarkStatus.Archived],
+    filter: StatusFilter.Archived,
+    sortKey: SortKey.ArchivedAt,
   },
   {
-    name: 'all',
     label: 'All',
-    statuses: [BookmarkStatus.Unread, BookmarkStatus.Reading, BookmarkStatus.Archived],
+    filter: StatusFilter.All,
   },
 ];
 
@@ -48,17 +42,17 @@ export function BookmarkFilter({condition: cdtn, ...props}: Props) {
   return (
     <>
       <div className={classNames(rootClass, props.className)}>
-        {statusFilters.map(({name, label, statuses}) => {
+        {statusFilters.map(({label, filter, sortKey}) => {
           return (
-            <div key={name}>
+            <div key={filter}>
               <RadioField
-                id={`status-${name}`}
+                id={`status-${filter}`}
                 name="status"
                 label={label}
                 value={name}
                 rootClass={cls.filterField}
-                checked={eqStatuses(statuses, cdtn.statuses)}
-                onChange={change({statuses})}
+                checked={filter === cdtn.statusFilter}
+                onChange={change({statusFilter: filter, sortKey: sortKey || SortKey.AddedAt})}
               />
             </div>
           );

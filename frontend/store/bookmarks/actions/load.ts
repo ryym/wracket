@@ -2,21 +2,15 @@ import {thunkAs} from 'redux-dutiful-thunk';
 import {Thunk} from '../../../action';
 import {selectShownIds} from '../../../lib/bookmark-lister';
 import * as api from '../../../lib/api';
-import {
-  getLastBookmark,
-  getBookmarksById,
-  getSearchCondition,
-  getCurrentQueryState,
-} from '../../selectors';
+import {getBookmarksById, getSearchCondition, getCurrentQueryState} from '../../selectors';
 
 export function initShownBookmarks(): Thunk {
   return thunkAs(initShownBookmarks.name, async (dispatch, getState) => {
-    dispatch(updateShownBookmarks({conditionChangeOnly: true}));
+    dispatch(updateShownBookmarks());
   });
 }
 
 export function updateShownBookmarks(
-  {conditionChangeOnly}: {conditionChangeOnly: boolean},
   d = {
     getBookmarksById,
     getSearchCondition,
@@ -28,11 +22,6 @@ export function updateShownBookmarks(
     const state = getState();
     const bookmarksById = d.getBookmarksById(state);
     const cdtn = d.getSearchCondition(state);
-
-    if (!conditionChangeOnly) {
-      dispatch({type: 'CLEAR_QUERY_COUNT_CACHES'});
-    }
-
     const qs = d.getCurrentQueryState(state);
     const ids = d.selectShownIds(bookmarksById, cdtn, qs ? qs.count : null);
     dispatch({type: 'UPDATE_SHOWN_BOOKMARKS', ids});
@@ -47,9 +36,9 @@ export function updateShownBookmarks(
 //   5. Do not load again if our server does not return new bookmarks.
 // Be careful not to cause an infinite loop!
 export function loadMoreBookmarks(
+  opts: {hasDesiredCount: boolean} = {hasDesiredCount: false},
   d = {
     getCurrentQueryState,
-    getLastBookmark,
     getSearchCondition,
     search: api.search,
   },
@@ -61,10 +50,18 @@ export function loadMoreBookmarks(
       return;
     }
 
-    dispatch({type: 'LOAD_MORE_BOOKMARKS_START'});
-    const lastBookmark = d.getLastBookmark(state);
+    // Skip searching if we have enough bookmarks in store,
+    // only if a query state exists. If not, it indicates
+    // we have never searched with the current search condition,
+    // so there may be additional data in server.
+    if (opts.hasDesiredCount && qs != null) {
+      return;
+    }
 
-    const result = await d.search(d.getSearchCondition(state), lastBookmark);
+    dispatch({type: 'LOAD_MORE_BOOKMARKS_START'});
+
+    const offset = qs == null ? null : qs.count;
+    const result = await d.search(d.getSearchCondition(state), offset);
     dispatch({
       type: 'LOAD_MORE_BOOKMARKS_OK',
       bookmarks: result.bookmarks,

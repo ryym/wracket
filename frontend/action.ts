@@ -1,5 +1,6 @@
 import {AnyThunkAction, ThunkAction, ThunkType} from 'redux-dutiful-thunk';
-import {BookmarkById, BookmarkStatus, SearchCondition, SyncStatus} from './lib/models';
+import {RouterAction} from 'connected-react-router';
+import {BookmarkById, BookmarkStatus, SearchCondition, SyncStatus, UnixTime} from './lib/models';
 import {State} from './state';
 
 export type ErrorAction = {
@@ -15,11 +16,12 @@ type Err = {err: Error};
 
 export type Action =
   | AnyThunkAction
+  | RouterAction
   | {type: 'PING'; name: string}
   | {type: 'CATCH_ERR'; caught: Error}
   | {type: 'SYNC_BOOKMARKS_START'}
   | {type: 'SYNC_BOOKMARKS_OK'; bookmarks: BookmarkById}
-  | {type: 'SEARCH'; condition: Partial<SearchCondition>}
+  | {type: 'SEARCH'; condition: SearchCondition; query: string}
   | {type: 'UPDATE_SHOWN_BOOKMARKS'; ids: string[]}
   | {type: 'LOAD_MORE_BOOKMARKS_START'}
   | {
@@ -35,12 +37,12 @@ export type Action =
   | {type: 'UNFAVORITE_BOOKMARK_START'; id: string}
   | {type: 'UNFAVORITE_BOOKMARK_ERR'; id: string} & Err
   | {type: 'ARCHIVE_BOOKMARK_START'; id: string}
+  | {type: 'ARCHIVE_BOOKMARK_OK'; id: string; archivedAt: UnixTime}
   | {type: 'ARCHIVE_BOOKMARK_ERR'; id: string; prevStatus: BookmarkStatus} & Err
   | {type: 'READD_BOOKMARK_START'; id: string}
   | {type: 'READD_BOOKMARK_ERR'; id: string} & Err
   | {type: 'DELETE_BOOKMARK_START'; id: string}
   | {type: 'DELETE_BOOKMARK_ERR'; id: string; prevStatus: BookmarkStatus} & Err
-  | {type: 'CLEAR_QUERY_COUNT_CACHES'}
   | {type: 'TOGGLE_SEARCH_PANEL_COLLAPSIBILITY'; enabled: boolean};
 
 export function isErrorAction(action: Action): action is ErrorAction {
