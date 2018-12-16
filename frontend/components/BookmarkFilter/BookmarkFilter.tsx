@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import {RadioField} from '../form/RadioField';
-import {SearchCondition, StatusFilter} from '../../lib/models';
+import {SearchCondition, StatusFilter, SortKey} from '../../lib/models';
 
 const cls = require('./BookmarkFilter.scss');
 
@@ -27,6 +27,7 @@ const statusFilters = [
   {
     label: 'Archived',
     filter: StatusFilter.Archived,
+    sortKey: SortKey.ArchivedAt,
   },
   {
     label: 'All',
@@ -41,7 +42,7 @@ export function BookmarkFilter({condition: cdtn, ...props}: Props) {
   return (
     <>
       <div className={classNames(rootClass, props.className)}>
-        {statusFilters.map(({label, filter}) => {
+        {statusFilters.map(({label, filter, sortKey}) => {
           return (
             <div key={filter}>
               <RadioField
@@ -51,7 +52,7 @@ export function BookmarkFilter({condition: cdtn, ...props}: Props) {
                 value={name}
                 rootClass={cls.filterField}
                 checked={filter === cdtn.statusFilter}
-                onChange={change({statusFilter: filter})}
+                onChange={change({statusFilter: filter, sortKey: sortKey || SortKey.AddedAt})}
               />
             </div>
           );

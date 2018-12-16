@@ -1,7 +1,7 @@
-import {SearchCondition, StatusFilter} from './models';
+import {SearchCondition, StatusFilter, SortKey} from './models';
 
 export const conditionToQuery = (cdtn: SearchCondition): string => {
-  return `statusFilter=${cdtn.statusFilter}`;
+  return `statusFilter=${cdtn.statusFilter}&sortKey=${cdtn.sortKey}`;
 };
 
 export const queryToCondition = (query: string): SearchCondition => {
@@ -9,21 +9,33 @@ export const queryToCondition = (query: string): SearchCondition => {
     query = query.substr(1);
   }
 
-  let statusFilter: StatusFilter = StatusFilter.New;
+  let statusFilter = StatusFilter.New;
+  let sortKey = SortKey.AddedAt;
   query.split('&').forEach(part => {
     const [key, value] = part.split('=');
-    if (key === 'statusFilter') {
-      let filter = convertToStatusFilter(value);
-      if (filter != null) {
-        statusFilter = filter;
-      }
+    switch (key) {
+      case 'statusFilter':
+        let filter = toEnumValue<StatusFilter>(StatusFilter, value);
+        if (filter != null) {
+          statusFilter = filter;
+        }
+      case 'sortKey':
+        let sort = toEnumValue<SortKey>(SortKey, value);
+        if (sort != null) {
+          sortKey = sort;
+        }
     }
   });
 
-  return {statusFilter};
+  return {statusFilter, sortKey};
 };
 
-const convertToStatusFilter = (filter: string): StatusFilter | null => {
-  const values = Object.keys(StatusFilter).map((key: any) => StatusFilter[key]) as StatusFilter[];
-  return values.find(v => v === filter) || null;
+// Note that this is NOT type safe.
+const toEnumValue = <E>(enm: any, value: string): E | null => {
+  const values: any[] = listValues(enm);
+  return (values.find(v => v === value) as E) || null;
+};
+
+const listValues = <V, O>(obj: O): Array<keyof O> => {
+  return Object.keys(obj).map(k => (obj as any)[k]);
 };

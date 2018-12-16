@@ -5,6 +5,7 @@ import {
   SearchCondition,
   User,
   SyncStatus,
+  SortKey,
 } from './lib/models';
 import {conditionToQuery} from './lib/search-query';
 
@@ -62,6 +63,7 @@ export interface QueryState {
 
 export const newSearchConditionState = (): SearchCondition => ({
   statusFilter: StatusFilter.New,
+  sortKey: SortKey.AddedAt,
 });
 
 export const newSearchState = (): SearchState => {

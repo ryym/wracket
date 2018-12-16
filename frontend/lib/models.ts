@@ -55,4 +55,10 @@ export interface BookmarkById {
 
 export interface SearchCondition {
   readonly statusFilter: StatusFilter;
+  readonly sortKey: SortKey;
+}
+
+export enum SortKey {
+  AddedAt = 'addedAt',
+  ArchivedAt = 'archivedAt',
 }
