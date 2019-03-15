@@ -13,15 +13,12 @@ gem 'bootsnap', require: false
 gem 'jbuilder'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
-gem 'rails', '~> 5.2'
 gem 'sentry-raven'
 
-# https://groups.google.com/forum/#!msg/rubyonrails-security/3KQRnXDIuLg/mByx5KkqBAAJ
-#  CVE-2018-16477
-gem 'activestorage', '>= 5.2.1.1'
-
-# CVE-2018-16476
-gem 'activejob', '>= 5.2.1.1'
+# activestorage: https://groups.google.com/forum/#!msg/rubyonrails-security/3KQRnXDIuLg/mByx5KkqBAAJ
+# actionview: https://groups.google.com/forum/#!topic/rubyonrails-security/GN7w9fFAQeI
+# railties: https://groups.google.com/forum/#!topic/rubyonrails-security/IsQKvDqZdKw
+gem 'rails', '~> 5.2', '>= 5.2.2.1'
 
 # GitHub warns that the versions >= 2.0.0 and < 2.0.6 are vulnerable.
 # CVE-2018-16470 , CVE-2018-16471
