@@ -32,4 +32,12 @@ module Wracket
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
   end
+
+  # Specify default_url_options for action handler (and mailer).
+  # This works but I don't know whether this is a best way to set the options.
+  # (https://github.com/rails/rails/issues/29992)
+  Rails.application.routes.default_url_options = {
+    protocol: Rails.env.development? ? 'http' : 'https',
+    host: ENV.fetch('SERVER_HOST'),
+  }
 end
