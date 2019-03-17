@@ -1,57 +1,75 @@
 # frozen_string_literal: true
 
 module Api
-  class BookmarksController < ApiBaseController
-    before_action do
-      @updater ||= BookmarkUpdater.create(current_user)
+  class BookmarksHandler
+    include ActionHandler::Equip
+
+    def self.create
+      new(
+        bookmark_updater_creator: BookmarkUpdater,
+      )
     end
 
-    before_action do
-      @bookmark_id = params.fetch(:id)
+    def initialize(bookmark_updater_creator:)
+      @updater_creator = bookmark_updater_creator
     end
 
-    def open
-      bookmark = @updater.open(@bookmark_id)
+    args Args::Sessions.create
+
+    arg(:bookmark_id) { |ctrl| ctrl.params.fetch(:id) }
+
+    def open(current_user, bookmark_id)
+      bookmark = updater(current_user).open(bookmark_id)
       render json: {
         bookmarkId: bookmark.id,
         openedAt: bookmark.opened_at,
       }
     end
 
-    def reset_open
-      bookmark = @updater.reset_open(@bookmark_id)
+    def reset_open(current_user, bookmark_id)
+      bookmark = updater(current_user).reset_open(bookmark_id)
       render json: { bookmarkId: bookmark.id }
     end
 
-    def favorite
-      bookmark = @updater.favorite(@bookmark_id)
+    def favorite(current_user, bookmark_id)
+      bookmark = updater(current_user).favorite(bookmark_id)
       render json: {
         bookmarkId: bookmark.id,
         favoritedAt: bookmark.favorited_at.to_i,
       }
     end
 
-    def unfavorite
-      bookmark = @updater.unfavorite(@bookmark_id)
+    def unfavorite(current_user, bookmark_id)
+      bookmark = updater(current_user).unfavorite(bookmark_id)
       render json: { bookmarkId: bookmark.id }
     end
 
-    def archive
-      bookmark = @updater.archive(@bookmark_id)
+    def archive(current_user, bookmark_id)
+      bookmark = updater(current_user).archive(bookmark_id)
       render json: {
         bookmarkId: bookmark.id,
         archivedAt: bookmark.archived_at.to_i,
       }
     end
 
-    def readd
-      bookmark = @updater.readd(@bookmark_id)
+    def readd(current_user, bookmark_id)
+      bookmark = updater(current_user).readd(bookmark_id)
       render json: { bookmarkId: bookmark.id }
     end
 
-    def delete
-      bookmark = @updater.delete(@bookmark_id)
+    def delete(current_user, bookmark_id)
+      bookmark = updater(current_user).delete(bookmark_id)
       render json: { bookmarkId: bookmark.id }
     end
+
+    private
+
+    def updater(user)
+      @updater_creator.create(user)
+    end
+  end
+
+  class BookmarksController < ApiBaseController
+    use_handler { Api::BookmarksHandler.create }
   end
 end

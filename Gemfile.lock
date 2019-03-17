@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action_handler (0.2.0)
     actioncable (5.2.2.1)
       actionpack (= 5.2.2.1)
       nio4r (~> 2.0)
@@ -249,6 +250,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  action_handler
   activerecord-import
   activerecord-session_store
   bootsnap
