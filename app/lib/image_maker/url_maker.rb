@@ -25,9 +25,9 @@ class ImageMaker
         @storage.url(image.path, variant: variant)
       elsif image.transform_tryable?
         @url_helpers.transform_image_path(image, variant: variant)
+      else
+        @storage.url(image.path)
       end
-
-      @storage.url(image.path)
     end
   end
 end
