@@ -1,16 +1,29 @@
 # frozen_string_literal: true
 
-class EntryImagesController < ViewBaseController
-  before_action do
-    @attacher ||= EntryImageAttacher.create
+class EntryImagesHandler
+  include ActionHandler::Equip
+
+  def self.create
+    new(
+      image_attacher: EntryImageAttacher.create,
+    )
   end
 
-  def attach
-    id, variant = params.permit(:id, :variant).values
+  def initialize(image_attacher:)
+    @attacher = image_attacher
+  end
+
+  args_params :id, :variant
+
+  def attach(id, variant)
     record = EntryImage.eager_load(:image).find_by(id: id)
     return render status: :not_found, plain: '' if record.nil?
 
     url = @attacher.attach(record, variant: variant)
     redirect_to url
   end
+end
+
+class EntryImagesController < ViewBaseController
+  use_handler { EntryImagesHandler.create }
 end

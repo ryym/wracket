@@ -15,6 +15,8 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
 gem 'sentry-raven'
 
+gem 'action_handler'
+
 # activestorage: https://groups.google.com/forum/#!msg/rubyonrails-security/3KQRnXDIuLg/mByx5KkqBAAJ
 # actionview: https://groups.google.com/forum/#!topic/rubyonrails-security/GN7w9fFAQeI
 # railties: https://groups.google.com/forum/#!topic/rubyonrails-security/IsQKvDqZdKw

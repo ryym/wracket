@@ -1,12 +1,23 @@
 # frozen_string_literal: true
 
-class HomeController < ViewBaseController
-  before_action do
-    @searcher ||= BookmarkSearcher.create
-    @json ||= JsonMaker.create
+class HomeHandler
+  include ActionHandler::Equip
+
+  def self.create
+    new(
+      bookmark_searcher: BookmarkSearcher.create,
+      json_maker: JsonMaker.create,
+    )
   end
 
-  def index
+  def initialize(bookmark_searcher:, json_maker:)
+    @searcher = bookmark_searcher
+    @json = json_maker
+  end
+
+  args Args::Sessions.create
+
+  def index(current_user, params)
     cdtn = @searcher.condition_from_params(params)
     result = @searcher.search(current_user, cdtn)
 
@@ -19,4 +30,8 @@ class HomeController < ViewBaseController
       initial_data: initial_data,
     }
   end
+end
+
+class HomeController < ViewBaseController
+  use_handler { HomeHandler.create }
 end

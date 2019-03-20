@@ -1,13 +1,24 @@
 # frozen_string_literal: true
 
 module Api
-  class SearchController < ApiBaseController
-    before_action do
-      @searcher ||= BookmarkSearcher.create
-      @json ||= JsonMaker.create
+  class SearchHandler
+    include ActionHandler::Equip
+
+    def self.create
+      new(
+        searcher: BookmarkSearcher.create,
+        json_maker: JsonMaker.create,
+      )
     end
 
-    def index
+    def initialize(searcher:, json_maker:)
+      @searcher = searcher
+      @json = json_maker
+    end
+
+    args Args::Sessions.create
+
+    def index(current_user, params)
       if current_user.sync_status_not_yet?
         return render json: {
           syncStatus: current_user.sync_status,
@@ -24,5 +35,9 @@ module Api
         isLast: result.is_last,
       }
     end
+  end
+
+  class SearchController < ApiBaseController
+    use_handler { Api::SearchHandler.create }
   end
 end

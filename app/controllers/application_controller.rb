@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ActionHandler::Controller
+
   protect_from_forgery with: :exception
 
   # Set up Sentry raven context.
