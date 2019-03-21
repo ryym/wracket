@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import {withRipple, RippleProps} from './ripple';
+// import {withRipple, RippleProps} from './ripple';
 
 // https://material.io/develop/web/components/buttons/icon-buttons/
 
@@ -15,7 +15,7 @@ export type Props = {
   readonly onClick?: () => void;
 };
 
-type BaseProps = Props & Partial<RippleProps>;
+type BaseProps = Props; // & Partial<RippleProps>;
 
 class IconButtonBase extends React.PureComponent<BaseProps> {
   private readonly button: React.RefObject<any>;
@@ -25,34 +25,34 @@ class IconButtonBase extends React.PureComponent<BaseProps> {
     this.button = React.createRef();
   }
 
-  componentDidMount() {
-    if (this.props.initRipple) {
-      this.props.initRipple(this.createRippleAdapter());
-    }
-  }
+  // componentDidMount() {
+  //   if (this.props.initRipple) {
+  //     this.props.initRipple(this.createRippleAdapter());
+  //   }
+  // }
 
-  private createRippleAdapter() {
-    const {button} = this;
-    return this.props.createRippleAdapter!(() => ({
-      isUnbounded: () => true,
-      isSurfaceActive: () => false,
-      computeBoundingRect: () => button.current.getBoundingClientRect(),
-      registerInteractionHandler: (type, handler) => {
-        button.current.addEventListener(type, handler);
-      },
-      deregisterInteractionHandler: (type, handler) => {
-        button.current.removeEventListener(type, handler);
-      },
-    }));
-  }
+  // private createRippleAdapter() {
+  //   const {button} = this;
+  //   return this.props.createRippleAdapter!(() => ({
+  //     isUnbounded: () => true,
+  //     isSurfaceActive: () => false,
+  //     computeBoundingRect: () => button.current.getBoundingClientRect(),
+  //     registerInteractionHandler: (type, handler) => {
+  //       button.current.addEventListener(type, handler);
+  //     },
+  //     deregisterInteractionHandler: (type, handler) => {
+  //       button.current.removeEventListener(type, handler);
+  //     },
+  //   }));
+  // }
 
   render() {
     const {props} = this;
     const baseClasses = 'mdc-icon-button material-icons';
-    const rippleProps = props.rippleProps
+    const rippleProps = false //props.rippleProps
       ? {
-          ...props.rippleProps,
-          className: classNames(baseClasses, 'material-icons', props.rippleProps.className),
+          // ...props.rippleProps,
+          // className: classNames(baseClasses, 'material-icons', props.rippleProps.className),
         }
       : {className: classNames(baseClasses, props.className)};
     return (
@@ -74,8 +74,9 @@ export function IconButton(props: Props) {
   return <IconButtonBase {...props} />;
 }
 
-function _IconButtonRipple(props: Props & RippleProps) {
-  return <IconButtonBase {...props} />;
-}
+// function _IconButtonRipple(props: Props & RippleProps) {
+//   return <IconButtonBase {...props} />;
+// }
 
-export const IconButtonRipple = withRipple(_IconButtonRipple);
+export const IconButtonRipple = IconButton;
+// export const IconButtonRipple = withRipple(_IconButtonRipple);
