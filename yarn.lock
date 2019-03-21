@@ -806,6 +806,28 @@
     prop-types "^15.6.1"
     react "^16.4.2"
 
+"@material/react-radio@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-radio/-/react-radio-0.11.0.tgz#fb44610aa4c458a8b0fb4e78def05ce531af12fe"
+  integrity sha512-XtVI/jXiyd74M2sHgVio136D+gyMEk3pfk1T+B8n8KF7e2peETzD+sk98BbQ50EFhK/t6aR7pIoLyNVfSNrsiQ==
+  dependencies:
+    "@material/form-field" "^0.41.0"
+    "@material/radio" "^0.41.0"
+    "@material/react-ripple" "^0.11.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+
+"@material/react-ripple@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.11.0.tgz#db1ed65fd9e8d32792fb1101a4343fe0b18fe486"
+  integrity sha512-ozfuf83aI1IsSw19bjzNJ5WEEN6wb110or96nLbe/pNNCPLmMYmBgLweJIXQS3w8LagaeBec2q+fN8YwoHMi2w==
+  dependencies:
+    "@material/dom" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+    utility-types "^3.2.1"
+
 "@material/react-ripple@^0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.7.1.tgz#2711be88b049f459168cde93e6e3188241186ec8"
@@ -10461,6 +10483,11 @@ util@^0.10.3:
   integrity sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==
   dependencies:
     inherits "2.0.3"
+
+utility-types@^3.2.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/utility-types/-/utility-types-3.4.1.tgz#3caa1d207eac873f989bf8c92cf3e8c539045c61"
+  integrity sha512-GyH068kJf7c4vhfqj4aCM5X+TeV8jG2iPFLimpGpnQ7dvKfogZOHfiYxMww/nGEfMm/bEmnVbeZGO1see1OVKg==
 
 utils-merge@1.0.1:
   version "1.0.1"
