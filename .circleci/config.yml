@@ -52,6 +52,7 @@ jobs:
           WRACKET_DB_HOST: localhost
           WRACKET_DB_USER: wracket
           WRACKET_DB_PASSWORD: ""
+          SERVER_HOST: localhost:3000
       - image: circleci/postgres:9.6-alpine
         environment:
           POSTGRES_USER: wracket
