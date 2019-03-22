@@ -796,14 +796,23 @@
     prop-types "^15.6.1"
     react "^16.4.2"
 
-"@material/react-material-icon@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@material/react-material-icon/-/react-material-icon-0.7.1.tgz#2e626a7c7c80eae8900a5ba27775f425822fa237"
-  integrity sha512-BgH+X7gs/3HUT0YLqC8+uN5DrnMzmPgAjkGzB8g2hbqHfE3PzYHCjElQNf+B1TbNz+XOlIbMzVk6F0XKiIJzNw==
+"@material/react-icon-button@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-icon-button/-/react-icon-button-0.11.0.tgz#d4d69f24439dac0d048ce10119dabc19956e44e9"
+  integrity sha512-DTmt+avgl+MGzB6lBfpZB4sgE1KsoC4o2ktM+s4etqkNFM1om0fn4Gf5/goRbN/1lHPgqwKFVTQAncdiM1gB1A==
   dependencies:
-    "@material/react-ripple" "^0.7.1"
-    classnames "^2.2.5"
-    prop-types "^15.6.1"
+    "@material/icon-button" "^0.41.0"
+    "@material/react-ripple" "^0.11.0"
+    classnames "^2.2.6"
+    react "^16.3.2"
+
+"@material/react-material-icon@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-material-icon/-/react-material-icon-0.11.0.tgz#ceb00734764ecc5568395aa7ed1cefc26d5af577"
+  integrity sha512-IXXEABY6kzCG0eOKe0k0VT6KDBA/cZgHCsUnhAn3sjFh7JlV2rlc4uwduFcPCQa9BWfE82/i5wImg9H4bG8h3A==
+  dependencies:
+    "@material/react-ripple" "^0.11.0"
+    classnames "^2.2.6"
     react "^16.4.2"
 
 "@material/react-radio@^0.11.0":
@@ -8428,6 +8437,16 @@ react-transition-group@^2.5.0:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
+react@^16.3.2:
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.8.4.tgz#fdf7bd9ae53f03a9c4cd1a371432c206be1c4768"
+  integrity sha512-0GQ6gFXfUH7aZcjGVymlPOASTuSjlQL4ZtVC5YKH+3JL6bBLCVO21DknzmaPlI90LN253ojj02nsapy+j7wIjg==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.13.4"
+
 react@^16.4.0, react@^16.4.2:
   version "16.6.3"
   resolved "https://registry.yarnpkg.com/react/-/react-16.6.3.tgz#25d77c91911d6bbdd23db41e70fb094cc1e0871c"
@@ -9095,6 +9114,14 @@ scheduler@^0.11.2:
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.11.2.tgz#a8db5399d06eba5abac51b705b7151d2319d33d3"
   integrity sha512-+WCP3s3wOaW4S7C1tl3TEXp4l9lJn0ZK8G3W3WKRWmw77Z2cIFUW2MiNTMHn5sCjxN+t7N43HAOOgMjyAg5hlg==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.13.4:
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.4.tgz#8fef05e7a3580c76c0364d2df5e550e4c9140298"
+  integrity sha512-cvSOlRPxOHs5dAhP9yiS/6IDmVAVxmk33f0CtTJRkmUWcb1Us+t7b1wqdzoC0REw2muC9V5f1L/w5R5uKGaepA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

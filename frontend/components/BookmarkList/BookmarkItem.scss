@@ -81,7 +81,6 @@
   @include mdc-icon-button-size(18px, 18px, 4px);
 
   color: var(--cl-primary-100);
-  font-weight: bold;
   transition: color 0.1s;
 
   @include screen-md-or-lg {
@@ -96,15 +95,17 @@
     color: var(--cl-primary-400);
   }
 
-  // Remove mdc-icon-button effects on ':active'.
-  &::before,
-  &::after {
-    opacity: 0;
-    background-color: transparent;
-  }
-
   &.isFavorite {
     color: var(--cl-secondary-400);
+  }
+
+  > :global(.iconButton_icon) {
+    font-size: 20px;
+    font-weight: bold;
+
+    @include screen-sm {
+      font-size: 28px;
+    }
   }
 }
 

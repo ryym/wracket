@@ -100,11 +100,11 @@
   "dependencies": {
     "@material/animation": "^0.41.0",
     "@material/form-field": "^0.41.0",
-    "@material/icon-button": "^0.41.0",
     "@material/linear-progress": "^0.41.0",
     "@material/list": "^0.41.0",
     "@material/react-button": "^0.7.1",
-    "@material/react-material-icon": "^0.7.1",
+    "@material/react-icon-button": "^0.11.0",
+    "@material/react-material-icon": "^0.11.0",
     "@material/react-radio": "^0.11.0",
     "@material/react-top-app-bar": "^0.7.1",
     "axios": "^0.18.0",
