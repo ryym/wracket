@@ -99,7 +99,6 @@
   },
   "dependencies": {
     "@material/animation": "^0.41.0",
-    "@material/form-field": "^0.41.0",
     "@material/linear-progress": "^0.41.0",
     "@material/list": "^0.41.0",
     "@material/react-button": "^0.11.0",
