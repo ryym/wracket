@@ -813,6 +813,15 @@
     classnames "^2.2.6"
     react "^16.3.2"
 
+"@material/react-linear-progress@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-linear-progress/-/react-linear-progress-0.11.0.tgz#be540ee59f6d43450fc6eb048b892d0d9d41277a"
+  integrity sha512-szRXLujtZZhb21U9iLXKR7R4VpCPzb3rsmN16VIH2bG8gQv895nNTqv60FQaT7GI4jrWvgSKLyeA+c4VYZubmQ==
+  dependencies:
+    "@material/linear-progress" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+
 "@material/react-material-icon@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@material/react-material-icon/-/react-material-icon-0.11.0.tgz#ceb00734764ecc5568395aa7ed1cefc26d5af577"
