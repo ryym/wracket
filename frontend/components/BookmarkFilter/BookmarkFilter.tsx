@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import {RadioField} from '../form/RadioField';
+import Radio, {NativeRadioControl} from '@material/react-radio';
 import {SearchCondition, StatusFilter, SortKey} from '../../lib/models';
 
 const cls = require('./BookmarkFilter.scss');
@@ -45,15 +45,15 @@ export function BookmarkFilter({condition: cdtn, ...props}: Props) {
         {statusFilters.map(({label, filter, sortKey}) => {
           return (
             <div key={filter}>
-              <RadioField
-                id={`status-${filter}`}
-                name="status"
-                label={label}
-                value={name}
-                rootClass={cls.filterField}
-                checked={filter === cdtn.statusFilter}
-                onChange={change({statusFilter: filter, sortKey: sortKey || SortKey.AddedAt})}
-              />
+              <Radio label={label} wrapperClasses={cls.filterField}>
+                <NativeRadioControl
+                  id={`status-${filter}`}
+                  name="status"
+                  value={name}
+                  checked={filter === cdtn.statusFilter}
+                  onChange={change({statusFilter: filter, sortKey: sortKey || SortKey.AddedAt})}
+                />
+              </Radio>
             </div>
           );
         })}

@@ -1,57 +1,20 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import {MDCLinearProgress} from '@material/linear-progress';
+import MDCLinearProgress from '@material/react-linear-progress';
 
 const cls = require('./LinearProgress.scss');
-
-// https://material.io/develop/web/components/linear-progress
-// Note that currently we don't use a custom adapter.
 
 export interface Props {
   readonly nowLoading?: boolean;
   readonly className?: string;
 }
 
-export class LinearProgress extends React.PureComponent<Props> {
-  private root: React.RefObject<any>;
-  private mdcComponent: MDCLinearProgress | null;
-
-  constructor(props: any) {
-    super(props);
-    this.root = React.createRef();
-    this.mdcComponent = null;
-  }
-
-  componentDidMount() {
-    this.mdcComponent = new MDCLinearProgress(this.root.current);
-    this.mdcComponent.determinate = !this.props.nowLoading;
-  }
-
-  componentDidUpdate() {
-    this.mdcComponent!.determinate = !this.props.nowLoading;
-  }
-
-  componentWillUnmount() {
-    this.mdcComponent!.destroy();
-  }
-
-  render() {
-    const {props} = this;
-    return (
-      <div
-        ref={this.root}
-        role="progressbar"
-        className={classNames('mdc-linear-progress', cls.root, props.className)}
-        style={{display: props.nowLoading ? 'block' : 'none'}}
-      >
-        <div className="mdc-linear-progress__buffer" />
-        <div className="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-          <span className="mdc-linear-progress__bar-inner" />
-        </div>
-        <div className="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-          <span className="mdc-linear-progress__bar-inner" />
-        </div>
-      </div>
-    );
-  }
-}
+export const LinearProgress = (props: Props) => {
+  return (
+    <MDCLinearProgress
+      className={classNames(cls.root, props.className)}
+      indeterminate={props.nowLoading}
+      bufferingDots={false}
+    />
+  );
+};
