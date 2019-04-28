@@ -44,7 +44,7 @@ jobs:
 
   test_ruby:
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: circleci/ruby:2.6.0
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_PATH: vendor/bundle
