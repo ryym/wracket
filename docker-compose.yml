@@ -11,6 +11,8 @@ services:
     image: postgres:10.4
     volumes:
       - postgres:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
 
   server:
     build: &server_build

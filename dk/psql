@@ -1,0 +1,5 @@
+#!/bin/sh
+
+docker-sync start > /dev/null
+docker-compose exec db psql -U postgres wracket_development
+
