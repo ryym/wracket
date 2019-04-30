@@ -4,6 +4,15 @@
 # ref: https://github.com/EugenMayer/docker-sync
 # You can use executables in the `dk` directory to run this docker-compose containers easily.
 
+# Tips:
+# - Install new Rubygem:
+#   1. Add a gem to Gemfile.
+#   2. Run `docker-compose run --rm spring bundle`
+# - Install new Node.js package:
+#   1. Run `docker-compose run --rm front yarn add package-name`
+#
+# The added packages are persisted in host volumes.
+
 version: '3'
 
 services:
