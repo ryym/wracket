@@ -31,6 +31,7 @@ services:
       - root-sync:/server:nocopy
       - bundle:/usr/local/bundle
     environment: &server_environment
+      - RAILS_IN_DOCKER=1
       - WRACKET_DB_HOST=db
       - WRACKET_DB_USER=postgres
     depends_on:
