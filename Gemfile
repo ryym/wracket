@@ -20,7 +20,7 @@ gem 'action_handler'
 # activestorage: https://groups.google.com/forum/#!msg/rubyonrails-security/3KQRnXDIuLg/mByx5KkqBAAJ
 # actionview: https://groups.google.com/forum/#!topic/rubyonrails-security/GN7w9fFAQeI
 # railties: https://groups.google.com/forum/#!topic/rubyonrails-security/IsQKvDqZdKw
-gem 'rails', '~> 5.2', '>= 5.2.2.1'
+gem 'rails', '~> 5.2'
 
 # GitHub warns that the versions >= 2.0.0 and < 2.0.6 are vulnerable.
 # CVE-2018-16470 , CVE-2018-16471
